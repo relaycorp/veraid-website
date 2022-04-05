@@ -1,0 +1,22 @@
+title: "Vera"
+
+markdown: kramdown
+liquid:
+  error_mode: strict
+  strict_filters: true
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .idea
+  - README.md
+
+# Theme settings
+theme: just-the-docs
+search_enabled: false
+color_scheme: dark
+aux_links:
+  "GitHub org": "https://github.com/VeraDomains"
+  "Relaycorp": "https://relaycorp.tech"
+heading_anchors: true
+gh_edit_link: true
