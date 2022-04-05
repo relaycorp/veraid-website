@@ -1,5 +1,4 @@
 ---
-layout: default
 title: "Spec"
 permalink: /specs/v1
 nav_order: 3

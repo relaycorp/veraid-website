@@ -4,6 +4,12 @@ markdown: kramdown
 liquid:
   error_mode: strict
   strict_filters: true
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: page
 exclude:
   - Gemfile
   - Gemfile.lock
