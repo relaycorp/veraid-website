@@ -34,9 +34,10 @@ We need a mechanism to assign customisable, user-friendly, globally-unique, offl
 We did find the following related technologies, but we decided not to use them or build upon them:
 
 - **DNS-Based Authentication of Named Entities (DANE)**. It may intuitively seem like a good foundation for this work, but it really is geared towards securing the trust anchor in the Internet PKI (PKIX). That is, DANE's sole purpose is to help TLS clients authenticate the certificates used by servers. However, we're not trying to authenticate servers and our users may not even have access to the Internet.
-- **Tor's Onion v3 vanity addresses**, like `bbcnewsv2vjtpsuy.onion` for BBC News. Even if we adapted the underlying algorithm to suppress the `.onion` suffix, addresses would still have a randomly-generated sequence after the customisable prefix (e.g., `bbcnewsv2vjtpsuy`), which wouldn't be customisable or user-friendly enough for us.
+- **Tor's Onion v3 vanity addresses**, like `bbcnewsv2vjtpsuy.onion` for BBC News. Even if we adapted the underlying algorithm to suppress the `.onion` suffix, addresses would still have a randomly-generated sequence after the customisable prefix, which wouldn't be customisable or user-friendly enough for us.
 - **Blockchain-based alternative DNS roots**, like ENS. Any blockchain-based solution would require each app to store gigabytes' worth of data (and keep it in sync) or blindly trust the information received from external sources (most likely a company like Infura).
-- **Extensible Resource Identifier (XRI) i-names**, like `=Alice.Smith`, `@ACME` or `@ACME*Alice.Smith`. Were XRI not defunct, we may have used it instead of DNS.
+- **Matrix.org Ids**, like `@alice.smith:acme.com`. The verification would require interacting with a server implementing the Matrix Identity Service API, which in turn requires something like [Awala](https://awala.network/) to work offline, making the overall solution slower and more complicated.
+- **Extensible Resource Identifier (XRI) i-names**, like `=Alice.Smith`, `@ACME` or `@ACME*Alice.Smith`. Were XRI not defunct, we might have used it instead of DNS.
 
 ## About
 
