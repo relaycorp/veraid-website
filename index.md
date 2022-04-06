@@ -21,9 +21,9 @@ Apps can use Vera to verify the authenticity and integrity of any type of data, 
 
 ## Technical overview
 
-Vera combines [DNSSEC](https://www.icann.org/resources/pages/dnssec-what-is-it-why-important-2019-03-05-en) with a new Public Key Infrastructure (PKI) to produce digital signatures whose provenance can be traced back to a domain name.
+Vera combines [DNSSEC](https://www.icann.org/resources/pages/dnssec-what-is-it-why-important-2019-03-05-en) with a new Public Key Infrastructure (PKI) to produce digital signatures whose provenance can be traced back to a domain name. Any DNSSEC-enabled domain can be a trust anchor in the PKI, but it'd only have control over itself (not other domains).
 
-Any DNSSEC-enabled domain can be a trust anchor in the PKI, but it'd only have control over itself (not other domains or subdomains).
+Consequently, every piece of content to be verified embeds enough information to complete the verification. External queries, like DNS lookups, are totally unnecessary.
 
 [Learn more about Vera's architecture](./architecture.md) or [read the spec](./spec.md).
 
