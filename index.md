@@ -15,9 +15,9 @@ Apps can use Vera to verify the authenticity and integrity of any type of data, 
 
 - Avoiding phishing in offline messaging apps (the _raison d'être_ of this project).
 - Sharing Web content offline or via email -- the actual content, not a URL.
+- Circumventing DNS-level censorship.
 - Decentralised document-signing -- without a gatekeeper like Adobe.
 - API authentication -- without pre-shared tokens or cryptographic keys.
-- Making DDoS attacks very expensive in overlay networks and federated systems.
 
 ## Technical overview
 
