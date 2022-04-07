@@ -6,4 +6,4 @@ nav_order: 2
 
 # Vera Architecture
 
-Lorem ipsum.
+**THIS IS A WORKING DRAFT AT THIS POINT**

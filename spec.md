@@ -15,4 +15,10 @@ nav_order: 3
 
 ## Overview
 
-Lorem ipsum.
+**THIS IS A WORKING DRAFT AT THIS POINT**
+
+## Security considerations
+
+### Homographic and character encoding-based attacks
+
+Also character encoding
