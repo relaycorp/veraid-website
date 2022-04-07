@@ -5,25 +5,27 @@ nav_order: 0
 
 # Vera: Domain names without the Internet
 
-Vera will be a technology that apps could use to authenticate users and organisations. It leverages the existing DNS infrastructure, but the verification step doesn't need the Internet.
+Vera will be a protocol to authenticate users and organisations, as well as any content they produce. It leverages the existing DNS infrastructure without actually using the Internet.
 
-Apps can use Vera to verify the authenticity and integrity of any type of data, and thus reliably attribute it to an organisation (like `acme.com`) or a member of an organisation (like `alice.smith` of `acme.com`).
+Apps will use Vera to verify the authenticity and integrity of any type of data, and thus reliably attribute it to an organisation (like `acme.com`) or a member of an organisation (like `alice.smith` of `acme.com`).
 
 ## Use cases
 
-[There are many potential use cases](./use-cases.md), such as:
+Vera can improve existing systems in many ways, such as:
 
 - Avoiding phishing in offline messaging apps (the _raison d'être_ of this project).
 - Sharing Web content offline or via email -- the actual content, not a URL.
-- Circumventing DNS-level censorship.
 - Decentralised document-signing -- without a gatekeeper like Adobe.
-- API authentication -- without pre-shared tokens or cryptographic keys.
+- API authentication -- without pre-shared tokens or public keys.
+- User authentication -- without auth servers.
+
+But perhaps more interestingly, it could power a new generation of systems that wouldn't be possible today. Like a new Web (Web4?) where static contents are no longer hosted on servers, but are instead hosted on BitTorrent and authenticated with Vera.
 
 ## Technical overview
 
 Vera combines [DNSSEC](https://www.icann.org/resources/pages/dnssec-what-is-it-why-important-2019-03-05-en) with a new Public Key Infrastructure (PKI) to produce digital signatures whose provenance can be traced back to a domain name. Any DNSSEC-enabled domain can be a trust anchor in the PKI, but it'd only have control over itself (not other domains).
 
-Consequently, every piece of content to be verified embeds enough information to complete the verification. External queries, like DNS lookups, are totally unnecessary.
+Consequently, every piece of content to be verified contains enough metadata to conduct the verification. External queries, like DNS lookups, are not needed.
 
 [Learn more about Vera's architecture](./architecture.md) or [read the spec](./spec.md).
 
@@ -43,6 +45,6 @@ We did find the following related technologies, but we decided not to use them o
 
 This project is being incubated by [Relaycorp](https://relaycorp.tech) for use in [Letro](https://letro.app/en/), but Vera itself is completely agnostic of Letro and Relaycorp.
 
-We could bundle it with Letro, but we think that the core functionality is generic enough and so widely applicable that it makes more sense to develop it independently.
+We could bundle it with Letro, but we think that the core functionality is generic enough and so widely applicable that it makes more sense to develop it independently. We also expect it to play a crucial role in Awala in the future, such as when we support [message broadcasting](https://github.com/AwalaNetwork/specs/issues/43).
 
 The word _vera_ is [Ido](https://www.idolinguo.org.uk/general.htm) for _authentic_, and it's pronounced _VEH-rah_ (with a trilled R).
