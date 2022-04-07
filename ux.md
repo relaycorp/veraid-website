@@ -19,7 +19,7 @@ Someone who manages the Vera setup for an organisation (like `acme.com`).
 - Provision bot id.
 - Deprovision bot id.
 
-Bots are basically members without user ids, so they act on behalf of the organisation in the context of a specific service.
+Bots are basically members without usernames, so they act on behalf of the organisation in the context of a specific service.
 
 ## Organisation member
 
