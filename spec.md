@@ -1,7 +1,7 @@
 ---
 title: "Spec"
 permalink: /specs/v1
-nav_order: 3
+nav_order: 4
 ---
 
 # Vera V1 Specification

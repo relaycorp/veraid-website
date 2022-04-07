@@ -1,7 +1,7 @@
 ---
 title: "Architecture"
 permalink: /architecture
-nav_order: 2
+nav_order: 3
 ---
 
 # Vera Architecture

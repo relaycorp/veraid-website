@@ -1,7 +1,7 @@
 ---
 title: "User Experience"
 permalink: /ux
-nav_order: 1
+nav_order: 2
 ---
 
 # User Experience

@@ -27,19 +27,10 @@ Vera combines [DNSSEC](https://www.icann.org/resources/pages/dnssec-what-is-it-w
 
 Consequently, every piece of content to be verified contains enough metadata to conduct the verification. External queries, like DNS lookups, are not needed.
 
-[Learn more about Vera's architecture](./architecture.md) or [read the spec](./spec.md).
+Designing and implementing _yet another_ auth protocol makes us uneasy: It's hard to get right and the consequences can be catastrophic. But sadly, [no existing technology satisfied our needs](./prior-art.md).
 
-## Prior art
-
-We need a mechanism to assign customisable, user-friendly, globally-unique, offline-compatible identifiers to [Letro](https://letro.app/en/) users in order to avoid phishing. We didn't come across any prior attempt to achieve this in a decentralised manner, so we decided to build our own solution based on DNS.
-
-We did find the following related technologies, but we decided not to use them or build upon them:
-
-- **Federated auth protocols**, like OAuth2/OIDC or SAML, assuming we only trust email addresses whose domain match that of the auth server. Compliant servers may sign the auth response, which could be theoretically verified offline -- however, this requires pre-sharing public keys or certificates for every possible server, which isn't feasible. Alternatively, TLSNotary could be used to distribute the auth response, which makes the solution hard to use and adds significant data overhead (the TLS session including certificate chains).
-- **DNS-Based Authentication of Named Entities (DANE)**. It may intuitively seem like a good foundation for this work, but it really is geared towards securing the trust anchor in the Internet PKI (PKIX). That is, DANE's sole purpose is to help TLS clients authenticate the certificates used by servers. However, we're not trying to authenticate servers and our users may not even have access to the Internet.
-- **Tor's Onion v3 vanity addresses**, like `bbcnewsv2vjtpsuy.onion` for BBC News. Even if we adapted the underlying algorithm to suppress the `.onion` suffix, addresses would still have a randomly-generated sequence after the customisable prefix, which wouldn't be customisable or user-friendly enough for us.
-- **Blockchain-based alternative DNS roots**, like ENS. Any blockchain-based solution would require each app to store gigabytes of data (and keep it in sync) or blindly trust the information received from external sources (most likely a company like Infura). Even if Zero-Knowledge Proofs could overcome these limitations, we'd rather not depend on a technology that's more complicated, more centralised, more costly and less battle-tested than DNSSEC.
-- **Extensible Resource Identifier (XRI) i-names**, like `=Alice.Smith`, `@ACME` or `@ACME*Alice.Smith`. Were XRI not defunct, we might have used it instead of DNS.
+[Learn more about the architecture](./architecture.md){: .btn .mr-2 }
+[Read the spec](./spec.md){: .btn .mr-2 }
 
 ## About
 
