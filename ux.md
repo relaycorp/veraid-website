@@ -46,4 +46,4 @@ A developer building software that verifies Vera signatures.
 
 An end user of an app that verifies Vera signatures.
 
-No human intervention need.
+No human intervention needed.
