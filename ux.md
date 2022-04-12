@@ -13,6 +13,7 @@ nav_order: 2
 Someone who manages the Vera setup for an organisation (like `acme.com`).
 
 - Provision DNSSEC and Vera server.
+- Renew root certificate (i.e., simply update DNS).
 - Revoke certificate (if private key is compromised).
 - Onboard member.
 - Offboard member.

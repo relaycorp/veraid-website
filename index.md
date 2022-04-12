@@ -5,7 +5,7 @@ nav_order: 0
 
 # Vera: Domain names without the Internet
 
-Vera will be a protocol to authenticate users and organisations, as well as any content they produce. It leverages the existing DNS infrastructure without actually using the Internet.
+Vera will be a protocol to authenticate users and organisations, as well as any content they produce. It'll leverage the existing DNS infrastructure without actually using the Internet.
 
 Apps will use Vera to verify the authenticity and integrity of any type of data, and thus reliably attribute it to an organisation (like `acme.com`) or a member of an organisation (like `alice.smith` of `acme.com`).
 
@@ -25,9 +25,9 @@ But perhaps more interestingly, it could power a new generation of systems that 
 
 Vera combines DNSSEC with a new Public Key Infrastructure (PKI) to produce digital signatures whose provenance can be traced back to a domain name. Any DNSSEC-enabled domain can be a trust anchor in the PKI, but it'd only have control over itself (not other domains).
 
-Consequently, every piece of content to be verified contains enough metadata to conduct the verification. External queries, like DNS lookups, are not needed.
+Consequently, every digital signature contains enough data to be independently verified. External queries, like DNS lookups, are not needed.
 
-Designing and implementing _yet another_ auth protocol makes us uneasy: It's hard to get right and the consequences can be catastrophic. But sadly, [no existing technology satisfied our needs](./prior-art.md).
+Designing and implementing _yet another_ auth protocol is not something we take lightly: We know it's hard to get them right and the consequences can be catastrophic. Unfortunately, [no existing technology satisfied our needs](./prior-art.md).
 
 [Learn more about the architecture](./architecture.md){: .btn .mr-2 }
 [Read the spec](./spec.md){: .btn .mr-2 }

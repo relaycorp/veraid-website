@@ -17,8 +17,29 @@ nav_order: 4
 
 **THIS IS A WORKING DRAFT AT THIS POINT**
 
+Initial provisioning done by organisation admins:
+
+- `acme.com` MUST have DNSSEC enabled and properly configured.
+- `acme.com` admin generates an Ed25519 key pair and self-issues an X.509 certificate with it. This is the root Certificate Authority (CA) for all certification paths and all digital signatures under `acme.com`.
+- `TXT` record `_vera.acme.com` contains the Base64-encoded, ASN.1 DER serialisation of the root certificate. This may have to span two records due to 255-character limit.
+
+Authenticating members and bots:
+
+- `acme.com` admin issues certificates to members of the organisation or bots that act on behalf of the organisation -- collectively known as _signers_.
+  - Each certificate contains a critical extension that specifies the context in which it can be used (e.g., Letro).
+  - If the certificate is for a member, the _Distinguished Name_ MUST contain the Vera username (e.g., `alice.smith`).
+- A signer provisions a certificate by providing an Ed25519 public key to the `acme.com` CA.
+
+Digital signatures by members and bots:
+
+- Signers must distribute each content with a _Vera signature_, which includes:
+  - The CMS `SignedData` signature, embedding the signer's certificate along with any intermediary CAs. The root CA SHOULD NOT be included.
+  - The `TXT` record `_vera.acme.com` along with all the intermediary records to verify the `TXT` record with DNSSEC.
+- Verifiers must verify each content they receive against its respective Vera signature as follows:
+  1. Verify the `TXT` record using DNSSEC.
+  1. Verify the authenticity of the content using the `SignedData` value with the root certificate in the `TXT` record as they only trusted certificate.
+  1. Verify that the signer's certificate is allowed to use the current service (e.g., Letro).
+
 ## Security considerations
 
 ### Homographic and character encoding-based attacks
-
-Also character encoding
