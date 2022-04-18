@@ -42,4 +42,8 @@ Digital signatures by members and bots:
 
 ## Security considerations
 
+### Reliance on DNSSEC infrastructure
+
+Every DNS zone in a Vera chain is a potential target for cyberattacks, including the [root zone](https://www.iana.org/dnssec).
+
 ### Homographic and character encoding-based attacks

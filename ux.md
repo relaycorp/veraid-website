@@ -48,3 +48,7 @@ A developer building software that verifies Vera signatures.
 An end user of an app that verifies Vera signatures.
 
 No human intervention needed.
+
+## Service designer
+
+An individual or team that defines the parameters to be honoured by signature producers and verifiers. Parameters include: OID of the service and maximum TTL of digital signatures (from DNSSEC answer).
