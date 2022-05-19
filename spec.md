@@ -40,6 +40,19 @@ Digital signatures by members and bots:
   1. Verify the authenticity of the content using the `SignedData` value with the root certificate in the `TXT` record as they only trusted certificate.
   1. Verify that the signer's certificate is allowed to use the current service (e.g., Letro).
 
+## Validity period
+
+Signature verifiers MUST count the _age_ of a digital signature from the moment the `TXT` record answer was signed.
+
+Vera service designers MUST specify the maximum Time-to-Live (TTL) for every digital signature in the service. The TTL is counted from the moment the `TXT` record answer was signed. The TTL MUST be within the following range:
+
+- 8 hours or more, in order to allow sufficient time for signature-producing apps to renew certificates (and wait for any outages to be resolved).
+- 30 days or less, in order to support Delay-Tolerant Networking.
+
+Vera favours short-lived certificates over long-lived ones, primarily to avoid the use of revocation protocols. Consequently, service designers SHOULD require the shortest TTL that would satisfy their particular requirements.
+
+Signature verifiers MAY require a TTL shorter than that required by the service, but still not shorter than 8 hours. Additionally, signature verifiers MAY allow their end users to specify the shorter TTL.
+
 ## Security considerations
 
 ### Reliance on DNSSEC infrastructure
