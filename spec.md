@@ -44,6 +44,6 @@ Digital signatures by members and bots:
 
 ### Reliance on DNSSEC infrastructure
 
-Every DNS zone in a Vera chain is a potential target for cyberattacks, including the [root zone](https://www.iana.org/dnssec).
+Every DNS zone in a Vera chain is a potential target for cyberattacks, including the [root zone](https://www.iana.org/dnssec). Not to mention that many governments control popular TLDs so, for example, the Libyan government could theoretically issue valid DNSSEC responses for `bit.ly`.
 
 ### Homographic and character encoding-based attacks
