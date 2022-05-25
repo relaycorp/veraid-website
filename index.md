@@ -16,7 +16,7 @@ Vera can improve existing systems in many ways, such as:
 - Avoiding phishing in offline messaging apps (the _raison d'être_ of this project).
 - Sharing Web content offline or via email -- the actual content, not a URL.
 - Decentralised document-signing -- without a gatekeeper like Adobe.
-- API authentication -- without pre-shared tokens or public keys.
+- API authentication -- without bearer tokens or pre-shared public keys.
 - User authentication -- without auth servers.
 
 But perhaps more interestingly, it could power a new generation of systems that wouldn't be possible today. Like a new Web where static contents are no longer hosted on servers, but are instead hosted on BitTorrent and authenticated with Vera -- Web 4.0 if you like.
@@ -25,7 +25,7 @@ But perhaps more interestingly, it could power a new generation of systems that 
 
 Vera combines DNSSEC with a new Public Key Infrastructure (PKI) to produce digital signatures whose provenance can be traced back to a domain name. Any DNSSEC-enabled domain can be a trust anchor in the PKI, but it'd only have control over itself (not other domains).
 
-Consequently, every digital signature contains enough data to be independently verified. External queries, like DNS lookups, are not needed.
+Consequently, every digital signature contains enough data to be independently verified. External queries, such as DNS lookups, are not needed.
 
 Designing and implementing _yet another_ auth protocol is not something we take lightly: We know it's hard to get them right and the consequences can be catastrophic. Unfortunately, [no existing technology satisfied our needs](./prior-art.md).
 
