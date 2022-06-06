@@ -29,6 +29,10 @@ Consequently, every digital signature contains enough data to be independently v
 
 Designing and implementing _yet another_ auth protocol is not something we take lightly: We know it's hard to get them right and the consequences can be catastrophic. Unfortunately, [no existing technology satisfied our needs](./prior-art.md).
 
+Watch the video for a walk-through of the protocol and a demo of the [prototype](https://github.com/VeraDomains/poc).
+
+{% include embed_youtube_video.html id="K2vbMOjur_E" %}
+
 [Learn more about the architecture](./architecture.md){: .btn .mr-2 }
 [Read the spec](./spec.md){: .btn .mr-2 }
 
