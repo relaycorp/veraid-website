@@ -19,7 +19,7 @@ Vera can improve existing systems in many ways, such as:
 - API authentication -- without bearer tokens or pre-shared public keys.
 - User authentication -- without auth servers.
 
-But perhaps more interestingly, it could power a new generation of systems that wouldn't be possible today. Like a new Web where static contents are no longer hosted on servers, but are instead hosted on BitTorrent and authenticated with Vera -- Web 4.0 if you like.
+But perhaps more interestingly, it could power a new generation of systems that wouldn't be possible today, such as a new Web where static contents are hosted on BitTorrent (instead of servers) and authenticated with Vera -- Web 4.0 if you like.
 
 ## Technical overview
 
