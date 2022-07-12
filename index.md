@@ -16,8 +16,8 @@ Vera can improve existing systems in many ways, such as:
 - Avoiding phishing in offline messaging apps (the _raison d'être_ of this project).
 - Sharing Web content offline or via email -- the actual content, not a URL.
 - Decentralised document-signing -- without a gatekeeper like Adobe.
-- API authentication -- without bearer tokens or pre-shared public keys.
-- User authentication -- without auth servers.
+- API authentication without bearer tokens or pre-shared public keys.
+- User authentication without auth servers -- and therefore offline-compatible.
 
 But perhaps more interestingly, it could power a new generation of systems that wouldn't be possible today, such as a new Web where static contents are hosted on BitTorrent (instead of servers) and authenticated with Vera -- Web 4.0 if you like.
 
