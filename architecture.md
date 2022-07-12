@@ -38,7 +38,7 @@ It will support the following API endpoints, which are to be consumed by the Ver
   - Auth: OAuth2 (_zone admin_).
   - Input: Username and service id.
   - Output: Single-use claim token.
-- `POST /zones/{zone}/users/`*: Claim invite and request Vera Id, if access type is invite-only. (We may skip this endpoint in v1)
+- `POST /zones/{zone}/users/`*: Claim invite and request Vera Id, if access type is invite-only.
   - Auth: Single-use claim token.
   - Input: Vera Id public key.
   - Output: Vera Id certificate.
@@ -50,7 +50,7 @@ It will support the following API endpoints, which are to be consumed by the Ver
   - Auth: OAuth2 (_zone admin_).
 - `POST /zones/{zone}/awala/`: [Awala endpoint middleware](https://github.com/relaycorp/relayverse/issues/28) backend.
   - Auth: Awala Endpoint Middleware.
-  - Operations:
+  - Awala service messages:
     - `UserInviteClaim` (if access type is invite-only).
       - Input: Single-use claim token.
       - Output: Vera Id certificate.
@@ -58,17 +58,14 @@ It will support the following API endpoints, which are to be consumed by the Ver
       - Input: Vera Id public key and desired username.
       - Output: Vera Id certificate.
     - `UserIdRenewal`.
-      - Input: Username, signed with assymetric key in the Vera Id.
+      - Input: Username, signed with asymmetric key in the Vera Id.
       - Output: New Vera Id certificate.
 
 \* We may skip this endpoint in v1 because the endpoint `POST /zones/{zone}/awala/` already supports this functionality.
 
 This server will have the following background processes:
 
-- Awala Endpoint middleware backend. Used to:
-  - Claim user invite (if access type is invite-only).
-  - Request user id (if access type is open).
-  - Renew Vera Id.
+- [Awala endpoint middleware](https://github.com/relaycorp/relayverse/issues/28) backend. Used to respond to the requests made to `POST /zones/{zone}/awala/`.
 
 Prototype implementation: [`vera-ca`](https://github.com/VeraDomains/poc/tree/main/vera-ca).
 
