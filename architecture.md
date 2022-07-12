@@ -75,7 +75,7 @@ This will be the command-line interface (CLI) to the admin-only endpoints in the
 
 The admin user will have to log in using [device authorisation code](https://auth0.com/docs/get-started/authentication-and-authorization-flow/device-authorization-flow), ideally.
 
-This wasn't implemented in the prototype.
+Prototype implementation: [`vera-ca` (`tech.relaycorp.vera.ca.cli.Main`)](https://github.com/VeraDomains/poc/blob/main/vera-ca/src/main/java/tech/relaycorp/vera/ca/cli/Main.kt).
 
 ## Notable compromises
 
