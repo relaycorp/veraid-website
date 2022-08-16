@@ -13,12 +13,11 @@ Apps will use Vera to verify the authenticity and integrity of any type of data,
 
 Vera can improve existing systems in many ways, such as:
 
-- Avoiding phishing in offline messaging apps (the _raison d'être_ of this project).
-- Sharing Web content offline or via email -- the actual content, not a URL.
-- Decentralised document signing -- without a gatekeeper like Adobe.
+- Avoiding phishing in offline communication apps (the _raison d'être_ of this project).
+- Document and code signing without gatekeepers like Adobe, Apple or Microsoft.
 - API authentication without bearer tokens or pre-shared public keys.
 
-But perhaps more interestingly, it could power a new generation of systems that wouldn't be possible today, such as a new Web where static contents are hosted on BitTorrent (instead of servers) and authenticated with Vera -- Web 4.0 if you like.
+But perhaps more interestingly, it could power a new generation of decentralised systems that wouldn't be possible today -- like [peer-to-peer web hosting](https://en.wikipedia.org/wiki/Peer-to-peer_web_hosting) with contents reliably attributed to a domain name.
 
 ## Technical overview
 
