@@ -17,7 +17,7 @@ Vera can improve existing systems in many ways, such as:
 - Signing documents and software without gatekeepers like Adobe, Apple or Microsoft.
 - Authenticating API clients without bearer tokens or pre-shared public keys.
 
-But perhaps more interestingly, it could power a new generation of decentralised systems that wouldn't be possible today -- like [peer-to-peer web hosting](https://en.wikipedia.org/wiki/Peer-to-peer_web_hosting) with contents reliably attributed to a domain name.
+But perhaps more interestingly, it could power a new generation of decentralised systems that wouldn't be possible today -- like [peer-to-peer web hosting](https://en.wikipedia.org/wiki/Peer-to-peer_web_hosting) with contents reliably attributed to their respective domain names.
 
 ## Technical overview
 
