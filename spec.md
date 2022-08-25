@@ -53,6 +53,16 @@ Vera favours short-lived certificates over long-lived ones, primarily to avoid t
 
 Signature verifiers MAY require a TTL shorter than that required by the service, but still not shorter than 8 hours. Additionally, signature verifiers MAY allow their end users to specify the shorter TTL.
 
+## DNSSEC Chain Serialisation
+
+Serialise as an _answer_ using the message format from [RFC 1035](https://datatracker.ietf.org/doc/html/rfc1035) (Section 4.2), where:
+
+- Header: contains the `ad` flag.
+- Question: is `_vera.<name>/TXT`.
+- Answer: contains the RRset for `_vera.<name>/TXT`.
+- Authority: is empty.
+- Additional: contains the rest of the DNSSEC chain, excluding `./DS` (which must be provided by the verifier).
+
 ## Security considerations
 
 ### Reliance on DNSSEC infrastructure
