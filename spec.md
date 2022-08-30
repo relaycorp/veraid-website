@@ -59,7 +59,7 @@ Serialise as an _answer_ using the message format from [RFC 1035](https://datatr
 
 - Header: contains the `ad` flag.
 - Question: is `_vera.<name>/TXT`.
-- Answer: contains the RRset for `_vera.<name>/TXT`.
+- Answer: contains the RRset for `_vera.<name>/TXT` (and respective `RRSIG`s).
 - Authority: is empty.
 - Additional: contains the rest of the DNSSEC chain, excluding `./DS` (which must be provided by the verifier).
 
