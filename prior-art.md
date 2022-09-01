@@ -35,16 +35,18 @@ Even if we adapted the underlying algorithm to suppress the `.onion` suffix, add
 
 This includes alternative DNS roots (like ENS) and many W3C DIDs.
 
-Any blockchain-based solution would require each app to store gigabytes of data (and keep it in sync) or blindly trust the information received from external sources (most likely a company like Infura).
+Any blockchain-based solution would require each app to store gigabytes of data (and keep it in sync) or blindly trust the information received from external sources (most likely Infura Inc).
 
-Even if Zero-Knowledge Proofs could overcome these limitations, we'd rather not depend on a technology that's more complicated, more centralised, more costly and less battle-tested than DNSSEC.
+Even if Zero-Knowledge Proofs could overcome these limitations, we'd rather not depend on a technology that's more complicated, more costly and less battle-tested than DNSSEC.
 
 There are valid use cases for blockchain technology, but this isn't one of them.
 
 ## DNS-Based Authentication of Named Entities (DANE)
 
-Intuitively, it may seem like a good foundation for Vera, but it really is geared towards securing the trust anchor in the Internet PKI (PKIX). That is, DANE's sole purpose is to help TLS clients authenticate the certificates used by servers. However, we're not trying to authenticate servers and our users may not even have access to the Internet.
+Intuitively, it may seem like a good foundation for Vera, but DANE really is geared towards securing the trust anchor in the Internet PKI (PKIX). That is, its sole purpose is to enable clients to authenticate TLS servers. However, we're not trying to authenticate servers and our users may not even have access to the Internet.
 
 ## Extensible Resource Identifier (XRI) i-names
 
-Like `=Alice.Smith`, `@ACME` or `@ACME*Alice.Smith`. Were XRI not defunct, we might have used it instead of DNS.
+`=Alice.Smith`, `@ACME` and `@ACME*Alice.Smith` are some i-name examples.
+
+We would've gladly used i-names instead of domain names for UX reasons. Unfortunately, XRI is a defunct technology and it didn't offer a PKI analogous to DNSSEC.
