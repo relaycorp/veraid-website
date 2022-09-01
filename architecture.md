@@ -14,7 +14,7 @@ This document describes the systems and software architecture of the various com
 
 This library, available in JavaScript and JVM/Android, will implement all the cryptographic and data serialisation operations needed by the various components in Vera.
 
-Its JS version will use PKI.js, ASN1.js and a new DNSSEC verification library to be implemented by Relaycorp. Its JVM/Android version will use Bouncy Castle and ideally dnsjava ([if we can expose the DNSSEC verification interface](https://github.com/dnsjava/dnsjava/issues/255) -- otherwise we'll have to implement our own DNSSEC verification library).
+Its JS version will use PKI.js, ASN1.js and a new [DNSSEC verification library](https://github.com/relaycorp/dnssec-verifier-js). Its JVM/Android version will use Bouncy Castle and dnsjava ([with a custom resolver](https://github.com/dnsjava/dnsjava/issues/255)).
 
 Prototype implementation: [`vera-lib`](https://github.com/VeraDomains/poc/tree/main/vera-lib).
 
