@@ -53,6 +53,23 @@ Vera favours short-lived certificates over long-lived ones, primarily to avoid t
 
 Signature verifiers MAY require a TTL shorter than that required by the service, but still not shorter than 8 hours. Additionally, signature verifiers MAY allow their end users to specify the shorter TTL.
 
+## X.509 certificate
+
+- Common Name MUST be the domain name in the case of an organisation certificate, the at sign (`@`) in the case of a bot certificate and the user name in the case of a user certificate.
+
+## TXT Record Data
+
+Space-separated fields:
+
+- Key id type: An integer denoting how the key is identified in the following field.
+  - `0`: The key id is the key itself (e.g., Ed25519 keys).
+  - `1`: The key id is the SHA-256 digest.
+  - `2`: The key id is the SHA-384 digest.
+  - `3`: The key id is the SHA-512 digest.
+- Key id: The Base64 (unpadded) encoding of the public key itself or its digest.
+- TTL override for the DNSSEC chain: A positive integer representing the number of seconds.
+- Service (optional): The OID for the service this chain applies to.
+
 ## DNSSEC Chain Serialisation
 
 Serialise as an _answer_ using the message format from [RFC 1035](https://datatracker.ietf.org/doc/html/rfc1035) (Section 4.2), where:
