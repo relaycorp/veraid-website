@@ -61,14 +61,23 @@ Signature verifiers MAY require a TTL shorter than that required by the service,
 
 Space-separated fields:
 
+- Key algorithm: An integer denoting the key algorithm.
+  - `0` (RSA 2048).
+  - `1` (RSA 3072).
+  - `2` (RSA 4096).
 - Key id type: An integer denoting how the key is identified in the following field.
-  - `0`: The key id is the key itself (e.g., Ed25519 keys).
-  - `1`: The key id is the SHA-256 digest.
-  - `2`: The key id is the SHA-384 digest.
-  - `3`: The key id is the SHA-512 digest.
+  - `0` (`ID`): The key id is the key itself (e.g., Ed25519 keys). Reserved for future use.
+  - `1` (`SHA256`): The key id is the SHA-256 digest.
+  - `2` (`SHA384`): The key id is the SHA-384 digest.
+  - `3` (`SHA512`): The key id is the SHA-512 digest.
 - Key id: The Base64 (unpadded) encoding of the public key itself or its digest.
 - TTL override for the DNSSEC chain: A positive integer representing the number of seconds.
 - Service (optional): The OID for the service this chain applies to.
+
+## Cryptographic algorithms supported
+
+- Hashing: SHA-256, SHA-384 and SHA-512.
+- Digital signatures: RSA-PSS with modulus 2048/3072/4096.
 
 ## DNSSEC Chain Serialisation
 
@@ -79,6 +88,22 @@ Serialise as an _answer_ using the message format from [RFC 1035](https://datatr
 - Answer: contains the RRset for `_vera.<name>/TXT` (and respective `RRSIG`s).
 - Authority: is empty.
 - Additional: contains the rest of the DNSSEC chain, excluding `./DS` (which must be provided by the verifier).
+
+## Vera Member Id Bundle
+
+ASN.1 SEQUENCE:
+
+- DNSSEC chain.
+- Organisation certificate.
+- Member certificate.
+
+## Vera Signature
+
+ASN.1 SEQUENCE:
+
+- DNSSEC chain.
+- Organisation certificate.
+- SignedData with member certificate (and any intermediate certificates) attached, but plaintext detached.
 
 ## Security considerations
 
