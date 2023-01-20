@@ -93,17 +93,24 @@ Serialise as an _answer_ using the message format from [RFC 1035](https://datatr
 
 ASN.1 SEQUENCE:
 
-- DNSSEC chain.
-- Organisation certificate.
-- Member certificate.
+- DNSSEC chain (SEQUENCE).
+- Organisation certificate (SEQUENCE).
+- Member certificate (SEQUENCE).
 
 ## Vera Signature
 
 ASN.1 SEQUENCE:
 
-- DNSSEC chain.
-- Organisation certificate.
-- SignedData with member certificate (and any intermediate certificates) attached, but plaintext detached.
+- DNSSEC chain (SEQUENCE).
+- Organisation certificate (SEQUENCE).
+- SignedData (SEQUENCE). Includes member certificate (and any intermediate certificates), but not the plaintext (content).
+
+## Vera Signed Content
+
+ASN.1 SEQUENCE:
+
+- Content (OCTET STRING).
+- Signature (SEQUENCE).
 
 ## Security considerations
 
