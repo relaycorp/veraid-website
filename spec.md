@@ -104,6 +104,9 @@ ASN.1 SEQUENCE:
 - DNSSEC chain (SEQUENCE).
 - Organisation certificate (SEQUENCE).
 - SignedData (SEQUENCE). Includes member certificate (and any intermediate certificates), but not the plaintext (content).
+- Signature validity period (SEQUENCE).
+  - Creation date.
+  - Expiry date.
 
 ## Vera Signed Content
 
