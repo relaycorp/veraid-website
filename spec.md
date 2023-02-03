@@ -105,7 +105,7 @@ ASN.1 SEQUENCE:
 - Organisation certificate (SEQUENCE).
 - SignedData (SEQUENCE). Includes:
   - Member certificate and any intermediate certificates, but not the plaintext (content).
-  - Signed attributes:
+  - Vera Signature Metadata in signedAttrs:
     - Service OID.
     - Validity period (SEQUENCE).
       - Start date.
