@@ -103,7 +103,7 @@ ASN.1 SEQUENCE:
 
 - DNSSEC chain (SEQUENCE).
 - Organisation certificate (SEQUENCE).
-- SignedData (SEQUENCE). Includes:
+- SignedData (SEQUENCE) with content detached. Includes:
   - Member certificate and any intermediate certificates, but not the plaintext (content).
   - Vera Signature Metadata in signedAttrs:
     - Service OID.
