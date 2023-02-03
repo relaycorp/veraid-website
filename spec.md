@@ -53,6 +53,10 @@ Vera favours short-lived certificates over long-lived ones, primarily to avoid t
 
 Signature verifiers MAY require a TTL shorter than that required by the service, but still not shorter than 8 hours. Additionally, signature verifiers MAY allow their end users to specify the shorter TTL.
 
+## Vera OID Arch
+
+1.3.6.1.4.1.58708.1
+
 ## X.509 certificate
 
 - Common Name MUST be the domain name in the case of an organisation certificate, the at sign (`@`) in the case of a bot certificate and the user name in the case of a user certificate.
@@ -97,7 +101,7 @@ ASN.1 SEQUENCE:
 - Organisation certificate (SEQUENCE).
 - Member certificate (SEQUENCE).
 
-## Vera Signature
+## Vera Signature Bundle
 
 ASN.1 SEQUENCE:
 
