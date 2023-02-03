@@ -104,10 +104,12 @@ ASN.1 SEQUENCE:
 - Validity period (SEQUENCE).
   - Start date.
   - Expiry date.
-- Service OID.
 - DNSSEC chain (SEQUENCE).
 - Organisation certificate (SEQUENCE).
-- SignedData (SEQUENCE). Includes member certificate and any intermediate certificates, but not the plaintext (content).
+- SignedData (SEQUENCE). Includes:
+  - Member certificate and any intermediate certificates, but not the plaintext (content).
+  - Signed attributes:
+    - Service OID.
 
 ## Vera Signed Content
 
