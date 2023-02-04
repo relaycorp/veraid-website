@@ -112,8 +112,8 @@ ASN.1 SEQUENCE:
   - Vera Signature Metadata in signedAttrs:
     - Service OID.
     - Validity period (SEQUENCE).
-      - Start date.
-      - Expiry date.
+      - Start date (UTCTime).
+      - Expiry date (UTCTime).
 
 ## Vera Signed Content
 
