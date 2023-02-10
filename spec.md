@@ -97,6 +97,7 @@ Serialise as an _answer_ using the message format from [RFC 1035](https://datatr
 
 ASN.1 SEQUENCE:
 
+- Version (INTEGER). `0` is the only valid value at the moment.
 - DNSSEC chain (SEQUENCE).
 - Organisation certificate (SEQUENCE).
 - Member certificate (SEQUENCE).
@@ -105,6 +106,7 @@ ASN.1 SEQUENCE:
 
 ASN.1 SEQUENCE:
 
+- Version (INTEGER). `0` is the only valid value at the moment.
 - DNSSEC chain (SEQUENCE).
 - Organisation certificate (SEQUENCE).
 - SignedData (SEQUENCE) with content detached. Includes:
