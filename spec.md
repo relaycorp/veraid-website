@@ -124,6 +124,12 @@ ASN.1 SEQUENCE:
 - Content (OCTET STRING).
 - Signature (SEQUENCE).
 
+## Member names
+
+Bots MUST use the at sign (`@`) as the _Common Name_ (CN).
+
+Users MUST have their name specified in their CN and, to mitigate phishing attacks, such names MUST NOT include whitespace characters other than simple spaces (e.g., `\t`, `\n`, `\r`) or at signs (`@`).
+
 ## Security considerations
 
 ### Reliance on DNSSEC infrastructure
@@ -131,3 +137,9 @@ ASN.1 SEQUENCE:
 Every DNS zone in a Vera chain is a potential target for cyberattacks, including the [root zone](https://www.iana.org/dnssec). Not to mention that many governments control popular TLDs so, for example, the Libyan government could theoretically issue valid DNSSEC responses for `bit.ly`.
 
 ### Homographic and character encoding-based attacks
+
+Also: UIs SHOULD NOT truncate user names, domain names or ids, to mitigate phishing attacks.
+
+### Newly-registered domain names
+
+Organisation admins SHOULD delay using Vera until at least the maximum TTL (90 days) has elapsed since the domain was registered (or acquired). Otherwise, the DNSSEC chain from the previous owner may still be valid.
