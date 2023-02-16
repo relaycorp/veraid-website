@@ -16,7 +16,7 @@ This library, available in JavaScript and JVM/Android, will implement all the cr
 
 Its JS version will use PKI.js, ASN1.js and a new [DNSSEC verification library](https://github.com/relaycorp/dnssec-verifier-js). Its JVM/Android version will use Bouncy Castle and dnsjava ([with a custom resolver](https://github.com/dnsjava/dnsjava/issues/255)).
 
-Prototype implementation: [`vera-lib`](https://github.com/VeraDomains/poc/tree/main/vera-lib).
+Prototype implementation: [`vera-lib`](https://github.com/relaycorp/veraid-poc/tree/main/vera-lib).
 
 ## VeraId Certificate Authority (CA) server
 
@@ -67,7 +67,7 @@ This server will have the following background processes:
 
 - [Awala endpoint middleware](https://github.com/relaycorp/relayverse/issues/28) backend. Used to respond to the requests made to `POST /zones/{zone}/awala/`.
 
-Prototype implementation: [`vera-ca`](https://github.com/VeraDomains/poc/tree/main/vera-ca).
+Prototype implementation: [`vera-ca`](https://github.com/relaycorp/veraid-poc/tree/main/vera-ca).
 
 ## VeraId CA Console
 
@@ -75,7 +75,7 @@ This will be the command-line interface (CLI) to the admin-only endpoints in the
 
 The admin user will have to log in using [device authorisation code](https://auth0.com/docs/get-started/authentication-and-authorization-flow/device-authorization-flow), ideally.
 
-Prototype implementation: [`vera-ca` (`tech.relaycorp.vera.ca.cli.Main`)](https://github.com/VeraDomains/poc/blob/main/vera-ca/src/main/java/tech/relaycorp/vera/ca/cli/Main.kt).
+Prototype implementation: [`vera-ca` (`tech.relaycorp.vera.ca.cli.Main`)](https://github.com/relaycorp/veraid-poc/blob/main/vera-ca/src/main/java/tech/relaycorp/vera/ca/cli/Main.kt).
 
 ## Notable compromises
 

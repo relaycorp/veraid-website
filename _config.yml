@@ -23,7 +23,7 @@ remote_theme: "pmarsceill/just-the-docs@v0.3.3"
 search_enabled: false
 color_scheme: dark
 aux_links:
-  "GitHub org": "https://github.com/VeraDomains"
+  "GitHub repo": "https://github.com/relaycorp/veraid-website"
   "Relaycorp": "https://relaycorp.tech"
 heading_anchors: true
 gh_edit_link: true
