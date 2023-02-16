@@ -43,7 +43,7 @@ There are valid use cases for blockchain technology, but this isn't one of them.
 
 ## DNS-Based Authentication of Named Entities (DANE)
 
-Intuitively, it may seem like a good foundation for Vera, but DANE really is geared towards securing the trust anchor in the Internet PKI (PKIX). That is, its sole purpose is to enable clients to authenticate TLS servers. However, we're not trying to authenticate servers and our users may not even have access to the Internet.
+Intuitively, it may seem like a good foundation for VeraId, but DANE really is geared towards securing the trust anchor in the Internet PKI (PKIX). That is, its sole purpose is to enable clients to authenticate TLS servers. However, we're not trying to authenticate servers and our users may not even have access to the Internet.
 
 ## Extensible Resource Identifier (XRI) i-names
 

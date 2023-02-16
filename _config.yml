@@ -1,5 +1,5 @@
-title: "Vera"
-description: "Vera is a DNS-based authentication protocol that works without the Internet"
+title: "VeraId"
+description: "VeraId is a DNS-based authentication protocol that works without the Internet"
 
 markdown: kramdown
 liquid:

@@ -4,7 +4,7 @@ permalink: /specs/v1
 nav_order: 4
 ---
 
-# Vera V1 Specification
+# VeraId V1 Specification
 
 <dl>
     <dt>Status</dt>
@@ -27,7 +27,7 @@ Authenticating members and bots:
 
 - `acme.com` admin issues certificates to members of the organisation or bots that act on behalf of the organisation -- collectively known as _signers_.
   - Each certificate contains a critical extension that specifies the context in which it can be used (e.g., Letro).
-  - If the certificate is for a member, the _Distinguished Name_ MUST contain the Vera username (e.g., `alice.smith`).
+  - If the certificate is for a member, the _Distinguished Name_ MUST contain the VeraId username (e.g., `alice.smith`).
 - A signer provisions a certificate by providing an Ed25519 public key to the `acme.com` CA.
 
 Digital signatures by members and bots:
@@ -35,7 +35,7 @@ Digital signatures by members and bots:
 - Signers must distribute each content with a _Vera signature_, which includes:
   - The CMS `SignedData` signature, embedding the signer's certificate along with any intermediary CAs. The root CA SHOULD NOT be included.
   - The `TXT` record `_vera.acme.com` along with all the intermediary records to verify the `TXT` record with DNSSEC.
-- Verifiers must verify each content they receive against its respective Vera signature as follows:
+- Verifiers must verify each content they receive against its respective VeraId signature as follows:
   1. Verify the `TXT` record using DNSSEC.
   1. Verify the authenticity of the content using the `SignedData` value with the root certificate in the `TXT` record as they only trusted certificate.
   1. Verify that the signer's certificate is allowed to use the current service (e.g., Letro).
@@ -44,16 +44,16 @@ Digital signatures by members and bots:
 
 Signature verifiers MUST count the _age_ of a digital signature from the moment the `TXT` record answer was signed.
 
-Vera service designers MUST specify the maximum Time-to-Live (TTL) for every digital signature in the service. The TTL is counted from the moment the `TXT` record answer was signed. The TTL MUST be within the following range:
+VeraId service designers MUST specify the maximum Time-to-Live (TTL) for every digital signature in the service. The TTL is counted from the moment the `TXT` record answer was signed. The TTL MUST be within the following range:
 
 - 8 hours or more, in order to allow sufficient time for signature-producing apps to renew certificates (and wait for any outages to be resolved).
 - 30 days or less, in order to support Delay-Tolerant Networking.
 
-Vera favours short-lived certificates over long-lived ones, primarily to avoid the use of revocation protocols. Consequently, service designers SHOULD require the shortest TTL that would satisfy their particular requirements.
+VeraId favours short-lived certificates over long-lived ones, primarily to avoid the use of revocation protocols. Consequently, service designers SHOULD require the shortest TTL that would satisfy their particular requirements.
 
 Signature verifiers MAY require a TTL shorter than that required by the service, but still not shorter than 8 hours. Additionally, signature verifiers MAY allow their end users to specify the shorter TTL.
 
-## Vera OID Arch
+## VeraId OID Arch
 
 1.3.6.1.4.1.58708.1
 
@@ -93,7 +93,7 @@ Serialise as an _answer_ using the message format from [RFC 1035](https://datatr
 - Authority: is empty.
 - Additional: contains the rest of the DNSSEC chain, excluding `./DS` (which must be provided by the verifier).
 
-## Vera Member Id Bundle
+## VeraId Member Id Bundle
 
 ASN.1 SEQUENCE:
 
@@ -102,7 +102,7 @@ ASN.1 SEQUENCE:
 - Organisation certificate (SEQUENCE).
 - Member certificate (SEQUENCE).
 
-## Vera Signature Bundle
+## VeraId Signature Bundle
 
 ASN.1 SEQUENCE:
 
@@ -111,13 +111,13 @@ ASN.1 SEQUENCE:
 - Organisation certificate (SEQUENCE).
 - SignedData (SEQUENCE) with content detached. Includes:
   - Member certificate and any intermediate certificates, but not the plaintext (content).
-  - Vera Signature Metadata in signedAttrs:
+  - VeraId Signature Metadata in signedAttrs:
     - Service OID.
     - Validity period (SEQUENCE).
       - Start date (UTCTime).
       - Expiry date (UTCTime).
 
-## Vera Signed Content
+## VeraId Signed Content
 
 ASN.1 SEQUENCE:
 
@@ -134,7 +134,7 @@ Users MUST have their name specified in their CN and, to mitigate phishing attac
 
 ### Reliance on DNSSEC infrastructure
 
-Every DNS zone in a Vera chain is a potential target for cyberattacks, including the [root zone](https://www.iana.org/dnssec). Not to mention that many governments control popular TLDs so, for example, the Libyan government could theoretically issue valid DNSSEC responses for `bit.ly`.
+Every DNS zone in a VeraId chain is a potential target for cyberattacks, including the [root zone](https://www.iana.org/dnssec). Not to mention that many governments control popular TLDs so, for example, the Libyan government could theoretically issue valid DNSSEC responses for `bit.ly`.
 
 ### Homographic and character encoding-based attacks
 
@@ -142,4 +142,4 @@ Also: UIs SHOULD NOT truncate user names, domain names or ids, to mitigate phish
 
 ### Newly-registered domain names
 
-Organisation admins SHOULD delay using Vera until at least the maximum TTL (90 days) has elapsed since the domain was registered (or acquired). Otherwise, the DNSSEC chain from the previous owner may still be valid.
+Organisation admins SHOULD delay using VeraId until at least the maximum TTL (90 days) has elapsed since the domain was registered (or acquired). Otherwise, the DNSSEC chain from the previous owner may still be valid.
