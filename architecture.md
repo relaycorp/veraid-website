@@ -24,31 +24,31 @@ This multi-tenant server will allow one or more organisations to manage their Ve
 
 It will support the following API endpoints, which are to be consumed by the VeraId CA Console (used by organisation admins) and VeraId signature producers (used by organisation members):
 
-- `POST /zones/`: Create zone.
+- `POST /orgs/`: Create org.
   - Auth: OAuth2 (_admin_).
   - Input:
-    - Zone (e.g., `acme.com`).
+    - org (e.g., `acme.com`).
     - Access type (invite-only or open).
     - Services (e.g., Letro).
     - [Awala endpoint middleware](https://github.com/relaycorp/relayverse/issues/28) URL (optional).
   - Output: TXT record.
-- `DELETE /zones/{zone}/`: Delete zone.
-  - Auth: OAuth2 (_zone admin_).
-- `POST /zones/{zone}/user-invites/`: Create user invite, if access type is invite-only.
-  - Auth: OAuth2 (_zone admin_).
+- `DELETE /orgs/{org}/`: Delete org.
+  - Auth: OAuth2 (_org admin_).
+- `POST /orgs/{org}/user-invites/`: Create user invite, if access type is invite-only.
+  - Auth: OAuth2 (_org admin_).
   - Input: Username and service id.
   - Output: Single-use claim token.
-- `POST /zones/{zone}/users/`*: Claim invite and request VeraId, if access type is invite-only.
+- `POST /orgs/{org}/users/`*: Claim invite and request VeraId, if access type is invite-only.
   - Auth: Single-use claim token.
   - Input: VeraId public key.
   - Output: VeraId certificate.
-- `POST /zones/{zone}/users/{user}/ids/`*: Renew VeraId.
+- `POST /orgs/{org}/users/{user}/ids/`*: Renew VeraId.
   - Auth: Signed request with the asymmetric key in the VeraId.
   - Input: None.
   - Output: New VeraId certificate.
-- `DELETE /zones/{zone}/users/{user}/`: Delete user.
-  - Auth: OAuth2 (_zone admin_).
-- `POST /zones/{zone}/awala/`: [Awala endpoint middleware](https://github.com/relaycorp/relayverse/issues/28) backend.
+- `DELETE /orgs/{org}/users/{user}/`: Delete user.
+  - Auth: OAuth2 (_org admin_).
+- `POST /orgs/{org}/awala/`: [Awala endpoint middleware](https://github.com/relaycorp/relayverse/issues/28) backend.
   - Auth: Awala Endpoint Middleware.
   - Awala service messages:
     - `UserInviteClaim` (if access type is invite-only).
@@ -61,11 +61,11 @@ It will support the following API endpoints, which are to be consumed by the Ver
       - Input: Username, signed with asymmetric key in the VeraId.
       - Output: New VeraId certificate.
 
-\* We may skip this endpoint in v1 because the endpoint `POST /zones/{zone}/awala/` already supports this functionality.
+\* We may skip this endpoint in v1 because the endpoint `POST /orgs/{org}/awala/` already supports this functionality.
 
 This server will have the following background processes:
 
-- [Awala endpoint middleware](https://github.com/relaycorp/relayverse/issues/28) backend. Used to respond to the requests made to `POST /zones/{zone}/awala/`.
+- [Awala endpoint middleware](https://github.com/relaycorp/relayverse/issues/28) backend. Used to respond to the requests made to `POST /orgs/{org}/awala/`.
 
 Prototype implementation: [`vera-ca`](https://github.com/relaycorp/veraid-poc/tree/main/vera-ca).
 
