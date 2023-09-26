@@ -23,7 +23,7 @@ But perhaps more interestingly, it could power a new generation of decentralised
 
 VeraId combines DNSSEC with a new Public Key Infrastructure (PKI) to produce digital signatures that can be linked to a domain name. Consequently, every signature contains enough data to be independently verified without external queries, such as DNS lookups.
 
-Any DNSSEC-enabled domain can be a trust anchor in the PKI, but it only has control over itself. This offers far better security than many PKIs such as the Transport Layer Security (TLS), where many trust anchors (_Certificate Authorities_) can issue certificates for any domain.
+Any DNSSEC-enabled domain can be a trust anchor in the PKI, but it only has control over itself. This offers far better security than PKIs such as the Transport Layer Security (TLS), where many trust anchors (_Certificate Authorities_) can issue certificates for any domain.
 
 Designing and implementing _yet another_ auth protocol is not something we took lightly: We know it's hard to get them right and the consequences can be catastrophic. Unfortunately, [no existing technology satisfied our needs](./prior-art.md).
 
