@@ -4,21 +4,22 @@ permalink: /architecture
 nav_order: 3
 ---
 
-# VeraId Architecture (MVP)
+# VeraId Architecture
 
-This document describes the systems and software architecture of the various component that make up the Minimum Viable Product (MVP) version of VeraId.
+This document describes the systems and software architecture of the various components that make up VeraId.
 
-![](diagrams/vera-architecture.svg)
+![](diagrams/architecture.svg)
 
 ## VeraId library
 
-This library, available in JavaScript and JVM/Android, implements all the cryptographic and data serialisation operations needed by the various components in VeraId.
+This library, available in JavaScript and Kotlin, implements all the cryptographic and data serialisation operations needed by the various components in VeraId.
 
 - JavaScript implementation: [`@relaycorp/veraid`](https://github.com/relaycorp/veraid-js).
-- Android/JVM implementation: [`tech.relaycorp:veraid`](https://github.com/relaycorp/veraid-jvm).
+- Kotlin implementation (JVM/Android): [`tech.relaycorp:veraid`](https://github.com/relaycorp/veraid-jvm).
 
 ## VeraId Authority server
 
 This is a cloud-native app that allows organisations to manage their VeraId members and the issuance of their respective bundles.
 
 - GitHub project: [`relaycorp/veraid-authority`](https://github.com/relaycorp/veraid-authority).
+- JavaScript client: [`@relaycorp/veraid-authority`](https://github.com/relaycorp/veraid-authority-js).

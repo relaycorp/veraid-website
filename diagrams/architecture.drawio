@@ -1,0 +1,91 @@
+<mxfile host="app.diagrams.net" modified="2023-09-26T13:23:35.990Z" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/117.0" etag="KYR6GMqaHcPL0wjo-duE" version="21.6.9" type="device">
+  <diagram id="tDWuslfsOla3uyn5Q_SK" name="Page-1">
+    <mxGraphModel dx="1434" dy="722" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#EEEEEE" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-16" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.183;entryY=1.033;entryDx=0;entryDy=0;fontColor=#1A1A1A;strokeColor=#182E3E;exitX=0.5;exitY=0;exitDx=0;exitDy=0;sketch=1;entryPerimeter=0;" parent="1" source="RoPFNuPiNcDbIwek6hss-1" target="2by-2GKCQBh-Cwc4sKDh-14" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RoPFNuPiNcDbIwek6hss-1" value="VeraId Authority" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;sketch=1;" parent="1" vertex="1">
+          <mxGeometry x="240" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-11" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontColor=#1A1A1A;strokeColor=#182E3E;sketch=1;" parent="1" source="RoPFNuPiNcDbIwek6hss-2" target="RoPFNuPiNcDbIwek6hss-1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RoPFNuPiNcDbIwek6hss-2" value="VeraId Authority Client" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;sketch=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RoPFNuPiNcDbIwek6hss-5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;labelBackgroundColor=#EEEEEE;strokeColor=#182E3E;fontColor=#1A1A1A;curved=1;sketch=1;" parent="1" source="RoPFNuPiNcDbIwek6hss-4" target="RoPFNuPiNcDbIwek6hss-1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-7" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#1A1A1A;strokeColor=#182E3E;sketch=1;" parent="1" source="RoPFNuPiNcDbIwek6hss-4" target="2by-2GKCQBh-Cwc4sKDh-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-15" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#1A1A1A;strokeColor=#182E3E;sketch=1;" parent="1" source="RoPFNuPiNcDbIwek6hss-4" target="2by-2GKCQBh-Cwc4sKDh-14" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RoPFNuPiNcDbIwek6hss-4" value="&lt;div&gt;VeraId signature producer&lt;/div&gt;&lt;div&gt;(e.g., Letro)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;sketch=1;" parent="1" vertex="1">
+          <mxGeometry x="440" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;startArrow=none;startFill=0;endArrow=classic;endFill=1;labelBackgroundColor=#EEEEEE;strokeColor=#182E3E;fontColor=#1A1A1A;curved=1;sketch=1;" parent="1" source="2by-2GKCQBh-Cwc4sKDh-1" target="RoPFNuPiNcDbIwek6hss-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-1" value="Org Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;labelPosition=center;align=center;fillColor=#F5AB50;strokeColor=#909090;fontColor=#1A1A1A;rounded=1;sketch=1;" parent="1" vertex="1">
+          <mxGeometry x="85" y="320" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-4" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontColor=#1A1A1A;strokeColor=#182E3E;sketch=1;" parent="1" source="2by-2GKCQBh-Cwc4sKDh-3" target="RoPFNuPiNcDbIwek6hss-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-3" value="Org Member" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;rounded=1;fontColor=#1A1A1A;strokeColor=#909090;fillColor=#F5AB50;sketch=1;" parent="1" vertex="1">
+          <mxGeometry x="485" y="320" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-17" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.867;entryY=1.067;entryDx=0;entryDy=0;fontColor=#1A1A1A;strokeColor=#182E3E;exitX=0.5;exitY=0;exitDx=0;exitDy=0;sketch=1;entryPerimeter=0;" parent="1" source="2by-2GKCQBh-Cwc4sKDh-6" target="2by-2GKCQBh-Cwc4sKDh-14" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-6" value="VeraId signature verifier&lt;br&gt;(e.g., Letro)" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#d6b656;fillColor=#fff2cc;sketch=1;" parent="1" vertex="1">
+          <mxGeometry x="640" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-8" value="Signature" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#1A1A1A;rounded=1;sketch=1;" parent="1" vertex="1">
+          <mxGeometry x="560" y="200" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-10" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#1A1A1A;strokeColor=#182E3E;sketch=1;" parent="1" source="2by-2GKCQBh-Cwc4sKDh-9" target="2by-2GKCQBh-Cwc4sKDh-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-9" value="Signature consumer" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;rounded=1;fontColor=#1A1A1A;strokeColor=#909090;fillColor=#F5AB50;sketch=1;" parent="1" vertex="1">
+          <mxGeometry x="685" y="320" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-19" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=1;sketch=1;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#1A1A1A;strokeColor=#182E3E;" parent="1" source="2by-2GKCQBh-Cwc4sKDh-14" target="2by-2GKCQBh-Cwc4sKDh-18" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-14" value="VeraId library" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#6c8ebf;fillColor=#dae8fc;sketch=1;" parent="1" vertex="1">
+          <mxGeometry x="440" y="60" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-18" value="DNSSEC verification library&lt;br&gt;(e.g., dnsjava)" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#d6b656;fillColor=#fff2cc;sketch=1;" parent="1" vertex="1">
+          <mxGeometry x="640" y="60" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-20" value="&lt;div&gt;Via HTTP&lt;/div&gt;&lt;div&gt;or Awala&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#1A1A1A;" parent="1" vertex="1">
+          <mxGeometry x="365" y="225" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-21" value="Via HTTP" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#1A1A1A;" parent="1" vertex="1">
+          <mxGeometry x="160" y="230" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-22" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=1;sketch=1;fontColor=#1A1A1A;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="40" y="440" as="sourcePoint" />
+            <mxPoint x="760" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-23" value="VeraId ecosystem component" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;sketch=1;" parent="1" vertex="1">
+          <mxGeometry x="480" y="480" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-24" value="External dependency or dependant" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;sketch=1;" parent="1" vertex="1">
+          <mxGeometry x="640" y="480" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2by-2GKCQBh-Cwc4sKDh-25" value="Legend:" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;sketch=1;fontColor=#1A1A1A;" parent="1" vertex="1">
+          <mxGeometry x="380" y="495" width="60" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
