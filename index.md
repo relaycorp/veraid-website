@@ -3,7 +3,7 @@ title: "Home"
 nav_order: 0
 ---
 
-# VeraId: Domain names without the Internet
+# VeraId: DNS-based authentication, with or without the Internet
 
 VeraId is a new authentication protocol that apps can use to verify the integrity of any content, and reliably attribute it to a domain name (like `acme.com`) or a _member_ of it (like `alice@acme.com`), without querying any server on the Internet.
 
