@@ -1,5 +1,6 @@
 title: "VeraId"
 description: "VeraId is a DNS-based authentication protocol that works without the Internet"
+logo: "/assets/veraid-logo-dark.png"
 
 markdown: kramdown
 liquid:
