@@ -45,6 +45,13 @@ There are valid use cases for blockchain technology, but this isn't one of them.
 
 Intuitively, it may seem like a good foundation for VeraId, but DANE really is geared towards securing the trust anchor in the Internet PKI (PKIX). That is, its sole purpose is to enable clients to authenticate TLS servers. However, we're not trying to authenticate servers and our users may not even have access to the Internet.
 
+## Signed HTTP Exchanges (SXGs)
+
+SXG is a protocol that allows HTTP servers to sign their response with their TLS certificates,
+so that a third party can cache and serve such responses to users on the website's behalf.
+However,
+the initial use cases we need to support don't involve HTTP.
+
 ## Extensible Resource Identifier (XRI) i-names
 
 `=Alice.Smith`, `@ACME` and `@ACME*Alice.Smith` are some i-name examples.
