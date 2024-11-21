@@ -40,4 +40,7 @@ This project is led by [Relaycorp](https://relaycorp.tech) and funded by the [Op
 
 We could've bundled it with Letro, but the core functionality is generic enough and so widely applicable that it makes more sense to develop it independently. We also expect it to play a crucial role in [Awala](https://awala.network/) in the future, such as when we support [message broadcasting](https://github.com/AwalaNetwork/specs/issues/43).
 
+As of Q4 2024,
+VeraId is undergoing an independent security audit by [Radically Open Security](https://www.radicallyopensecurity.com/), commissioned by the Open Technology Fund.
+
 The word _vera_ is [Ido](https://www.idolinguo.org.uk/general.htm) for _authentic_, and it's pronounced _VEH-rah_ (with a trilled R).
