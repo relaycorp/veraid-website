@@ -7,7 +7,7 @@ nav_order: 0
 
 VeraId is a new authentication protocol that apps can use to verify the integrity of any content, and reliably attribute it to a domain name (like `acme.com`) or a _member_ of it (like `alice@acme.com`), without querying any server on the Internet.
 
-The protocol is essentially a thin layer on top of existing DNS infrastructure. It's also [open](./spec.md), decentralised and has [open source implementations](./architecture.md). 
+The protocol is essentially a thin layer on top of existing DNS infrastructure. It's also [open](./spec.md), decentralised and has [open source implementations](./architecture.md).
 
 ## Use cases
 
