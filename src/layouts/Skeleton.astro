@@ -23,6 +23,12 @@ const { title, description } = Astro.props;
     <link rel="shortcut icon" href="/favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
     <link rel="manifest" href="/favicon/site.webmanifest" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&display=swap" rel="stylesheet">
+
     <title>{title}</title>
   </head>
   <body>
@@ -55,5 +61,7 @@ const { title, description } = Astro.props;
   h5,
   h6 {
     color: #ffffff;
+    font-family: "Chakra Petch", sans-serif;
+    font-weight: 700;
   }
 </style>
