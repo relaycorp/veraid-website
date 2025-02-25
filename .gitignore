@@ -1,3 +1,6 @@
-vendor
-.jekyll-cache
-_site
+dist/
+.astro/
+node_modules/
+.idea/
+**/.DS_Store
+.vscode/

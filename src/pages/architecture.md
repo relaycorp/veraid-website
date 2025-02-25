@@ -8,7 +8,7 @@ nav_order: 3
 
 This document describes the systems and software architecture of the various components that make up VeraId.
 
-![](diagrams/architecture.svg)
+![](/public/diagrams/architecture.svg)
 
 ## VeraId library
 
