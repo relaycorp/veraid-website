@@ -12,6 +12,8 @@ const relaycorpLinks = [
   { href: "https://relaycorp.tech/", text: "Contact us" },
   { href: "https://github.com/relaycorp/.github/blob/master/SECURITY.md", text: "Security policy" },
 ];
+
+const currentYear = new Date().getFullYear();
 ---
 
 <footer class="py-16 mx-auto text-sm bg-neutral-950">
@@ -75,7 +77,7 @@ const relaycorpLinks = [
     </div>
 
     <div class="mt-8">
-      Copyright 2022-2025 by <a
+      Copyright 2022-{currentYear} by <a
         href="https://relaycorp.tech"
         class="text-green-300 hover:text-green-200">Relaycorp</a
       >.
