@@ -1,7 +1,8 @@
 ---
 title: "User Experience"
+description: "VeraId User Experience"
+layout: ../layouts/Markdown.astro
 permalink: /ux
-nav_order: 2
 ---
 
 # User Experience

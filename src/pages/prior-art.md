@@ -1,7 +1,8 @@
 ---
 title: "Prior art"
+description: "Documentation of the technologies we considered but didn't use"
+layout: ../layouts/Markdown.astro
 permalink: /prior-art
-nav_order: 1
 ---
 
 # Prior art

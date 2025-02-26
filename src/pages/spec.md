@@ -1,7 +1,8 @@
 ---
 title: "Spec"
+description: "VeraId V1 Specification"
+layout: ../layouts/Markdown.astro
 permalink: /specs/v1
-nav_order: 4
 ---
 
 # VeraId V1 Specification

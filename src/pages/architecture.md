@@ -1,14 +1,15 @@
 ---
 title: "Architecture"
+description: "VeraId Architecture"
+layout: ../layouts/Markdown.astro
 permalink: /architecture
-nav_order: 3
 ---
 
 # VeraId Architecture
 
 This document describes the systems and software architecture of the various components that make up VeraId.
 
-![](/public/diagrams/architecture.svg)
+![](/diagrams/architecture.svg)
 
 ## VeraId library
 
