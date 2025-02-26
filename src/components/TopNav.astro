@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import logoDark from "../assets/veraid-logo-dark.png";
 
+const { pathname } = Astro.url;
 const navLinks = [
   { href: "/ux", text: "User experience" },
   { href: "/architecture", text: "Architecture" },
@@ -31,7 +32,15 @@ const navLinks = [
   <ul class="hidden md:flex space-x-12 text-white">
     {navLinks.map(({ href, text }) => (
       <li>
-        <a href={href} class="hover:text-green-300">{text}</a>
+        <a 
+          href={href} 
+          class:list={[
+            "hover:text-green-200",
+            { "text-green-300": pathname === href }
+          ]}
+        >
+          {text}
+        </a>
       </li>
     ))}
   </ul>
@@ -40,7 +49,15 @@ const navLinks = [
   <ul class="absolute top-20 left-0 pl-6 w-full bg-black flex-col items-center space-y-6 text-white py-6 hidden" id="mobile-nav-links">
     {navLinks.map(({ href, text }) => (
       <li>
-        <a href={href} class="hover:text-green-300">{text}</a>
+        <a 
+          href={href} 
+          class:list={[
+            "hover:text-green-200",
+            { "text-green-300": pathname === href }
+          ]}
+        >
+          {text}
+        </a>
       </li>
     ))}
   </ul>
