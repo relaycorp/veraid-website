@@ -1,0 +1,32 @@
+---
+import checkmarkIcon from "../../assets/icons/checkmark.svg?raw";
+---
+
+<section>
+  <div
+    class="flex flex-col md:flex-row justify-between items-start md:gap-16 gap-8 px-6 py-12 md:py-24 max-w-6xl mx-auto"
+  >
+    <div class="max-w-sm">
+      <h2 class="text-5xl font-mono font-bold">Key benefits</h2>
+    </div>
+
+    <ul class="space-y-8 text-sm md:text-lg">
+      <li class="flex items-center gap-4">
+        <div class="w-6 h-6 text-green-400 shrink-0" set:html={checkmarkIcon} />
+        <span>Extends battle-tested standards like DNSSEC, X.509 and CMS.</span>
+      </li>
+      <li class="flex items-center gap-4">
+        <div class="w-6 h-6 text-green-400 shrink-0" set:html={checkmarkIcon} />
+        <span>Open protocol with open source reference implementations.</span>
+      </li>
+      <li class="flex items-center gap-4">
+        <div class="w-6 h-6 text-green-400 shrink-0" set:html={checkmarkIcon} />
+        <span>As decentralised as DNS itself.</span>
+      </li>
+      <li class="flex items-center gap-4">
+        <div class="w-6 h-6 text-green-400 shrink-0" set:html={checkmarkIcon} />
+        <span>Signatures can be produced and verified offline.</span>
+      </li>
+    </ul>
+  </div>
+</section>

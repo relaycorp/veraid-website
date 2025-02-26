@@ -1,13 +1,21 @@
 ---
 import Layout from "../layouts/Skeleton.astro";
+import Hero from "../components/Homepage/Hero.astro";
+import UseCases from "../components/Homepage/UseCases.astro";
+import About from "../components/Homepage/About.astro";
+import Founder from "../components/Homepage/Founder.astro";
+import HowItWorks from "../components/Homepage/HowItWorks.astro";
+import Benefits from "../components/Homepage/Benefits.astro";
 ---
 
-<Layout title="Home" description="Home page">
-  <div class="px-6 py-16 space-y-8">
-    <h1 class="text-5xl font-bold text-center">Homepage</h1>
-    <p class="text-center">
-      Welcome to the homepage of the VeraId project. This is a project that is currently in
-      development.
-    </p>
-  </div>
+<Layout
+  title="VeraId | DNS-based authentication, with or without the Internet"
+  description="VeraId is a decentralised protocol to securely attribute content to domain names - without the Internet or passwords."
+>
+  <Hero />
+  <UseCases />
+  <Benefits />
+  <HowItWorks />
+  <Founder />
+  <About />
 </Layout>

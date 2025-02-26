@@ -13,59 +13,58 @@ const navLinks = [
 ];
 ---
 
-<nav class="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center">
-  <div>
+<nav class="border-b border-neutral-800">
+  <div class="px-6 py-4 flex max-w-6xl mx-auto justify-between items-center">
+    <!-- Logo -->
     <a href="/">
-      <Image src={logoDark} alt="VeraId logo" width={100} height={100} />
+      <Image src={logoDark} alt="VeraId logo" width={120} height={120} />
     </a>
+    <!-- Desktop navigation links -->
+    <ul class="hidden md:flex space-x-12 text-white text-sm">
+      {
+        navLinks.map(({ href, text }) => (
+          <li>
+            <a
+              href={href}
+              class:list={[
+                "hover:text-green-200",
+                { "text-green-300": pathname.replace(/\/$/, "") === href },
+              ]}
+            >
+              {text}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <!-- Mobile menu -->
+    <div class="md:hidden">
+      <details>
+        <summary class="text-white cursor-pointer list-none [&>div]:w-6 [&>div]:h-6">
+          <div class="[details[open]_&]:hidden" set:html={MenuIcon} />
+          <div class="hidden [details[open]_&]:block" set:html={CloseIcon} />
+        </summary>
+
+        <ul
+          class="absolute top-20 left-0 pl-6 w-full bg-black flex-col items-center space-y-6 text-white py-6 z-50"
+        >
+          {
+            navLinks.map(({ href, text }) => (
+              <li>
+                <a
+                  href={href}
+                  class:list={[
+                    "hover:text-green-200",
+                    { "text-green-300": pathname.replace(/\/$/, "") === href },
+                  ]}
+                >
+                  {text}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </details>
+    </div>
   </div>
-
-  <!-- Mobile menu toggle button -->
-  <div class="md:hidden">
-    <details>
-      <summary class="text-white cursor-pointer list-none [&>div]:w-6 [&>div]:h-6">
-        <div class="[details[open]_&]:hidden" set:html={MenuIcon} />
-        <div class="hidden [details[open]_&]:block" set:html={CloseIcon} />
-      </summary>
-
-      <ul
-        class="absolute top-20 left-0 pl-6 w-full bg-black flex-col items-center space-y-6 text-white py-6"
-      >
-        {
-          navLinks.map(({ href, text }) => (
-            <li>
-              <a
-                href={href}
-                class:list={[
-                  "hover:text-green-200",
-                  { "text-green-300": pathname.replace(/\/$/, "") === href },
-                ]}
-              >
-                {text}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </details>
-  </div>
-
-  <!-- Desktop navigation -->
-  <ul class="hidden md:flex space-x-12 text-white">
-    {
-      navLinks.map(({ href, text }) => (
-        <li>
-          <a
-            href={href}
-            class:list={[
-              "hover:text-green-200",
-              { "text-green-300": pathname.replace(/\/$/, "") === href },
-            ]}
-          >
-            {text}
-          </a>
-        </li>
-      ))
-    }
-  </ul>
 </nav>
