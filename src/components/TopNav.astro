@@ -1,6 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import logoDark from "../assets/veraid-logo-dark.png";
+import MenuIcon from "../assets/icons/menu.svg?raw";
+import CloseIcon from "../assets/icons/close.svg?raw";
 
 const { pathname } = Astro.url;
 const navLinks = [
@@ -20,29 +22,8 @@ const navLinks = [
 
   <!-- Mobile menu toggle button -->
   <button id="menu-button" class="text-white cursor-pointer md:hidden" aria-label="Toggle menu">
-    <svg
-      class="menu-icon w-6 h-6"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M4 6h16M4 12h16M4 18h16"></path>
-    </svg>
-    <svg
-      class="close-icon hidden w-6 h-6"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"
-      ></path>
-    </svg>
+    <div class="menu-icon w-6 h-6" set:html={MenuIcon} />
+    <div class="close-icon hidden w-6 h-6" set:html={CloseIcon} />
   </button>
 
   <!-- Desktop navigation -->
