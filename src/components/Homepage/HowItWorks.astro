@@ -1,0 +1,48 @@
+<section class="max-w-7xl mx-auto px-6 py-16">
+  <h2 class="text-6xl font-bold text-center mb-8">How it works</h2>
+
+  <div class="space-y-6 text-gray-300">
+    <p>
+      VeraId combines DNSSEC with a new Public Key Infrastructure (PKI) to produce digital
+      signatures that can be linked to a domain name. Consequently, every signature contains enough
+      data to be independently verified without external queries, such as DNS lookups.
+    </p>
+
+    <p>
+      Any DNSSEC-enabled domain can be a trust anchor in the PKI, but it only has control over
+      itself. This offers far better security than PKIs such as the Transport Layer Security (TLS),
+      where many trust anchors (Certificate Authorities) can issue certificates for any domain.
+    </p>
+
+    <p>
+      Designing and implementing yet another auth protocol is not something we took lightly: We know
+      it's hard to get them right and the consequences can be catastrophic. Unfortunately, no <a
+        href="https://en.wikipedia.org/wiki/Public_key_infrastructure"
+        class="text-green-400">existing technology satisfied our needs</a
+      >.
+    </p>
+
+    <p>
+      Watch the video below for a walk-through of the protocol and a demo of the <a
+        href="https://github.com/relaycorp/vera-id-prototype"
+        class="text-green-400">prototype</a
+      >.
+    </p>
+
+    <div class="aspect-video rounded-lg overflow-hidden bg-black">
+      <iframe
+        class="w-full h-full"
+        src="https://www.youtube.com/embed/K2vbMOjur_E"
+        title="VeraId Protocol Demo"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+
+    <div class="flex flex-wrap gap-4 justify-center pt-4">
+      <a href="#" class="bg-green-400 text-black px-6 py-2 rounded-full hover:bg-green-300">
+        Learn more about the architecture
+      </a>
+      <a href="#" class="bg-white/10 px-6 py-2 rounded-full hover:bg-white/20"> Read the spec </a>
+    </div>
+  </div>
+</section>

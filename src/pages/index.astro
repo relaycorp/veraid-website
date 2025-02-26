@@ -1,8 +1,19 @@
 ---
 import Layout from "../layouts/Skeleton.astro";
 import Hero from "../components/Homepage/Hero.astro";
+import UseCases from "../components/Homepage/UseCases.astro";
+import About from "../components/Homepage/About.astro";
+import Founder from "../components/Homepage/Founder.astro";
+import HowItWorks from "../components/Homepage/HowItWorks.astro";
 ---
 
-<Layout title="VeraId | DNS-based authentication, with or without the Internet" description="VeraId is a decentralised protocol to securely attribute content to domain names - without the Internet or passwords.">
-<Hero />
+<Layout
+  title="VeraId | DNS-based authentication, with or without the Internet"
+  description="VeraId is a decentralised protocol to securely attribute content to domain names - without the Internet or passwords."
+>
+  <Hero />
+  <UseCases />
+  <HowItWorks />
+  <Founder />
+  <About />
 </Layout>
