@@ -1,7 +1,7 @@
 ---
 title: "User Experience"
 description: "Comprehensive guide to VeraId user roles and workflows, including organisation administration, member management, and signature verification processes"
-layout: ../layouts/Markdown.astro
+layout: ../layouts/Page.astro
 permalink: /ux
 ---
 

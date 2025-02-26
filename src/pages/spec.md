@@ -1,7 +1,7 @@
 ---
 title: "Spec"
 description: "Complete technical specification for VeraId V1, including DNSSEC integration, cryptographic requirements, and digital signature implementation details"
-layout: ../layouts/Markdown.astro
+layout: ../layouts/Page.astro
 permalink: /specs/v1
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "Architecture"
 description: "Technical overview of VeraId's system architecture, including the core cryptographic library and cloud-native authority server components"
-layout: ../layouts/Markdown.astro
+layout: ../layouts/Page.astro
 permalink: /architecture
 ---
 
