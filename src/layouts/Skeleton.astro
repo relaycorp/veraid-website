@@ -8,6 +8,7 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+const IS_PRODUCTION = import.meta.env.PROD;
 ---
 
 <!doctype html>
@@ -33,6 +34,12 @@ const { title, description } = Astro.props;
     />
 
     <title>{title}</title>
+
+    {
+      IS_PRODUCTION && (
+        <script is:inline src="https://cdn.usefathom.com/script.js" data-site="UNVOWGIF" defer />
+      )
+    }
   </head>
   <body>
     <TopNav />
