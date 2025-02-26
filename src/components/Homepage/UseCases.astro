@@ -1,6 +1,9 @@
 ---
 import { Image } from "astro:assets";
-import apiAuthentication from "../../assets/authentication.png";
+import apiAuthentication from "../../assets/api-authentication.png";
+import documentSigning from "../../assets/document-signing.png";
+import decentralisedSystems from "../../assets/decentralised-systems.png";
+import offlineAuthentication from "../../assets/offline-authentication.png";
 ---
 
 <section class="px-6 sm:py-10 py-8 md:py-16 bg-neutral-950">
@@ -18,13 +21,13 @@ import apiAuthentication from "../../assets/authentication.png";
       </div>
 
       <div class="space-y-2">
-        <Image src={apiAuthentication} alt="API Authentication icon" class="w-12 h-12" />
+        <Image src={documentSigning} alt="API Authentication icon" class="w-12 h-12" />
         <h3>Documenting and app signing</h3>
         <p class="text-gray-300">For example, signing a PDF on behalf of "bbc.com".</p>
       </div>
 
       <div class="space-y-2">
-        <Image src={apiAuthentication} alt="API Authentication icon" class="w-12 h-12" />
+        <Image src={offlineAuthentication} alt="API Authentication icon" class="w-12 h-12" />
         <h3>Offline user authentication</h3>
         <p class="text-gray-300">
           For example, allow users of decentralised communications apps to have their own
@@ -33,7 +36,7 @@ import apiAuthentication from "../../assets/authentication.png";
       </div>
 
       <div class="space-y-2">
-        <Image src={apiAuthentication} alt="API Authentication icon" class="w-12 h-12" />
+        <Image src={decentralisedSystems} alt="API Authentication icon" class="w-12 h-12" />
         <h3>Next-gen decentralised systems</h3>
         <p class="text-gray-300">
           For example, peer-to-peer web hosting with contents reliably attributed to their
