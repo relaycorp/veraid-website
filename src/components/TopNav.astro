@@ -20,59 +20,77 @@ const navLinks = [
 
   <!-- Mobile menu toggle button -->
   <button id="menu-button" class="text-white cursor-pointer md:hidden" aria-label="Toggle menu">
-    <svg class="menu-icon w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    <svg
+      class="menu-icon w-6 h-6"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"></path>
     </svg>
-    <svg class="close-icon hidden w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    <svg
+      class="close-icon hidden w-6 h-6"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"
+      ></path>
     </svg>
   </button>
 
   <!-- Desktop navigation -->
   <ul class="hidden md:flex space-x-12 text-white">
-    {navLinks.map(({ href, text }) => (
-      <li>
-        <a 
-          href={href} 
-          class:list={[
-            "hover:text-green-200",
-            { "text-green-300": pathname === href }
-          ]}
-        >
-          {text}
-        </a>
-      </li>
-    ))}
+    {
+      navLinks.map(({ href, text }) => (
+        <li>
+          <a
+            href={href}
+            class:list={["hover:text-green-200", { "text-green-300": pathname === href }]}
+          >
+            {text}
+          </a>
+        </li>
+      ))
+    }
   </ul>
 
   <!-- Mobile navigation -->
-  <ul class="absolute top-20 left-0 pl-6 w-full bg-black flex-col items-center space-y-6 text-white py-6 hidden" id="mobile-nav-links">
-    {navLinks.map(({ href, text }) => (
-      <li>
-        <a 
-          href={href} 
-          class:list={[
-            "hover:text-green-200",
-            { "text-green-300": pathname === href }
-          ]}
-        >
-          {text}
-        </a>
-      </li>
-    ))}
+  <ul
+    class="absolute top-20 left-0 pl-6 w-full bg-black flex-col items-center space-y-6 text-white py-6 hidden"
+    id="mobile-nav-links"
+  >
+    {
+      navLinks.map(({ href, text }) => (
+        <li>
+          <a
+            href={href}
+            class:list={["hover:text-green-200", { "text-green-300": pathname === href }]}
+          >
+            {text}
+          </a>
+        </li>
+      ))
+    }
   </ul>
 </nav>
 
 <script>
-  document.getElementById('menu-button')?.addEventListener('click', function() {
-      const mobileMenu = document.getElementById('mobile-nav-links');
-      const menuIcon = this?.querySelector('.menu-icon');
-      const closeIcon = this?.querySelector('.close-icon');
-      
-      if (mobileMenu && menuIcon && closeIcon) {
-        mobileMenu.classList.toggle('hidden');
-        menuIcon.classList.toggle('hidden');
-        closeIcon.classList.toggle('hidden');
-      }
+  document.getElementById("menu-button")?.addEventListener("click", function () {
+    const mobileMenu = document.getElementById("mobile-nav-links");
+    const menuIcon = this?.querySelector(".menu-icon");
+    const closeIcon = this?.querySelector(".close-icon");
+
+    if (mobileMenu && menuIcon && closeIcon) {
+      mobileMenu.classList.toggle("hidden");
+      menuIcon.classList.toggle("hidden");
+      closeIcon.classList.toggle("hidden");
+    }
   });
 </script>
