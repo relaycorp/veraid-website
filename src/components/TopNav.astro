@@ -10,57 +10,52 @@ const navLinks = [
 ];
 ---
 
-<nav class="flex items-center justify-between px-6 py-8 mx-auto max-w-7xl">
-  <div class="flex items-center">
+<nav class="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center">
+  <div>
     <a href="/">
-      <Image src={logoDark} alt="Logo" width={100} height={100} />
+      <Image src={logoDark} alt="VeraId logo" width={100} height={100} />
     </a>
   </div>
 
-  <!-- Hamburger menu toggle -->
-  <input type="checkbox" id="nav-toggle" class="hidden peer" />
-  <label for="nav-toggle" class="cursor-pointer md:hidden z-20">
-    <svg class="w-6 h-6 peer-checked:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M4 6h16M4 12h16M4 18h16"></path>
+  <!-- Mobile menu toggle button -->
+  <button id="menu-button" class="text-white cursor-pointer md:hidden" aria-label="Toggle menu">
+    <svg class="menu-icon w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
     </svg>
-    <svg
-      class="hidden w-6 h-6 peer-checked:block"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"
-      ></path>
+    <svg class="close-icon hidden w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
     </svg>
-  </label>
+  </button>
 
-  <!-- Desktop menu -->
-  <div class="hidden md:flex items-center gap-10">
-    {
-      navLinks.map(({ href, text }) => (
-        <a {href} class="transition-colors hover:text-green-200">
-          {text}
-        </a>
-      ))
-    }
-  </div>
+  <!-- Desktop navigation -->
+  <ul class="hidden md:flex space-x-12 text-white">
+    {navLinks.map(({ href, text }) => (
+      <li>
+        <a href={href} class="hover:text-green-300">{text}</a>
+      </li>
+    ))}
+  </ul>
 
-  <!-- Mobile menu -->
-  <div
-    class="fixed inset-y-0 right-0 w-64 bg-neutral-900 translate-x-full peer-checked:translate-x-0 transition-transform md:hidden"
-  >
-    <div class="flex flex-col items-start justify-center h-full gap-8 text-white px-8">
-      {
-        navLinks.map(({ href, text }) => (
-          <a {href} class="transition-colors hover:text-green-200">
-            {text}
-          </a>
-        ))
-      }
-    </div>
-  </div>
+  <!-- Mobile navigation -->
+  <ul class="absolute top-20 left-0 pl-6 w-full bg-black flex-col items-center space-y-6 text-white py-6 hidden" id="mobile-nav-links">
+    {navLinks.map(({ href, text }) => (
+      <li>
+        <a href={href} class="hover:text-green-300">{text}</a>
+      </li>
+    ))}
+  </ul>
 </nav>
+
+<script>
+  document.getElementById('menu-button')?.addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobile-nav-links');
+      const menuIcon = this?.querySelector('.menu-icon');
+      const closeIcon = this?.querySelector('.close-icon');
+      
+      if (mobileMenu && menuIcon && closeIcon) {
+        mobileMenu.classList.toggle('hidden');
+        menuIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+      }
+  });
+</script>

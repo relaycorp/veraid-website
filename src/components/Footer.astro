@@ -1,7 +1,21 @@
 ---
 import { Image } from "astro:assets";
-import RedditIcon from "../assets/Icons/reddit.svg";
 import VeraIdLogo from "../assets/veraid-logo-dark.png";
+
+const veraidLinks = [
+  { href: "/prior-art", text: "Prior art" },
+  { href: "/user-experience", text: "User Experience" },
+  { href: "/architecture", text: "Architecture" },
+  { href: "/prototype", text: "VeraId prototype" },
+  { href: "https://github.com/relaycorp/veraid-website", text: "GitHub Repo" },
+];
+
+const relaycorpLinks = [
+  { href: "https://relaycorp.tech/", text: "Contact us" },
+  { href: "https://github.com/relaycorp/.github/blob/master/SECURITY.md", text: "Security policy" },
+  { href: "https://awala.app/en/", text: "Awala" },
+  { href: "https://letro.app/en/", text: "Letro" },
+];
 ---
 
 <footer class="py-16 mx-auto text-sm bg-neutral-950">
@@ -36,24 +50,18 @@ import VeraIdLogo from "../assets/veraid-logo-dark.png";
       <div class="space-y-4 [&>ul>li>a]:text-neutral-400 [&>ul>li>a]:hover:text-neutral-300">
         <h3>VERAID</h3>
         <ul class="space-y-4">
-          <li><a href="/prior-art">Prior art</a></li>
-          <li><a href="/user-experience">User Experience</a></li>
-          <li><a href="/architecture">Architecture</a></li>
-          <li><a href="/prototype">VeraId prototype</a></li>
-          <li><a href="https://github.com/relaycorp/veraid-website">GitHub Repo</a></li>
+          {veraidLinks.map(({ href, text }) => (
+            <li><a href={href}>{text}</a></li>
+          ))}
         </ul>
       </div>
 
       <div class="space-y-4 [&>ul>li>a]:text-neutral-400 [&>ul>li>a]:hover:text-neutral-300">
         <h3>RELAYCORP</h3>
         <ul class="space-y-4">
-          <li><a href="https://relaycorp.tech/">Contact us</a></li>
-          <li>
-            <a href="https://github.com/relaycorp/.github/blob/master/SECURITY.md"
-              >Security policy</a>
-          </li>
-          <li><a href="https://awala.app/en/">Awala</a></li>
-          <li><a href="https://letro.app/en/">Letro</a></li>
+          {relaycorpLinks.map(({ href, text }) => (
+            <li><a href={href}>{text}</a></li>
+          ))}
         </ul>
       </div>
     </div>
