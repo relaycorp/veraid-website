@@ -1,0 +1,65 @@
+---
+import { Image } from "astro:assets";
+import logoDark from "../assets/veraid-logo-dark.png";
+import MenuIcon from "../assets/icons/menu.svg?raw";
+import CloseIcon from "../assets/icons/close.svg?raw";
+
+const { pathname } = Astro.url;
+const navLinks = [
+  { href: "/ux", text: "User experience" },
+  { href: "/architecture", text: "Architecture" },
+  { href: "/spec", text: "Spec" },
+  { href: "/prior-art", text: "Prior art" },
+];
+---
+
+<nav class="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center">
+  <div>
+    <a href="/">
+      <Image src={logoDark} alt="VeraId logo" width={100} height={100} />
+    </a>
+  </div>
+
+  <!-- Mobile menu toggle button -->
+  <div class="md:hidden">
+    <details>
+      <summary class="text-white cursor-pointer list-none [&>div]:w-6 [&>div]:h-6">
+        <div class="[details[open]_&]:hidden" set:html={MenuIcon} />
+        <div class="hidden [details[open]_&]:block" set:html={CloseIcon} />
+      </summary>
+
+      <ul
+        class="absolute top-20 left-0 pl-6 w-full bg-black flex-col items-center space-y-6 text-white py-6"
+      >
+        {
+          navLinks.map(({ href, text }) => (
+            <li>
+              <a
+                href={href}
+                class:list={["hover:text-green-200", { "text-green-300": pathname === href }]}
+              >
+                {text}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </details>
+  </div>
+
+  <!-- Desktop navigation -->
+  <ul class="hidden md:flex space-x-12 text-white">
+    {
+      navLinks.map(({ href, text }) => (
+        <li>
+          <a
+            href={href}
+            class:list={["hover:text-green-200", { "text-green-300": pathname === href }]}
+          >
+            {text}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

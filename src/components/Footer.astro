@@ -1,0 +1,78 @@
+---
+import { Image } from "astro:assets";
+import VeraIdLogo from "../assets/veraid-logo-dark.png";
+import XIcon from "../assets/icons/x.svg?raw";
+import GithubIcon from "../assets/icons/github.svg?raw";
+import RedditIcon from "../assets/icons/reddit.svg?raw";
+
+const veraidLinks = [
+  { href: "/ux", text: "User Experience" },
+  { href: "/architecture", text: "Architecture" },
+  { href: "/spec", text: "Spec" },
+  { href: "/prior-art", text: "Prior art" },
+];
+
+const relaycorpLinks = [
+  { href: "https://relaycorp.tech/", text: "Contact us" },
+  { href: "https://github.com/relaycorp/.github/blob/master/SECURITY.md", text: "Security policy" },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="py-16 mx-auto text-sm bg-neutral-950">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-8 md:gap-24">
+      <div class="space-y-4">
+        <a href="/" class="block">
+          <Image src={VeraIdLogo} alt="VeraId Logo" class="h-8 w-auto" />
+        </a>
+        <p class="text-sm">User-and developer-friendly authentication based on DNS.</p>
+        <div class="flex gap-4 [&>a]:text-neutral-400 [&>a]:hover:text-neutral-300">
+          <a href="https://x.com/CheVeraId">
+            <div class="h-6 w-6" set:html={XIcon} />
+          </a>
+          <a href="https://github.com/CheVeraId">
+            <div class="h-6 w-6" set:html={GithubIcon} />
+          </a>
+          <a href="https://www.reddit.com/r/VeraId/about/">
+            <div class="h-6 w-6" set:html={RedditIcon} />
+          </a>
+        </div>
+      </div>
+
+      <div class="space-y-4 [&>ul>li>a]:text-neutral-400 [&>ul>li>a]:hover:text-neutral-300">
+        <h3>VERAID</h3>
+        <ul class="space-y-4">
+          {
+            veraidLinks.map(({ href, text }) => (
+              <li>
+                <a href={href}>{text}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="space-y-4 [&>ul>li>a]:text-neutral-400 [&>ul>li>a]:hover:text-neutral-300">
+        <h3>RELAYCORP</h3>
+        <ul class="space-y-4">
+          {
+            relaycorpLinks.map(({ href, text }) => (
+              <li>
+                <a href={href}>{text}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      Copyright 2022-{currentYear} by <a
+        href="https://relaycorp.tech"
+        class="text-green-300 hover:text-green-200">Relaycorp</a
+      >.
+    </div>
+  </div>
+</footer>
