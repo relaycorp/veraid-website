@@ -8,30 +8,36 @@ import offlineAuthentication from "../../assets/offline-authentication.png";
 
 <section class="px-6 sm:py-10 py-12 md:py-16 bg-neutral-950 text-sm md:text-base">
   <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl sm:text-4xl md:text-6xl text-center md:mb-12 mb-8">Use cases</h2>
+    <h2 id="use-cases" class="text-3xl sm:text-4xl md:text-6xl text-center md:mb-12 mb-8">
+      Use cases
+    </h2>
     <div
       class="grid md:grid-cols-2 md:gap-16 gap-8 [&>div>h3]:text-xl [&>div>h3]:sm:text-xl [&>div>h3]:md:text-3xl [&>div>h3]:font-semibold [&>div>h3]:mt-4"
     >
       <div class="space-y-2">
         <Image src={apiAuthentication} alt="API Authentication icon" class="w-12 h-12" />
-        <h3>API Authentication</h3>
+        <h3>Service accounts for the Internet</h3>
         <p class="text-gray-300">
-          For example, authenticating API clients without bearer tokens or pre-shared public keys.
+          Ditch API keys! Clients authenticate by proving domain authorisation without sharing
+          secrets—like AWS roles or Kubernetes service accounts for the entire Internet!
         </p>
       </div>
 
       <div class="space-y-2">
         <Image src={documentSigning} alt="API Authentication icon" class="w-12 h-12" />
-        <h3>Documenting and app signing</h3>
-        <p class="text-gray-300">For example, signing a PDF on behalf of "bbc.com".</p>
+        <h3>Artefact signing</h3>
+        <p class="text-gray-300">
+          Sign documents, apps, libraries, or other files on behalf of a domain name, without
+          gatekeepers like Adobe or Microsoft.
+        </p>
       </div>
 
       <div class="space-y-2">
         <Image src={offlineAuthentication} alt="API Authentication icon" class="w-12 h-12" />
         <h3>Offline user authentication</h3>
         <p class="text-gray-300">
-          For example, allow users of decentralised communications apps to have their own
-          identifiers.
+          Enable users of offline systems to authenticate with user-friendly, customisable
+          identifiers. That's how <a href="https://letro.app/en/">Letro</a> uses VeraId!
         </p>
       </div>
 
@@ -39,8 +45,8 @@ import offlineAuthentication from "../../assets/offline-authentication.png";
         <Image src={decentralisedSystems} alt="API Authentication icon" class="w-12 h-12" />
         <h3>Next-gen decentralised systems</h3>
         <p class="text-gray-300">
-          For example, peer-to-peer web hosting with contents reliably attributed to their
-          respective domain names.
+          VeraId enables systems that are hard to imagine today, like peer-to-peer web hosting with
+          contents reliably attributed to their respective domain names.
         </p>
       </div>
     </div>
