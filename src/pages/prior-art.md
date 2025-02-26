@@ -1,6 +1,6 @@
 ---
-title: "Prior art"
-description: "Documentation of the technologies we considered but didn't use"
+title: "VeraId - Prior art"
+description: "Analysis of alternative identity and authentication technologies considered for VeraId, including federated auth, DIDs, blockchain solutions, and DANE"
 layout: ../layouts/Markdown.astro
 permalink: /prior-art
 ---
