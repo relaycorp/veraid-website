@@ -36,7 +36,10 @@ const navLinks = [
             <li>
               <a
                 href={href}
-                class:list={["hover:text-green-200", { "text-green-300": pathname === href }]}
+                class:list={[
+                  "hover:text-green-200",
+                  { "text-green-300": pathname.replace(/\/$/, "") === href },
+                ]}
               >
                 {text}
               </a>
@@ -54,7 +57,10 @@ const navLinks = [
         <li>
           <a
             href={href}
-            class:list={["hover:text-green-200", { "text-green-300": pathname === href }]}
+            class:list={[
+              "hover:text-green-200",
+              { "text-green-300": pathname.replace(/\/$/, "") === href },
+            ]}
           >
             {text}
           </a>
