@@ -1,5 +1,5 @@
 ---
-title: "VeraId - User Experience"
+title: "User Experience"
 description: "Comprehensive guide to VeraId user roles and workflows, including organisation administration, member management, and signature verification processes"
 layout: ../layouts/Markdown.astro
 permalink: /ux
