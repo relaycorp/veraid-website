@@ -1,14 +1,15 @@
 ---
 title: "Architecture"
+description: "Technical overview of VeraId's system architecture, including the core cryptographic library and cloud-native authority server components"
+layout: ../layouts/Page.astro
 permalink: /architecture
-nav_order: 3
 ---
 
 # VeraId Architecture
 
 This document describes the systems and software architecture of the various components that make up VeraId.
 
-![](/public/diagrams/architecture.svg)
+![](/diagrams/architecture.svg)
 
 ## VeraId library
 
