@@ -1,28 +1,67 @@
 ---
 import { Image } from "astro:assets";
 import patternSvg from "../../assets/pattern.svg";
+import microsoftImg from "../../assets/microsoft.png";
+import xkcdImg from "../../assets/xkcd.png";
+import gandalfImg from "../../assets/gandalf.png";
+import bbcImg from "../../assets/bbc.png";
+import chewbaccaImg from "../../assets/chewbacca.png";
 ---
 
-<section class="relative px-6 sm:pt-16 pt-8 md:pb-20 pb-12">
-  <div class="absolute inset-0 w-full h-full">
-    <Image
-      src={patternSvg}
-      alt="decorative pattern"
-      class="w-full h-full object-cover opacity-70"
-    />
-  </div>
-  <div class="relative max-w-6xl mx-auto text-center">
-    <h1 class="text-3xl sm:text-5xl md:text-7xl md:mb-8 mb-4 leading-tight text-white">
-      <span
-        class="bg-gradient-to-r from-[#01FD93] via-[#87FFCC] to-[#D9FFEF] inline-block text-transparent bg-clip-text"
-        >User- and developer-friendly</span
-      >
-      <br />
-      authentication based on DNS
-    </h1>
-    <p class="text-md sm:text-xl md:text-2xl text-neutral-300 mx-auto max-w-4xl">
-      VeraId is a decentralised authentication protocol that securely attributes content to domain
-      names.
-    </p>
+<section class="relative px-4 sm:px-6 pt-8 md:pb-16 pb-9">
+  <div class="max-w-6xl mx-auto">
+    <div class="absolute inset-0 w-full h-full">
+      <Image
+        src={patternSvg}
+        alt="decorative pattern"
+        class="w-full h-full object-cover opacity-70"
+      />
+    </div>
+    <div class="relative text-center">
+      <h1 class="text-[2.1rem] sm:text-5xl md:text-7xl md:mb-8 mb-4 leading-tight text-white">
+        <span
+          class="bg-gradient-to-r from-[#01FD93] via-[#87FFCC] to-[#D9FFEF] inline-block text-transparent bg-clip-text"
+          >User- and developer-friendly</span
+        >
+        <br />
+        authentication based on DNS
+      </h1>
+      <p class="text-md sm:text-xl md:text-2xl text-neutral-300 mx-auto max-w-4xl">
+        VeraId is a decentralised authentication protocol that securely attributes content to domain
+        names.
+      </p>
+      <!-- Carousel -->
+      <div class="mt-14 relative overflow-hidden w-full">
+        <div class="carousel-scroll flex gap-16 items-center">
+          <Image src={microsoftImg} alt="Microsoft" class="h-24 w-auto object-contain" />
+          <Image src={xkcdImg} alt="XKCD" class="h-24 w-auto object-contain" />
+          <Image src={gandalfImg} alt="Gandalf" class="h-24 w-auto object-contain" />
+          <Image src={bbcImg} alt="BBC" class="h-32 w-auto object-contain" />
+          <Image src={chewbaccaImg} alt="Chewbacca" class="h-24 w-auto object-contain" />
+          <Image src={xkcdImg} alt="XKCD" class="h-24 w-auto object-contain" />
+          <Image src={microsoftImg} alt="Microsoft" class="h-16 w-auto object-contain" />
+          <Image src={gandalfImg} alt="Gandalf" class="h-24 w-auto object-contain" />
+          <Image src={bbcImg} alt="BBC" class="h-32 w-auto object-contain" />
+          <Image src={chewbaccaImg} alt="Chewbacca" class="h-24 w-auto object-contain" />
+        </div>
+
+        <style>
+          @keyframes scroll {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+          .carousel-scroll {
+            animation: scroll 10s linear infinite;
+          }
+          .carousel-scroll:hover {
+            animation-play-state: paused;
+          }
+        </style>
+      </div>
+    </div>
   </div>
 </section>
