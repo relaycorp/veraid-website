@@ -1,2 +1,3 @@
-# website
-Main website
+# VeraId website
+
+Run locally with `npm start`.

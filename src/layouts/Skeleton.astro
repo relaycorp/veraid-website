@@ -1,0 +1,85 @@
+---
+import TopNav from "../components/TopNav.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const IS_PRODUCTION = import.meta.env.PROD;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Favicon -->
+    <link rel="shorticon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{`${title} | VeraId`}</title>
+
+    {
+      IS_PRODUCTION && (
+        <script is:inline src="https://cdn.usefathom.com/script.js" data-site="UNVOWGIF" defer />
+      )
+    }
+  </head>
+  <body>
+    <TopNav />
+    <slot />
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  @font-face {
+    font-family: "JetBrainsMono";
+    src: url("/fonts/JetBrainsMono-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  html,
+  body {
+    background-color: #000000;
+    overflow-x: hidden;
+    width: 100%;
+    color: #d4d4d4;
+    font-family: "JetBrainsMono";
+    font-size: 20px;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #ffffff;
+    font-family: "Chakra Petch", sans-serif;
+    font-weight: 700;
+  }
+  p a {
+    color: #7af2a8;
+  }
+  p a:hover {
+    color: #b9f7cf;
+    text-decoration: underline;
+  }
+</style>

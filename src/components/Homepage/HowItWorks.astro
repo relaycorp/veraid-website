@@ -1,0 +1,59 @@
+<section class="bg-neutral-950 text-sm md:text-base">
+  <div class="max-w-6xl mx-auto px-6 py-12 md:py-16">
+    <h2 class="text-3xl sm:text-4xl md:text-6xl text-center mb-8">How it works</h2>
+
+    <div class="space-y-6 text-gray-300">
+      <p>
+        VeraId combines DNSSEC with a new Public Key Infrastructure (PKI) to produce digital
+        signatures that can be linked to a domain name. Consequently, every signature contains
+        enough data to be independently verified without external queries, such as DNS lookups.
+      </p>
+
+      <p>
+        Any DNSSEC-enabled domain can be a trust anchor in the PKI, but it only has control over
+        itself. This offers far better security than PKIs such as the Transport Layer Security
+        (TLS), where many trust anchors (Certificate Authorities) can issue certificates for any
+        domain.
+      </p>
+
+      <p>
+        Designing and implementing yet another auth protocol is not something we took lightly: We
+        know it's hard to get them right and the consequences can be catastrophic. Unfortunately, no <a
+          href="/prior-art"
+          class="text-green-400">existing technology satisfied our needs</a
+        >.
+      </p>
+
+      <p>
+        Watch the video below for a walk-through of the protocol and a demo of the <a
+          href="https://github.com/relaycorp/veraid-poc"
+          class="text-green-400">prototype</a
+        >.
+      </p>
+
+      <div class="aspect-video rounded-lg overflow-hidden bg-black">
+        <iframe
+          class="w-full h-full"
+          src="https://www.youtube.com/embed/K2vbMOjur_E"
+          title="VeraId Protocol Demo"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+
+      <div class="flex flex-wrap gap-4 justify-center pt-4">
+        <a
+          href="/architecture"
+          class="bg-green-400 text-black px-6 md:py-2 py-1 rounded-full hover:bg-green-300 text-sm md:text-base"
+        >
+          Learn more about the architecture
+        </a>
+        <a
+          href="/spec"
+          class="bg-white/10 px-6 md:py-2 py-1 rounded-full hover:bg-white/20 text-sm md:text-base"
+        >
+          Read the spec
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,77 @@
+---
+import Skeleton from "./Skeleton.astro";
+import { z } from "astro:content";
+
+interface Frontmatter {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  frontmatter?: Frontmatter;
+  title?: string;
+  description?: string;
+}
+
+const schema = z.object({
+  title: z.string(),
+  description: z.string(),
+});
+
+console.log("Props received:", Astro.props);
+const { title, description } = schema.parse(Astro.props.frontmatter ?? Astro.props);
+
+const articleClasses = [
+  "mx-auto",
+  "max-w-5xl",
+  "pt-16",
+  "pb-24",
+  "px-6",
+  "prose",
+  "leading-normal",
+  "font-['Inter']",
+  "font-normal",
+  "text-neutral-300",
+  "prose-lg",
+  "prose-h1:mb-4",
+  "prose-h2:mt-12",
+  "prose-h2:mb-4",
+  "prose-h3:text-2xl",
+  "prose-h3:mt-10",
+  "prose-h3:mb-2",
+  "prose-h4:mt-3",
+  "prose-h4:mb-1",
+  "prose-code:text-white",
+  "prose-a:text-green-300",
+  "prose-a:no-underline",
+  "prose-a:[&:hover]:text-green-200",
+  "prose-a:hover:underline",
+
+  // Inline code
+  "[&_:not(pre)>code]:bg-neutral-900",
+  "[&_:not(pre)>code]:py-1",
+  "[&_:not(pre)>code]:px-1",
+  "[&_:not(pre)>code]:border",
+  "[&_:not(pre)>code]:border-neutral-700",
+  "[&_:not(pre)>code]:rounded-sm",
+  "[&_:not(pre)>code]:text-neutral-400",
+  "[&_:not(pre)>code]:text-sm",
+  "[&_:not(pre)>code]:font-mono",
+  "[&_:not(pre)>code]:break-words",
+  "[&_:not(pre)>code]:whitespace-normal",
+  "prose-code:font-normal",
+  "[&_code]:before:content-['']",
+  "[&_code]:after:content-['']",
+  "prose-strong:text-neutral-300",
+  "prose-dt:text-white",
+  "prose-dl:text-neutral-400",
+  "[&_dt]:text-white",
+  "prose-img:w-full",
+];
+---
+
+<Skeleton title={title} description={description}>
+  <article class={articleClasses.join(" ")}>
+    <slot />
+  </article>
+</Skeleton>

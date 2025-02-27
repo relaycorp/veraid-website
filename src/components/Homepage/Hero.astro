@@ -1,0 +1,24 @@
+---
+import { Image } from "astro:assets";
+import patternSvg from "../../assets/pattern.svg";
+---
+
+<section class="relative px-6 sm:pt-16 pt-8 md:pb-20 pb-12">
+  <div class="absolute inset-0 w-full h-full">
+    <Image src={patternSvg} alt="" class="w-full h-full object-cover opacity-60" />
+  </div>
+  <div class="relative max-w-6xl mx-auto text-center">
+    <h1 class="text-3xl sm:text-5xl md:text-7xl font-bold md:mb-8 mb-4 leading-tight">
+      <span
+        class="bg-gradient-to-b from-green-500 via-green-400 to-green-300 text-transparent bg-clip-text"
+        >User- and developer-friendly</span
+      >
+      <br />
+      authentication based on DNS
+    </h1>
+    <p class="text-md sm:text-xl md:text-2xl text-neutral-300 mx-auto max-w-4xl">
+      VeraId is a decentralised authentication protocol that securely attributes content to domain
+      names.
+    </p>
+  </div>
+</section>
