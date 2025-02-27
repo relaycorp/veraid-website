@@ -21,8 +21,8 @@ import offlineAuthentication from "../../assets/offline-authentication.png";
         <Image src={apiAuthentication} alt="API Authentication icon" class="w-12 h-12" />
         <h3>Service accounts for the Internet</h3>
         <p class="text-gray-300">
-          Ditch API keys! Clients authenticate by proving domain authorisation without sharing
-          secrets—like AWS roles or Kubernetes service accounts for the entire Internet!
+          Ditch API keys! Clients authenticate by proving their identity (e.g. alice@example.com).
+          Think AWS roles or Azure managed identities, but for the entire Internet!
         </p>
       </div>
 
@@ -30,7 +30,7 @@ import offlineAuthentication from "../../assets/offline-authentication.png";
         <Image src={documentSigning} alt="API Authentication icon" class="w-12 h-12" />
         <h3>Artefact signing</h3>
         <p class="text-gray-300">
-          Sign documents, apps, libraries, or other files on behalf of a domain name, without
+          Sign documents, apps, libraries, and other files on behalf of a domain name, without
           gatekeepers like Adobe or Microsoft.
         </p>
       </div>
