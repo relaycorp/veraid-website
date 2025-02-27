@@ -25,6 +25,7 @@ The primary purpose of VeraId is to provide a mechanism to assign customisable, 
 ### 1.2 Scope
 
 This specification defines:
+
 - The VeraId protocol architecture and components
 - Certificate formats and requirements
 - DNSSEC integration details
@@ -65,16 +66,19 @@ VeraId establishes trust through DNSSEC. Any DNSSEC-enabled domain can be a trus
 The VeraId protocol operates as follows:
 
 1. **Initial Provisioning**:
+
    - Organisation admin enables DNSSEC for their domain (e.g., `acme.com`).
    - Admin generates a key pair and self-issues an X.509 certificate, which serves as the root Certificate Authority (CA).
    - Admin publishes the certificate in a `TXT` record at `_vera.acme.com`.
 
 2. **Member Authentication**:
+
    - Admin issues certificates to members or bots (collectively known as signers).
    - Each certificate contains a critical extension specifying its usage context.
    - Member certificates include the VeraId username in the Distinguished Name.
 
 3. **Digital Signature Creation**:
+
    - Signers create a CMS `SignedData` signature, embedding their certificate and any intermediary CAs.
    - Signers include the DNSSEC chain for the `_vera.acme.com` TXT record.
 
@@ -88,6 +92,7 @@ The VeraId protocol operates as follows:
 ### 3.1 Organisation Certificate
 
 The organisation certificate MUST:
+
 - Be a self-signed X.509 certificate.
 - Have the domain name as the Common Name (CN) in the Subject field.
 - Use one of the supported cryptographic algorithms.
@@ -95,6 +100,7 @@ The organisation certificate MUST:
 ### 3.2 Member Certificate
 
 Member certificates MUST:
+
 - Be signed by the organisation certificate or an intermediate CA.
 - Include the member's username as the Common Name (CN) in the Subject field.
 - Contain a critical extension specifying the service context.
@@ -120,11 +126,13 @@ The organisation MUST have DNSSEC properly configured for its domain. The `_vera
 The TXT record contains space-separated fields:
 
 1. **Key algorithm**: An integer denoting the key algorithm.
+
    - `0` (RSA 2048)
    - `1` (RSA 3072)
    - `2` (RSA 4096)
 
 2. **Key ID type**: An integer denoting how the key is identified.
+
    - `0` (`ID`): The key ID is the key itself (reserved for future use)
    - `1` (`SHA256`): The key ID is the SHA-256 digest
    - `2` (`SHA384`): The key ID is the SHA-384 digest
@@ -151,11 +159,13 @@ The DNSSEC chain MUST be serialised as an _answer_ using the message format from
 ### 5.1 Supported Algorithms
 
 #### 5.1.1 Hashing Algorithms
+
 - SHA-256
 - SHA-384
 - SHA-512
 
 #### 5.1.2 Digital Signature Algorithms
+
 - RSA-PSS with modulus 2048/3072/4096
 
 ### 5.2 Key Management
@@ -167,6 +177,7 @@ Organisation admins SHOULD rotate their keys periodically. This is accomplished 
 ### 6.1 VeraId Member ID Bundle
 
 ASN.1 SEQUENCE:
+
 - Version (INTEGER). `0` is the only valid value at the moment.
 - DNSSEC chain (SEQUENCE).
 - Organisation certificate (SEQUENCE).
@@ -175,6 +186,7 @@ ASN.1 SEQUENCE:
 ### 6.2 VeraId Signature Bundle
 
 ASN.1 SEQUENCE:
+
 - Version (INTEGER). `0` is the only valid value at the moment.
 - DNSSEC chain (SEQUENCE).
 - Organisation certificate (SEQUENCE).
@@ -189,6 +201,7 @@ ASN.1 SEQUENCE:
 ### 6.3 VeraId Signed Content
 
 ASN.1 SEQUENCE:
+
 - Content (OCTET STRING).
 - Signature (SEQUENCE).
 
@@ -336,7 +349,7 @@ function createSignature(content, memberCertificate, privateKey, serviceOID):
             expiryDate: currentTime() + serviceTTL
         }
     }
-    
+
     // Create CMS SignedData
     signedData = createCMSSignedData(
         content,
@@ -344,14 +357,14 @@ function createSignature(content, memberCertificate, privateKey, serviceOID):
         privateKey,
         metadata
     )
-    
+
     // Get DNSSEC chain
     domain = extractDomainFromCertificate(memberCertificate)
     dnssecChain = getDNSSECChain("_vera." + domain)
-    
+
     // Get organisation certificate
     orgCert = extractCertificateFromDNSSEC(dnssecChain)
-    
+
     // Create signature bundle
     signatureBundle = {
         version: 0,
@@ -359,7 +372,7 @@ function createSignature(content, memberCertificate, privateKey, serviceOID):
         organisationCertificate: orgCert,
         signedData: signedData
     }
-    
+
     return signatureBundle
 
 // Verify a VeraId signature
@@ -367,27 +380,27 @@ function verifySignature(content, signatureBundle, serviceOID):
     // Verify DNSSEC chain
     if (!verifyDNSSECChain(signatureBundle.dnssecChain)):
         return false
-    
+
     // Extract organisation certificate
     orgCert = signatureBundle.organisationCertificate
-    
+
     // Verify certificate chain
     if (!verifyCertificateChain(signatureBundle.signedData.certificates, orgCert)):
         return false
-    
+
     // Extract metadata
     metadata = extractSignatureMetadata(signatureBundle.signedData)
-    
+
     // Verify service OID
     if (metadata.serviceOID != serviceOID):
         return false
-    
+
     // Verify validity period
     dnssecSigningTime = extractSigningTime(signatureBundle.dnssecChain)
     if (dnssecSigningTime < metadata.validityPeriod.startDate ||
         dnssecSigningTime > metadata.validityPeriod.expiryDate):
         return false
-    
+
     // Verify content signature
     return verifyCMSSignature(
         content,
