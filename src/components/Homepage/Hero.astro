@@ -1,27 +1,51 @@
 ---
 import { Image } from "astro:assets";
+import Carousel from "./Carousel.astro";
 import patternSvg from "../../assets/pattern.svg";
+import microsoftImg from "../../assets/microsoft.png";
+import xkcdImg from "../../assets/xkcd.png";
+import gandalfImg from "../../assets/gandalf.png";
+import bbcImg from "../../assets/bbc.png";
+import chewbaccaImg from "../../assets/chewbacca.png";
+import spotifyImg from "../../assets/spotify.gif";
+import winterImg from "../../assets/winter.png";
+
+const carouselImages = [
+  {
+    src: microsoftImg,
+    alt: "Text: Developers! Developers! Developers! with email sb@microsoft.com",
+  },
+  { src: xkcdImg, alt: "XKCD-style stick figure drawing showing a graph and two people" },
+  { src: gandalfImg, alt: "Text: You shall not pass! with email gandalf@ring.company" },
+  { src: spotifyImg, alt: "Audio waveform visualization" },
+  { src: chewbaccaImg, alt: "Text: Rrruuuurr with email chewbacca@kashyyyk.space" },
+  { src: bbcImg, alt: "HTML code snippet showing a news article structure", heightClass: "h-30" },
+  { src: winterImg, alt: "Text: Winter is Coming with email winter@got.com" },
+];
 ---
 
-<section class="relative px-6 sm:pt-16 pt-8 md:pb-20 pb-12">
-  <div class="absolute inset-0 w-full h-full">
-    <Image
-      src={patternSvg}
-      alt="decorative pattern"
-      class="w-full h-full object-cover opacity-70"
-    />
-  </div>
-  <div class="relative max-w-6xl mx-auto text-center">
-    <h1 class="text-3xl sm:text-5xl md:text-7xl md:mb-8 mb-4 leading-tight text-white">
-      <span
-        class="bg-gradient-to-r from-[#01FD93] via-[#87FFCC] to-[#D9FFEF] inline-block text-transparent bg-clip-text"
-        >User- and developer-friendly</span
-      >
-      <br />
-      authentication based on DNS
-    </h1>
-    <p class="text-md sm:text-xl md:text-2xl text-neutral-300 mx-auto max-w-4xl">
-      VeraId is a decentralised protocol that securely attributes content to domain names.
-    </p>
+<section class="relative px-4 md:px-6 md:pt-12 pt-8 md:pb-14 pb-9">
+  <div class="max-w-6xl mx-auto">
+    <div class="absolute inset-0 w-full h-full">
+      <Image
+        src={patternSvg}
+        alt="decorative pattern"
+        class="w-full h-full object-cover opacity-70"
+      />
+    </div>
+    <div class="relative text-center">
+      <h1 class="text-[2.1rem] sm:text-5xl md:text-7xl md:mb-8 mb-4 leading-tight text-white">
+        <span
+          class="bg-gradient-to-r from-[#01FD93] via-[#87FFCC] to-[#D9FFEF] inline-block text-transparent bg-clip-text"
+          >User- and developer-friendly</span
+        >
+        <br />
+        authentication based on DNS
+      </h1>
+      <p class="text-md sm:text-xl md:text-2xl text-neutral-300 mx-auto max-w-4xl">
+        VeraId is a decentralised protocol that securely attributes content to domain names.
+      </p>
+      <Carousel images={carouselImages} />
+    </div>
   </div>
 </section>
