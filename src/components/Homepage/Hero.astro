@@ -6,9 +6,12 @@ import xkcdImg from "../../assets/xkcd.png";
 import gandalfImg from "../../assets/gandalf.png";
 import bbcImg from "../../assets/bbc.png";
 import chewbaccaImg from "../../assets/chewbacca.png";
+import spotifyImg from "../../assets/spotify.png";
+import winterImg from "../../assets/winter.png";
+import audioGif from "../../assets/audio.gif";
 ---
 
-<section class="relative px-4 sm:px-6 pt-8 md:pb-16 pb-9">
+<section class="relative px-4 md:px-6 md:pt-12 pt-8 md:pb-14 pb-9">
   <div class="max-w-6xl mx-auto">
     <div class="absolute inset-0 w-full h-full">
       <Image
@@ -32,17 +35,39 @@ import chewbaccaImg from "../../assets/chewbacca.png";
       </p>
       <!-- Carousel -->
       <div class="mt-14 relative overflow-hidden w-full">
-        <div class="carousel-scroll flex gap-16 items-center">
-          <Image src={microsoftImg} alt="Microsoft" class="h-24 w-auto object-contain" />
-          <Image src={xkcdImg} alt="XKCD" class="h-24 w-auto object-contain" />
-          <Image src={gandalfImg} alt="Gandalf" class="h-24 w-auto object-contain" />
-          <Image src={bbcImg} alt="BBC" class="h-32 w-auto object-contain" />
-          <Image src={chewbaccaImg} alt="Chewbacca" class="h-24 w-auto object-contain" />
-          <Image src={xkcdImg} alt="XKCD" class="h-24 w-auto object-contain" />
-          <Image src={microsoftImg} alt="Microsoft" class="h-16 w-auto object-contain" />
-          <Image src={gandalfImg} alt="Gandalf" class="h-24 w-auto object-contain" />
-          <Image src={bbcImg} alt="BBC" class="h-32 w-auto object-contain" />
-          <Image src={chewbaccaImg} alt="Chewbacca" class="h-24 w-auto object-contain" />
+        <div class="carousel-scroll flex gap-8 items-center">
+          <div class="flex gap-16 items-center min-w-max pr-8">
+            <Image src={microsoftImg} alt="Microsoft" class="h-24 w-auto object-contain" />
+            <Image src={xkcdImg} alt="XKCD" class="h-24 w-auto object-contain" />
+            <Image src={gandalfImg} alt="Gandalf" class="h-24 w-auto object-contain" />
+            <div class="relative">
+              <Image src={spotifyImg} alt="Spotify" class="h-24 w-auto object-contain" />
+              <Image
+                src={audioGif}
+                alt="Waveform gif"
+                class="absolute top-1/2 left-1/2 -translate-x-[53%] -translate-y-1/2"
+              />
+            </div>
+            <Image src={chewbaccaImg} alt="Chewbacca" class="h-24 w-auto object-contain" />
+            <Image src={bbcImg} alt="BBC" class="h-30 w-auto object-contain" />
+            <Image src={winterImg} alt="Winter" class="h-24 w-auto object-contain" />
+          </div>
+          <div class="flex gap-16 items-center min-w-max">
+            <Image src={xkcdImg} alt="XKCD" class="h-24 w-auto object-contain" />
+            <Image src={microsoftImg} alt="Microsoft" class="h-24 w-auto object-contain" />
+            <div class="relative">
+              <Image src={spotifyImg} alt="Spotify" class="h-24 w-auto object-contain" />
+              <Image
+                src={audioGif}
+                alt="Waveform gif"
+                class="absolute top-1/2 left-1/2 -translate-x-[53%] -translate-y-1/2"
+              />
+            </div>
+            <Image src={gandalfImg} alt="Gandalf" class="h-24 w-auto object-contain" />
+            <Image src={bbcImg} alt="BBC" class="h-30 w-auto object-contain" />
+            <Image src={chewbaccaImg} alt="Chewbacca" class="h-24 w-auto object-contain" />
+            <Image src={winterImg} alt="Winter" class="h-24 w-auto object-contain" />
+          </div>
         </div>
 
         <style>
@@ -55,7 +80,9 @@ import chewbaccaImg from "../../assets/chewbacca.png";
             }
           }
           .carousel-scroll {
-            animation: scroll 10s linear infinite;
+            display: flex;
+            width: max-content;
+            animation: scroll 20s linear infinite;
           }
           .carousel-scroll:hover {
             animation-play-state: paused;
