@@ -231,7 +231,7 @@ _veraid.example.com. IN TXT "1 3 dGhpcyBpcyBub3QgYSByZWFsIGtleSBkaWdlc3Q 86400"
 
 This example specifies an RSA-2048 key identified by its SHA-512 digest with a TTL override of 24 hours (86400 seconds).
 
-### 3.3. DNSSEC Chain Serialization
+### 3.3. DNSSEC Chain Serialisation
 
 The DNSSEC chain for a VeraId signature MUST be serialised in a format that allows for offline verification. The serialisation format is based on the DNS message format defined in RFC 1035, with specific requirements for VeraId:
 
@@ -429,15 +429,17 @@ The VeraId signature metadata is encoded as an ASN.1 structure:
 
 ```asn1
 SignatureMetadata ::= SEQUENCE {
-    serviceOid         OBJECT IDENTIFIER,
-    validityPeriod     DatePeriod
+    serviceOid      [0] OBJECT IDENTIFIER,
+    validityPeriod  [1] DatePeriod
 }
 
 DatePeriod ::= SEQUENCE {
-    start              [0] GeneralizedTime,
-    end                [1] GeneralizedTime
+    start  [0] GeneralizedTime,
+    end    [1] GeneralizedTime
 }
 ```
+
+All `GeneralizedTime` values in VeraId structures SHOULD include UTC timezone information (`Z` suffix). When timezone information is absent from a `GeneralizedTime` value in any VeraId structure, implementations MUST interpret it as UTC.
 
 The signature MAY be either detached (where the signed content is provided separately) or encapsulated (where the signed content is included in the CMS structure), depending on the application's requirements.
 
@@ -624,10 +626,10 @@ The Member ID Bundle is a self-contained package that provides all the informati
 
 ```asn1
 MemberIdBundle ::= SEQUENCE {
-    version               [0] INTEGER DEFAULT 0,
-    dnssecChain           [1] DnssecChain,
-    organisationCertificate [2] Certificate,
-    memberCertificate     [3] Certificate
+    version                  [0] INTEGER DEFAULT 0,
+    dnssecChain              [1] DnssecChain,
+    organisationCertificate  [2] Certificate,
+    memberCertificate        [3] Certificate
 }
 ```
 
@@ -648,10 +650,10 @@ The Signature Bundle is the core artefact of the VeraId protocol, containing a d
 
 ```asn1
 SignatureBundle ::= SEQUENCE {
-    version               [0] INTEGER DEFAULT 0,
-    dnssecChain           [1] DnssecChain,
-    organisationCertificate [2] Certificate,
-    signature             [3] ContentInfo
+    version                  [0] INTEGER DEFAULT 0,
+    dnssecChain              [1] DnssecChain,
+    organisationCertificate  [2] Certificate,
+    signature                [3] ContentInfo
 }
 ```
 
@@ -681,13 +683,13 @@ The signature metadata is encoded as an ASN.1 structure:
 
 ```asn1
 SignatureMetadata ::= SEQUENCE {
-    serviceOid         [0] OBJECT IDENTIFIER,
-    validityPeriod     [1] DatePeriod
+    serviceOid      [0] OBJECT IDENTIFIER,
+    validityPeriod  [1] DatePeriod
 }
 
 DatePeriod ::= SEQUENCE {
-    start              [0] GeneralizedTime,
-    end                [1] GeneralizedTime
+    start  [0] GeneralizedTime,
+    end    [1] GeneralizedTime
 }
 ```
 
@@ -768,14 +770,14 @@ VeraId uses Object Identifiers (OIDs) to uniquely identify services and applicat
 1. **OID Structure:**
 
    - The VeraId root OID is `1.3.6.1.4.1.58708.1`.
-   - Service-specific OIDs SHOULD be allocated under this root.
+   - Official service OIDs MUST be allocated under this root.
    - For example, the test service OID is `1.3.6.1.4.1.58708.1.1`.
 
 2. **OID Allocation:**
 
    - Service designers MUST obtain a unique OID for their service.
-   - OIDs MAY be allocated from the VeraId namespace by request.
-   - Alternatively, services MAY use OIDs from their own namespace.
+   - Third-party services MUST use OIDs from their own namespace.
+   - The VeraId OID arc is reserved exclusively for official services under the VeraId project umbrella.
 
 3. **OID Usage:**
 
@@ -784,6 +786,7 @@ VeraId uses Object Identifiers (OIDs) to uniquely identify services and applicat
    - VeraId TXT records MAY specify a service OID to restrict key usage.
 
 4. **Versioning:**
+
    - Service designers SHOULD include version information in their OID structure.
    - Major protocol changes SHOULD use a new OID.
    - Minor, backward-compatible changes MAY use the same OID.
@@ -844,7 +847,7 @@ Service developers integrating VeraId should adhere to the following guidelines 
    - Use dependency injection to allow for testing and component replacement.
    - Consider signature verification as a security boundary in the application.
 
-4. **Performance Optimizations:**
+4. **Performance Optimisations:**
 
    - Cache verification results when appropriate (respecting validity periods).
    - Implement efficient ASN.1 parsing routines.
@@ -960,7 +963,7 @@ Domain ownership changes represent a fundamental challenge to any domain-based a
 
 Offline verification introduces specific security considerations:
 
-1. **Time Synchronization:**
+1. **Time Synchronisation:**
 
    - Accurate verification requires correct system time.
    - Devices with incorrect clocks may incorrectly validate expired signatures.
@@ -1000,12 +1003,12 @@ Reference implementations of the VeraId protocol are available to assist develop
 
 1. **Core Libraries:**
 
-   - JavaScript/TypeScript: `@relaycorp/veraid`.
-   - Kotlin/JVM/Android: `tech.relaycorp:veraid`.
+   - [JavaScript/TypeScript (`@relaycorp/veraid`)](https://github.com/relaycorp/veraid-js).
+   - [Kotlin/JVM (`tech.relaycorp:veraid`)](https://github.com/relaycorp/veraid-jvm).
 
 2. **Related Tools:**
-   - VeraId Authority: Server for managing organisations and members.
-   - VeraId Authority Client: Client library for interacting with VeraId Authority.
+   - [VeraId Authority](https://github.com/relaycorp/veraid-authority): Server for managing organisations and members.
+   - [VeraId Authority Client](https://github.com/relaycorp/veraid-authority-js): JavaScript client library for interacting with VeraId Authority.
 
 The reference implementations serve as definitive interpretations of this specification. Where ambiguities exist in the specification, the behaviour of the reference implementations should be considered normative.
 
@@ -1040,22 +1043,28 @@ To ensure interoperability between different VeraId implementations:
    - Domain names SHOULD be handled in their ASCII form after Punycode conversion.
    - Usernames MUST be compared using case-sensitive comparison.
 
-4. **Algorithm Support:**
+4. **Time Representation:**
+
+   - Implementations SHOULD use UTC (`Z` suffix) in all `GeneralizedTime` values, including those in X.509 certificates.
+   - When timezone information is absent from a `GeneralizedTime` value in any VeraId structure, implementations MUST interpret it as UTC.
+   - Implementations MUST correctly handle and compare `GeneralizedTime` values with different timezone representations.
+
+5. **Algorithm Support:**
 
    - Implementations MUST support all mandatory cryptographic algorithms.
    - Implementations MAY support additional algorithms for future compatibility.
    - Implementations MUST reject signatures using unsupported algorithms.
 
-5. **Version Handling:**
+6. **Version Handling:**
    - Implementations MUST check version fields in all structures.
    - Implementations MUST reject structures with unsupported versions.
    - Implementations SHOULD be designed to accommodate future versions.
 
 Regular interoperability testing between different implementations is recommended to ensure ongoing compatibility.
 
-### 10.3. Performance Optimizations
+### 10.3. Performance Optimisations
 
-VeraId implementations can benefit from several performance optimizations whilst maintaining security:
+VeraId implementations can benefit from several performance optimisations whilst maintaining security:
 
 1. **Caching Strategies:**
 
@@ -1064,7 +1073,7 @@ VeraId implementations can benefit from several performance optimizations whilst
    - Use LRU (Least Recently Used) or similar algorithms for cache management.
    - Ensure cache entries are invalidated when they expire.
 
-2. **Size Optimizations:**
+2. **Size Optimisations:**
 
    - Minimise the size of DNSSEC chains by removing redundant records.
    - Use the minimum required set of certificates in signature bundles.
@@ -1085,11 +1094,11 @@ VeraId implementations can benefit from several performance optimizations whilst
    - Consider memory constraints on resource-limited devices.
 
 5. **Parallel Processing:**
-   - Parallelize independent verification steps when possible.
+   - Parallelise independent verification steps when possible.
    - Consider using worker threads for CPU-intensive operations.
-   - Balance parallelization benefits against overhead costs.
+   - Balance parallelisation benefits against overhead costs.
 
-These optimizations MUST NOT compromise security or correctness. Performance-critical applications SHOULD profile their verification code to identify bottlenecks and focus optimization efforts accordingly.
+These optimisations MUST NOT compromise security or correctness. Performance-critical applications SHOULD profile their verification code to identify bottlenecks and focus optimisation efforts accordingly.
 
 ## Appendices
 
@@ -1106,30 +1115,30 @@ DnssecChain ::= SET OF OCTET STRING
 -- Default tag defines all tags as IMPLICIT
 -- Member ID Bundle
 MemberIdBundle ::= SEQUENCE {
-    version               [0] INTEGER DEFAULT 0,
-    dnssecChain           [1] DnssecChain,
-    organisationCertificate [2] Certificate,
-    memberCertificate     [3] Certificate
+    version                  [0] INTEGER DEFAULT 0,
+    dnssecChain              [1] DnssecChain,
+    organisationCertificate  [2] Certificate,
+    memberCertificate        [3] Certificate
 }
 
 -- Signature Bundle
 SignatureBundle ::= SEQUENCE {
-    version               [0] INTEGER DEFAULT 0,
-    dnssecChain           [1] DnssecChain,
-    organisationCertificate [2] Certificate,
-    signature             [3] ContentInfo
+    version                  [0] INTEGER DEFAULT 0,
+    dnssecChain              [1] DnssecChain,
+    organisationCertificate  [2] Certificate,
+    signature                [3] ContentInfo
 }
 
 -- Signature metadata (included as a signed attribute)
 SignatureMetadata ::= SEQUENCE {
-    serviceOid         [0] OBJECT IDENTIFIER,
-    validityPeriod     [1] DatePeriod
+    serviceOid      [0] OBJECT IDENTIFIER,
+    validityPeriod  [1] DatePeriod
 }
 
 -- Date period structure
 DatePeriod ::= SEQUENCE {
-    start              [0] GeneralizedTime,
-    end                [1] GeneralizedTime
+    start  [0] GeneralizedTime,
+    end    [1] GeneralizedTime
 }
 ```
 
@@ -1157,84 +1166,13 @@ The following Object Identifiers (OIDs) are defined for use in the VeraId protoc
 3. **Service OIDs:**
    - `1.3.6.1.4.1.58708.1.1`: Test Service.
 
-New OIDs for services using VeraId SHOULD be allocated under their own arcs. If a service does not have its own OID arc, it MAY request allocation under the VeraId base OID.
+Third-party services implementing VeraId MUST register and use their own OIDs under their own arcs. The VeraId OID arc (`1.3.6.1.4.1.58708.1`) is reserved exclusively for official services and protocol components under the VeraId project umbrella.
 
 OID registration procedures:
 
-1. OIDs under the VeraId base OID are managed by the VeraId maintainers.
-2. Requests for new OIDs SHOULD be submitted with documentation about the service.
-3. OIDs are allocated on a first-come, first-served basis.
+1. OIDs under the VeraId base OID are managed by the VeraId maintainers and reserved for official VeraId project purposes.
+2. Third parties MUST NOT use OIDs under the VeraId arc for their services.
+3. Third parties without their own OID arc SHOULD obtain one from their national registration authority or through IANA's Private Enterprise Number (PEN) registry.
 4. Once allocated, OIDs are never reassigned to different services.
 
 Services SHOULD use versioning in their OID structure to manage protocol evolution. Major, incompatible changes SHOULD use a new OID, whilst minor, backward-compatible changes MAY use the same OID.
-
-### C. Example Implementations
-
-The following examples illustrate key operations in the VeraId protocol:
-
-#### 1. Signature Production:
-
-```typescript
-import { sign } from "@relaycorp/veraid";
-import { addDays } from "date-fns";
-
-const SERVICE_OID = "1.3.6.1.4.1.58708.1.1"; // Test service
-
-async function produceSignature(
-  plaintext: ArrayBuffer,
-  memberIdBundle: ArrayBuffer,
-  memberPrivateKey: CryptoKey,
-): Promise<ArrayBuffer> {
-  const expiryDate = addDays(new Date(), 30);
-  return sign(plaintext, SERVICE_OID, memberIdBundle, memberPrivateKey, expiryDate);
-}
-```
-
-#### 2. Signature Verification:
-
-```typescript
-import { verify, type IDatePeriod } from "@relaycorp/veraid";
-import { subDays } from "date-fns";
-
-const SERVICE_OID = "1.3.6.1.4.1.58708.1.1"; // Test service
-
-async function verifySignature(
-  plaintext: ArrayBuffer,
-  signatureBundle: ArrayBuffer,
-): Promise<string> {
-  const now = new Date();
-  const datePeriod: IDatePeriod = {
-    start: subDays(now, 30),
-    end: now,
-  };
-
-  const {
-    member: { user, organisation },
-  } = await verify(plaintext, signatureBundle, SERVICE_OID, datePeriod);
-
-  return user === undefined ? organisation : `${user}@${organisation}`;
-}
-```
-
-#### 3. Organisation Certificate Issuance:
-
-```typescript
-import { selfIssueOrganisationCertificate, generateTxtRdata } from "@relaycorp/veraid";
-import { addDays } from "date-fns";
-
-async function setupOrganisation(
-  domainName: string,
-  keyPair: CryptoKeyPair,
-): Promise<{ certificate: ArrayBuffer; txtRecord: string }> {
-  const expiryDate = addDays(new Date(), 365);
-  const certificate = await selfIssueOrganisationCertificate(domainName, keyPair, expiryDate);
-
-  // TTL override of 30 days (in seconds)
-  const ttlOverride = 30 * 24 * 60 * 60;
-  const txtRecord = await generateTxtRdata(keyPair.publicKey, ttlOverride);
-
-  return { certificate, txtRecord };
-}
-```
-
-These examples are illustrative and may need adaptation for specific implementations and use cases. Implementers should consult the reference implementations for complete, tested code examples.
