@@ -1,14 +1,26 @@
 ---
 import TopNav from "../components/TopNav.astro";
 import Footer from "../components/Footer.astro";
+import OpenGraph from "../assets/images/opengraph.png";
 import "../styles/global.css";
+
 interface Props {
   title: string;
   description: string;
+  ogImage?: string;
+  ogType?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, ogImage = OpenGraph.src, ogType = "website" } = Astro.props;
+
+const siteUrl = getSiteUrl(Astro.url);
+const ogImageUrl = new URL(ogImage, siteUrl);
+const ogUrl = new URL(Astro.url, siteUrl);
 const IS_PRODUCTION = import.meta.env.PROD;
+
+function getSiteUrl(url: URL) {
+  return import.meta.env.SITE ?? `${url.protocol}//${url.host}`;
+}
 ---
 
 <!doctype html>
@@ -17,6 +29,13 @@ const IS_PRODUCTION = import.meta.env.PROD;
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={ogUrl} />
+    <meta property="og:image" content={ogImageUrl} />
 
     <!-- Favicon -->
     <link rel="shorticon" type="image/svg+xml" href="/favicon/favicon.svg" />
