@@ -1107,30 +1107,30 @@ DnssecChain ::= SET OF OCTET STRING
 -- Default tag defines all tags as IMPLICIT
 -- Member ID Bundle
 MemberIdBundle ::= SEQUENCE {
-    version               [0] INTEGER DEFAULT 0,
-    dnssecChain           [1] DnssecChain,
-    organisationCertificate [2] Certificate,
-    memberCertificate     [3] Certificate
+    version                  [0] INTEGER DEFAULT 0,
+    dnssecChain              [1] DnssecChain,
+    organisationCertificate  [2] Certificate,
+    memberCertificate        [3] Certificate
 }
 
 -- Signature Bundle
 SignatureBundle ::= SEQUENCE {
-    version               [0] INTEGER DEFAULT 0,
-    dnssecChain           [1] DnssecChain,
-    organisationCertificate [2] Certificate,
-    signature             [3] ContentInfo
+    version                  [0] INTEGER DEFAULT 0,
+    dnssecChain              [1] DnssecChain,
+    organisationCertificate  [2] Certificate,
+    signature                [3] ContentInfo
 }
 
 -- Signature metadata (included as a signed attribute)
 SignatureMetadata ::= SEQUENCE {
-    serviceOid         [0] OBJECT IDENTIFIER,
-    validityPeriod     [1] DatePeriod
+    serviceOid      [0] OBJECT IDENTIFIER,
+    validityPeriod  [1] DatePeriod
 }
 
 -- Date period structure
 DatePeriod ::= SEQUENCE {
-    start              [0] GeneralizedTime,
-    end                [1] GeneralizedTime
+    start  [0] GeneralizedTime,
+    end    [1] GeneralizedTime
 }
 ```
 
