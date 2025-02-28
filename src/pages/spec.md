@@ -63,25 +63,17 @@ VeraId is designed with the following primary goals:
 ### 1.4. Terminology
 
 - **Organisation:** A domain name that participates in the VeraId protocol by configuring DNSSEC and publishing the necessary VeraId TXT record.
-
 - **Member:** An entity (user or bot) that acts on behalf of an organisation.
-
 - **User:** A specific type of member identified by a username within an organisation.
-
 - **Bot:** A special type of member that acts on behalf of the organisation as a whole.
-
 - **VeraId TXT Record:** A DNS TXT record at `_veraid.<domain>` that contains the organisation's public key information.
-
 - **Organisation Certificate:** A self-signed X.509 certificate owned by an organisation that serves as the root of trust for all signatures produced on behalf of that organisation.
-
 - **Member Certificate:** An X.509 certificate issued by the organisation certificate to a member.
-
 - **Member ID Bundle:** A data structure containing a member certificate, its issuing organisation certificate, and the DNSSEC chain proving the authenticity of the organisation's VeraId TXT record.
-
-- **Signature Bundle:** A data structure containing a digital signature produced by a member, along with all the information needed to verify the signature offline.
-
+- **Signature Bundle:** A data structure containing a digital signature and all the information needed to verify it offline.
+- **Member Signature Bundle:** A signature bundle containing a signature produced by a member using their private key.
+- **Organisation Signature Bundle:** A signature bundle containing a signature produced directly by an organisation using its private key, with a required member attribution that assigns authorship of the content to a specific member.
 - **DNSSEC Chain:** A sequence of DNS responses that allows a verifier to cryptographically validate the authenticity of a DNS record.
-
 - **Service OID:** An Object Identifier (OID) that uniquely identifies a service or application context where a VeraId signature is valid.
 
 ## 2. Protocol Overview
@@ -112,6 +104,11 @@ VeraId's trust model differs significantly from traditional PKIs such as the one
 
 4. **Short-lived certificates:** VeraId favours short-lived certificates over revocation mechanisms, reducing complexity and vulnerability to disconnected operation.
 
+5. **Two signature types with different trust models:**
+
+   - **Member signatures:** Produced by members using their private keys, these signatures cryptographically prove that a specific member created the content. The verification chain goes from DNSSEC to the organisation certificate to the member certificate to the signature.
+   - **Organisation signatures:** Produced directly by organisations using their private keys, these signatures prove that the organisation vouches for the content. When including member attribution, the organisation claims (but does not cryptographically prove) that a specific member created the content.
+
 By relying on DNSSEC, VeraId inherits its security properties and limitations. The protocol's trust is ultimately rooted in the DNS hierarchy, including the root zone and TLD operators.
 
 ### 2.3. Key Components
@@ -119,18 +116,15 @@ By relying on DNSSEC, VeraId inherits its security properties and limitations. T
 The VeraId protocol consists of the following core components:
 
 1. **VeraId TXT Record:** A DNS TXT record at `_veraid.<domain>` containing the organisation's public key information, including key algorithm, key ID type, key ID, TTL override, and optional service OID.
-
 2. **Organisation Certificate:** A self-issued X.509 certificate containing the organisation's public key. This certificate serves as the root Certificate Authority (CA) for all certification paths and digital signatures under the organisation's domain.
-
 3. **Member Certificates:** X.509 certificates issued by the organisation to individual users or bots. User certificates include the username in the Common Name field, whilst bot certificates use the at sign (`@`) as their Common Name.
-
 4. **DNSSEC Chain:** A serialised collection of DNS responses that provide cryptographic proof of the authenticity of the organisation's VeraId TXT record.
-
 5. **Member ID Bundle:** A structure containing a member certificate, the issuing organisation certificate, and the DNSSEC chain necessary to verify the organisation's authority.
+6. **Signature Bundle:** A structure containing a CMS SignedData value, the organisation certificate, and the DNSSEC chain. There are two types of bundles, which determine the signer of the SignedData value:
+   - **Member Signature Bundles** are signed by a member.
+   - **Organisation Signature Bundles** are signed directly by the organisation, but attributed to a specific member.
 
-6. **Signature Bundle:** A structure containing a CMS `SignedData` object, the organisation certificate, and the DNSSEC chain. The `SignedData` object includes the member's certificate and signature metadata.
-
-These components work together to create a secure chain of trust from the DNS root to the individual signatures produced by organisation members.
+These components work together to create a secure chain of trust from the DNS root to the individual signatures produced by organisation members or by the organisation itself.
 
 ### 2.4. Workflow Summary
 
@@ -151,14 +145,23 @@ The VeraId protocol involves the following key workflows:
 
 3. **Signature Production:**
 
-   - Members use their private keys to sign content.
-   - The signature is packaged with the member's certificate, the organisation certificate, and the DNSSEC chain into a signature bundle.
+   - **Member signatures:**
+     - Members use their private keys to sign content.
+     - The signature is packaged with the member's certificate, the organisation certificate, and the DNSSEC chain into a signature bundle.
+   - **Organisation signatures:**
+     - The organisation uses its private key to sign content directly.
+     - The organisation MUST include member attribution to indicate which member authored the content.
+     - The signature is packaged with the organisation certificate and the DNSSEC chain into a signature bundle.
 
 4. **Signature Verification:**
    - Verifiers extract and validate the DNSSEC chain to confirm the organisation's public key.
    - The organisation certificate is validated using the public key from the TXT record.
-   - The member certificate is validated against the organisation certificate.
-   - The digital signature is verified using the member's public key.
+   - For member signatures:
+     - The member certificate is validated against the organisation certificate.
+     - The digital signature is verified using the member's public key.
+   - For organisation signatures:
+     - The digital signature is verified using the organisation's public key.
+     - The member attribution is extracted and presented to the user.
    - Additional checks ensure the signature is valid for the intended service and time period.
 
 Each of these workflows contributes to the overall security and integrity of the VeraId ecosystem.
@@ -408,7 +411,9 @@ VeraId signatures use the Cryptographic Message Syntax (CMS) as defined in RFC 5
 
 2. **Signer Info:**
 
-   - The SignerInfo structure MUST include the signer's certificate.
+   - For member signatures, the SignerInfo structure MUST include the signer's certificate.
+   - For organisation signatures, the signer's certificate MAY be included if it differs from the organisation certificate in the signature bundle.
+   - Both signature types MAY include intermediate certificates if the signer's certificate is issued through a certification path from the organisation certificate.
    - The digest algorithm MUST match the key strength (SHA-256 for RSA-2048, etc.).
    - The signature algorithm MUST be RSA-PSS.
 
@@ -419,29 +424,16 @@ VeraId signatures use the Cryptographic Message Syntax (CMS) as defined in RFC 5
    - MUST include the VeraId signature metadata attribute (`1.3.6.1.4.1.58708.1.0`) containing:
      - Service OID: The OID of the service for which the signature is valid.
      - Validity period: The start and end dates for signature validity.
+   - For organisation signatures, MUST include the VeraId member attribution attribute (`1.3.6.1.4.1.58708.1.2`) containing:
+     - A UTF8String identifying the member to whom the organisation attributes the content.
 
 4. **Certificate Chain:**
-   - MUST include the member's certificate.
+   - For member signatures, MUST include the member's certificate.
+   - For organisation signatures where the signer is not the organisation itself (e.g., a delegated signer), MUST include the signer's certificate.
    - MAY include intermediate certificates if applicable.
-   - SHOULD NOT include the organisation certificate (which is provided separately).
+   - MUST NOT include the organisation certificate from the signature bundle.
 
-The VeraId signature metadata is encoded as an ASN.1 structure:
-
-```asn1
-SignatureMetadata ::= SEQUENCE {
-    serviceOid      [0] OBJECT IDENTIFIER,
-    validityPeriod  [1] DatePeriod
-}
-
-DatePeriod ::= SEQUENCE {
-    start  [0] GeneralizedTime,
-    end    [1] GeneralizedTime
-}
-```
-
-All `GeneralizedTime` values in VeraId structures SHOULD include UTC timezone information (`Z` suffix). When timezone information is absent from a `GeneralizedTime` value in any VeraId structure, implementations MUST interpret it as UTC.
-
-The signature MAY be either detached (where the signed content is provided separately) or encapsulated (where the signed content is included in the CMS structure), depending on the application's requirements.
+The VeraId signature metadata is encoded as an ASN.1 structure and is defined in section 7.3.
 
 ## 5. Identity Model
 
@@ -664,12 +656,23 @@ Where:
 - `organisationCertificate` is the organisation's self-issued X.509 certificate.
 - `signature` is a CMS `ContentInfo` containing a `SignedData` structure.
 
-The `SignedData` structure within the `signature` field contains:
+VeraId supports two types of signature bundles, which share the same structure but differ in their content and verification process:
 
-- The member certificate (and any intermediate certificates if applicable).
-- The digital signature over the content.
-- Signature attributes, including the VeraId signature metadata.
-- Optionally, the signed content itself (for encapsulated signatures).
+1. **Member signatures:** The `SignedData` structure contains:
+
+   - The member certificate (and any intermediate certificates if applicable).
+   - The digital signature over the content, produced using the member's private key.
+   - Signature attributes, including the VeraId signature metadata.
+   - Optionally, the signed content itself (for encapsulated signatures).
+
+2. **Organisation signatures:** The `SignedData` structure contains:
+   - The digital signature over the content, produced using the organisation's private key.
+   - Signature attributes, including the VeraId signature metadata.
+   - The member attribution attribute identifying the member who authored the content.
+   - Optionally, intermediate certificates if the organisation uses a certification path.
+   - Optionally, the signed content itself (for encapsulated signatures).
+
+The signature type is determined by the presence of the member attribution attribute: if present, it's an organisation signature; if absent, it's a member signature.
 
 For detached signatures, the plaintext content must be provided separately during verification.
 
@@ -731,35 +734,74 @@ The verification of a VeraId signature involves multiple steps that validate the
    - Confirm that the certificate is self-signed and valid.
    - Check that the certificate has the CA flag set in the Basic Constraints extension.
 
-4. **Extract and validate the CMS signature:**
+4. **Determine the signature type:**
 
-   - Parse the CMS `SignedData` structure.
-   - Extract the member certificate from the `SignedData`.
-   - Verify that the member certificate was issued by the organisation certificate.
+   - Extract the signed attributes from the CMS `SignedData` structure.
+   - Check for the presence of the member attribution attribute (`1.3.6.1.4.1.58708.1.2`).
+   - If the member attribution attribute is present, it is an organisation signature.
+   - If the member attribution attribute is absent, it is a member signature.
 
-5. **Validate the signature metadata:**
+5. **Extract and validate certificates:**
 
-   - Extract the service OID and validity period from the signature metadata.
+   - Extract the organisation certificate from the signature bundle.
+   - Extract the signer's certificate from the CMS `SignedData` structure if present.
+     - For member signatures, the signer's certificate MUST be present.
+     - For organisation signatures, the signer's certificate MAY be present if it differs from the organisation certificate.
+   - Construct and validate the certification path:
+     - The path starts with the organisation certificate from the signature bundle.
+     - The path ends with the signer's certificate (which may be the organisation certificate itself for organisation signatures).
+     - Any intermediate certificates in the `SignedData` structure MUST be included in the path.
+   - Verify that all certificates in the path are valid at the verification time.
+
+6. **Validate the signature metadata:**
+
+   - Extract the service OID and validity period from the signature metadata attribute.
    - Verify that the service OID matches the expected service.
    - Confirm that the verification time falls within the signature validity period.
 
-6. **Determine the overall validity period:**
+7. **Determine the overall validity period:**
 
    - Calculate the intersection of:
-     - The organisation certificate validity period.
-     - The member certificate validity period.
+     - The validity periods of all certificates in the certification path, from the organisation certificate to the signer's certificate (if different).
      - The signature metadata validity period.
      - The DNSSEC record validity period (using the TTL override).
    - Verify that the verification time falls within this intersection.
 
-7. **Verify the digital signature:**
-   - Use the member's public key to verify the signature over the content.
+8. **Verify the digital signature:**
+
+   - Use the signer's public key to verify the signature over the content.
    - For detached signatures, use the externally provided content.
    - For encapsulated signatures, extract the content from the CMS structure.
 
-If all these steps succeed, the signature is considered valid, and the content is confirmed to originate from the identified member of the specified organisation.
+9. **Produce verification output:**
+   - Always include the organisation name.
+   - Include the member name (for users only, not for bots):
+     - For member signatures, from the signer certificate.
+     - For organisation signatures, from the member attribution.
+   - Always include the signature type (member or organisation).
+
+If all these steps succeed, the signature is considered valid, and the content is confirmed to originate from the identified member of the specified organisation or from the organisation itself.
 
 The verification process MUST be performed in full, without skipping any steps, to ensure the security properties of the VeraId protocol.
+
+### 7.5. Member Attribution
+
+For organisation signatures, a required signed attribute is included in the CMS `SignedData` structure to attribute the content to a specific member:
+
+```asn1
+MemberAttribution ::= UTF8String
+```
+
+The member attribution attribute (`1.3.6.1.4.1.58708.1.2`) serves the following purposes:
+
+1. **Content authorship:** Indicates which member authored the content, even when the organisation signs directly.
+2. **Operational flexibility:** Allows organisations to produce signatures on behalf of members without requiring certificate management for ephemeral members.
+3. **Accountability:** Maintains a record of which member is responsible for the content, even when using organisation signatures.
+4. **Signature type identification:** Enables reliable determination of the signature type during verification.
+
+The member attribution value MUST conform to the same naming conventions defined for member names in section 5.3. For users, this is the username; for bots, this is the at sign (`@`).
+
+Member attribution is a claim made by the organisation, not cryptographically proven by the member. Verifiers MUST present this distinction clearly to end users.
 
 ## 8. Service Integration
 
@@ -995,6 +1037,47 @@ Offline verification introduces specific security considerations:
 
 These limitations are inherent to any offline verification system and reflect fundamental tradeoffs between availability and security. VeraId provides a balanced approach that offers strong verification guarantees whilst supporting offline operation.
 
+### 9.5. Organisation Signatures and Member Attribution
+
+Organisation signatures with member attribution introduce specific security considerations that implementers and developers should be aware of:
+
+1. **Trust Model Shift:**
+
+   - Member signatures provide cryptographic proof that a specific member created the content, with the member's private key directly signing the content.
+   - Organisation signatures with member attribution provide only a claim by the organisation about which member authored the content, without cryptographic proof from the member.
+   - This distinction represents a fundamental shift in the trust model from cryptographic verification to organisational attestation.
+
+2. **Potential for Misattribution:**
+
+   - Organisations have the technical ability to attribute content to any member, whether or not that member actually created the content.
+   - Malicious or compromised organisations could falsely attribute content to members who did not create it.
+   - This risk is mitigated by the fact that the organisation must still sign the content with its private key, creating an auditable record of the attribution.
+
+3. **Accountability Considerations:**
+
+   - Member signatures create direct cryptographic accountability for the member.
+   - Organisation signatures shift accountability to the organisation, even when content is attributed to a specific member.
+   - Legal and regulatory frameworks may treat these different types of signatures differently with respect to non-repudiation and liability.
+
+4. **Operational Security:**
+
+   - Organisation signatures require access to the organisation's private key, which should be more tightly controlled than member private keys.
+   - Organisations should implement strict access controls and audit mechanisms for the use of organisation signatures, particularly when attributing content to members.
+   - The use of certification paths in organisation signatures introduces additional complexity and potential security vulnerabilities.
+
+5. **Verification Presentation:**
+   - Verification interfaces MUST clearly distinguish between cryptographically proven member signatures and organisation signatures with member attribution.
+   - End users of applications implementing VeraId may need to be informed about the different trust implications of these signature types.
+   - Implementations SHOULD use distinct visual indicators or terminology to prevent confusion between the two signature types.
+
+To mitigate these risks, developers integrating VeraId SHOULD:
+
+- Prefer member signatures over organisation signatures when practical.
+- Limit the use of organisation signatures to specific use cases where certificate management for members is impractical.
+- Implement strong audit logging for all organisation signatures, especially those with member attribution.
+- Clearly communicate the distinction between signature types to end users.
+- Consider implementing additional verification steps for organisation signatures with member attribution in high-security contexts.
+
 ## 10. Implementation Guidance
 
 ### 10.1. Reference Implementations
@@ -1100,6 +1183,34 @@ VeraId implementations can benefit from several performance optimisations whilst
 
 These optimisations MUST NOT compromise security or correctness. Performance-critical applications SHOULD profile their verification code to identify bottlenecks and focus optimisation efforts accordingly.
 
+### 10.4. Member vs Organisation Signatures
+
+Developers integrating VeraId into their applications must decide whether to use member signatures or organisation signatures with member attribution. This decision should be based on the specific requirements of the application and the security considerations outlined in Section 9.5.
+
+#### 10.4.1. Implementation Recommendations
+
+1. **Library/SDK Design:**
+
+   - VeraId libraries and SDKs SHOULD provide distinct functions for creating member signatures and organisation signatures.
+   - Verification functions SHOULD be unified, with the signature type included in the verification output.
+   - Libraries SHOULD NOT require developers to specify the signature type during verification, as this should be determined automatically from the signature bundle.
+
+2. **Use Case Considerations:**
+
+   - Member signatures are recommended for applications where non-repudiation at the individual level is critical.
+   - Organisation signatures with member attribution are appropriate for applications where certificate management for individual members is impractical or where organisational accountability is sufficient.
+
+3. **Hybrid Approaches:**
+   - Some applications may benefit from supporting both signature types, allowing flexibility based on the specific context or user role.
+   - In hybrid implementations, clear policies should govern when each signature type is used.
+
+#### 10.4.2. User Interface Recommendations
+
+1. **Signature Type Indication:** User interfaces SHOULD clearly indicate whether a signature is a member signature or an organisation signature with member attribution. Different visual indicators (icons, colors, labels) SHOULD be used to distinguish between the two signature types.
+2. **Attribution Presentation:** For organisation signatures, interfaces SHOULD clearly indicate that the member attribution is a claim made by the organisation, not cryptographic proof. Example phrasing: `Signed by example.com on behalf of alice` rather than `Signed by alice of example.com`.
+3. **Verification Details:** Interfaces SHOULD provide access to detailed verification information, including the full certification path and validity periods. Advanced users SHOULD be able to view the complete verification process and results.
+4. **Error Handling:** Clear error messages SHOULD be displayed when verification fails, with appropriate guidance for users. Different error handling may be appropriate for different signature types, reflecting their distinct trust models.
+
 ## Appendices
 
 ### A. ASN.1 Schemas
@@ -1140,6 +1251,9 @@ DatePeriod ::= SEQUENCE {
     start  [0] GeneralizedTime,
     end    [1] GeneralizedTime
 }
+
+-- Member attribution (included as a signed attribute in organisation signatures)
+MemberAttribution ::= UTF8String
 ```
 
 All VeraId data structures MUST be encoded using ASN.1 Distinguished Encoding Rules (DER). Implementations MUST reject structures that are not valid DER.
@@ -1162,6 +1276,7 @@ The following Object Identifiers (OIDs) are defined for use in the VeraId protoc
 2. **Protocol OIDs:**
 
    - `1.3.6.1.4.1.58708.1.0`: Signature Metadata Attribute.
+   - `1.3.6.1.4.1.58708.1.2`: Member Attribution Attribute.
 
 3. **Service OIDs:**
    - `1.3.6.1.4.1.58708.1.1`: Test Service.
