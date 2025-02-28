@@ -439,6 +439,8 @@ DatePeriod ::= SEQUENCE {
 }
 ```
 
+All `GeneralizedTime` values in VeraId structures SHOULD include UTC timezone information (`Z` suffix). When timezone information is absent from a `GeneralizedTime` value in any VeraId structure, implementations MUST interpret it as UTC.
+
 The signature MAY be either detached (where the signed content is provided separately) or encapsulated (where the signed content is included in the CMS structure), depending on the application's requirements.
 
 ## 5. Identity Model
@@ -1041,13 +1043,19 @@ To ensure interoperability between different VeraId implementations:
    - Domain names SHOULD be handled in their ASCII form after Punycode conversion.
    - Usernames MUST be compared using case-sensitive comparison.
 
-4. **Algorithm Support:**
+4. **Time Representation:**
+
+   - Implementations SHOULD use UTC (`Z` suffix) in all `GeneralizedTime` values, including those in X.509 certificates.
+   - When timezone information is absent from a `GeneralizedTime` value in any VeraId structure, implementations MUST interpret it as UTC.
+   - Implementations MUST correctly handle and compare `GeneralizedTime` values with different timezone representations.
+
+5. **Algorithm Support:**
 
    - Implementations MUST support all mandatory cryptographic algorithms.
    - Implementations MAY support additional algorithms for future compatibility.
    - Implementations MUST reject signatures using unsupported algorithms.
 
-5. **Version Handling:**
+6. **Version Handling:**
    - Implementations MUST check version fields in all structures.
    - Implementations MUST reject structures with unsupported versions.
    - Implementations SHOULD be designed to accommodate future versions.
