@@ -768,14 +768,14 @@ VeraId uses Object Identifiers (OIDs) to uniquely identify services and applicat
 1. **OID Structure:**
 
    - The VeraId root OID is `1.3.6.1.4.1.58708.1`.
-   - Service-specific OIDs SHOULD be allocated under this root.
+   - Official service OIDs MUST be allocated under this root.
    - For example, the test service OID is `1.3.6.1.4.1.58708.1.1`.
 
 2. **OID Allocation:**
 
    - Service designers MUST obtain a unique OID for their service.
-   - OIDs MAY be allocated from the VeraId namespace by request.
-   - Alternatively, services MAY use OIDs from their own namespace.
+   - Third-party services MUST use OIDs from their own namespace.
+   - The VeraId OID arc is reserved exclusively for official services under the VeraId project umbrella.
 
 3. **OID Usage:**
 
@@ -784,6 +784,7 @@ VeraId uses Object Identifiers (OIDs) to uniquely identify services and applicat
    - VeraId TXT records MAY specify a service OID to restrict key usage.
 
 4. **Versioning:**
+
    - Service designers SHOULD include version information in their OID structure.
    - Major protocol changes SHOULD use a new OID.
    - Minor, backward-compatible changes MAY use the same OID.
@@ -1157,13 +1158,13 @@ The following Object Identifiers (OIDs) are defined for use in the VeraId protoc
 3. **Service OIDs:**
    - `1.3.6.1.4.1.58708.1.1`: Test Service.
 
-New OIDs for services using VeraId SHOULD be allocated under their own arcs. If a service does not have its own OID arc, it MAY request allocation under the VeraId base OID.
+Third-party services implementing VeraId MUST register and use their own OIDs under their own arcs. The VeraId OID arc (`1.3.6.1.4.1.58708.1`) is reserved exclusively for official services and protocol components under the VeraId project umbrella.
 
 OID registration procedures:
 
-1. OIDs under the VeraId base OID are managed by the VeraId maintainers.
-2. Requests for new OIDs SHOULD be submitted with documentation about the service.
-3. OIDs are allocated on a first-come, first-served basis.
+1. OIDs under the VeraId base OID are managed by the VeraId maintainers and reserved for official VeraId project purposes.
+2. Third parties MUST NOT use OIDs under the VeraId arc for their services.
+3. Third parties without their own OID arc SHOULD obtain one from their national registration authority or through IANA's Private Enterprise Number (PEN) registry.
 4. Once allocated, OIDs are never reassigned to different services.
 
 Services SHOULD use versioning in their OID structure to manage protocol evolution. Major, incompatible changes SHOULD use a new OID, whilst minor, backward-compatible changes MAY use the same OID.
