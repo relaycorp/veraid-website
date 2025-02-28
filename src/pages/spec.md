@@ -429,13 +429,13 @@ The VeraId signature metadata is encoded as an ASN.1 structure:
 
 ```asn1
 SignatureMetadata ::= SEQUENCE {
-    serviceOid         OBJECT IDENTIFIER,
-    validityPeriod     DatePeriod
+    serviceOid      [0] OBJECT IDENTIFIER,
+    validityPeriod  [1] DatePeriod
 }
 
 DatePeriod ::= SEQUENCE {
-    start              [0] GeneralizedTime,
-    end                [1] GeneralizedTime
+    start  [0] GeneralizedTime,
+    end    [1] GeneralizedTime
 }
 ```
 
@@ -626,10 +626,10 @@ The Member ID Bundle is a self-contained package that provides all the informati
 
 ```asn1
 MemberIdBundle ::= SEQUENCE {
-    version               [0] INTEGER DEFAULT 0,
-    dnssecChain           [1] DnssecChain,
-    organisationCertificate [2] Certificate,
-    memberCertificate     [3] Certificate
+    version                  [0] INTEGER DEFAULT 0,
+    dnssecChain              [1] DnssecChain,
+    organisationCertificate  [2] Certificate,
+    memberCertificate        [3] Certificate
 }
 ```
 
@@ -650,10 +650,10 @@ The Signature Bundle is the core artefact of the VeraId protocol, containing a d
 
 ```asn1
 SignatureBundle ::= SEQUENCE {
-    version               [0] INTEGER DEFAULT 0,
-    dnssecChain           [1] DnssecChain,
-    organisationCertificate [2] Certificate,
-    signature             [3] ContentInfo
+    version                  [0] INTEGER DEFAULT 0,
+    dnssecChain              [1] DnssecChain,
+    organisationCertificate  [2] Certificate,
+    signature                [3] ContentInfo
 }
 ```
 
@@ -683,13 +683,13 @@ The signature metadata is encoded as an ASN.1 structure:
 
 ```asn1
 SignatureMetadata ::= SEQUENCE {
-    serviceOid         [0] OBJECT IDENTIFIER,
-    validityPeriod     [1] DatePeriod
+    serviceOid      [0] OBJECT IDENTIFIER,
+    validityPeriod  [1] DatePeriod
 }
 
 DatePeriod ::= SEQUENCE {
-    start              [0] GeneralizedTime,
-    end                [1] GeneralizedTime
+    start  [0] GeneralizedTime,
+    end    [1] GeneralizedTime
 }
 ```
 
