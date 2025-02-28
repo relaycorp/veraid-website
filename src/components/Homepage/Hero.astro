@@ -85,7 +85,7 @@ import audioGif from "../../assets/audio.gif";
           }
           @media (min-width: 768px) {
             .carousel-scroll {
-              animation: scroll 20s linear infinite;
+              animation: scroll 30s linear infinite;
             }
           }
           .carousel-paused {
@@ -101,6 +101,19 @@ import audioGif from "../../assets/audio.gif";
   const carousel = document.getElementById("carousel");
   let isPaused = false;
 
+  // Pause on hover (desktop only)
+  const mediaQuery = window.matchMedia("(hover: hover)");
+  if (mediaQuery.matches) {
+    carousel?.addEventListener("mouseenter", () => {
+      carousel.classList.add("carousel-paused");
+    });
+
+    carousel?.addEventListener("mouseleave", () => {
+      carousel.classList.remove("carousel-paused");
+    });
+  }
+
+  // Keep click/tap functionality for mobile
   carousel?.addEventListener("click", () => {
     isPaused = !isPaused;
     carousel.classList.toggle("carousel-paused", isPaused);
