@@ -34,9 +34,9 @@ import audioGif from "../../assets/audio.gif";
         names.
       </p>
       <!-- Carousel -->
-      <div class="mt-14 relative overflow-hidden w-full">
-        <div class="carousel-scroll flex gap-8 items-center">
-          <div class="flex gap-16 items-center min-w-max pr-8">
+      <div class="mt-6 md:mt-14 relative overflow-hidden w-full">
+        <div class="carousel-scroll flex gap-8 items-center" id="carousel">
+          <div class="flex gap-8 sm:gap-16 items-center min-w-max pr-4 sm:pr-8">
             <Image src={microsoftImg} alt="Microsoft" class="h-24 w-auto object-contain" />
             <Image src={xkcdImg} alt="XKCD" class="h-24 w-auto object-contain" />
             <Image src={gandalfImg} alt="Gandalf" class="h-24 w-auto object-contain" />
@@ -52,7 +52,7 @@ import audioGif from "../../assets/audio.gif";
             <Image src={bbcImg} alt="BBC" class="h-30 w-auto object-contain" />
             <Image src={winterImg} alt="Winter" class="h-24 w-auto object-contain" />
           </div>
-          <div class="flex gap-16 items-center min-w-max">
+          <div class="flex gap-8 sm:gap-16 items-center min-w-max">
             <Image src={xkcdImg} alt="XKCD" class="h-24 w-auto object-contain" />
             <Image src={microsoftImg} alt="Microsoft" class="h-24 w-auto object-contain" />
             <div class="relative">
@@ -82,9 +82,14 @@ import audioGif from "../../assets/audio.gif";
           .carousel-scroll {
             display: flex;
             width: max-content;
-            animation: scroll 20s linear infinite;
+            animation: scroll 30s linear infinite;
           }
-          .carousel-scroll:hover {
+          @media (min-width: 768px) {
+            .carousel-scroll {
+              animation: scroll 20s linear infinite;
+            }
+          }
+          .carousel-paused {
             animation-play-state: paused;
           }
         </style>
@@ -92,3 +97,13 @@ import audioGif from "../../assets/audio.gif";
     </div>
   </div>
 </section>
+<!-- Pause the carousel on click/tap -->
+<script>
+  const carousel = document.getElementById("carousel");
+  let isPaused = false;
+
+  carousel?.addEventListener("click", () => {
+    isPaused = !isPaused;
+    carousel.classList.toggle("carousel-paused", isPaused);
+  });
+</script>
