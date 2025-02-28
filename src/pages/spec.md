@@ -1001,12 +1001,12 @@ Reference implementations of the VeraId protocol are available to assist develop
 
 1. **Core Libraries:**
 
-   - JavaScript/TypeScript: `@relaycorp/veraid`.
-   - Kotlin/JVM/Android: `tech.relaycorp:veraid`.
+   - [JavaScript/TypeScript (`@relaycorp/veraid`)](https://github.com/relaycorp/veraid-js).
+   - [Kotlin/JVM (`tech.relaycorp:veraid`)](https://github.com/relaycorp/veraid-jvm).
 
 2. **Related Tools:**
-   - VeraId Authority: Server for managing organisations and members.
-   - VeraId Authority Client: Client library for interacting with VeraId Authority.
+   - [VeraId Authority](https://github.com/relaycorp/veraid-authority): Server for managing organisations and members.
+   - [VeraId Authority Client](https://github.com/relaycorp/veraid-authority-js): JavaScript client library for interacting with VeraId Authority.
 
 The reference implementations serve as definitive interpretations of this specification. Where ambiguities exist in the specification, the behaviour of the reference implementations should be considered normative.
 
