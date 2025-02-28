@@ -1,14 +1,27 @@
 ---
 import { Image } from "astro:assets";
+import Carousel from "./Carousel.astro";
 import patternSvg from "../../assets/pattern.svg";
 import microsoftImg from "../../assets/microsoft.png";
 import xkcdImg from "../../assets/xkcd.png";
 import gandalfImg from "../../assets/gandalf.png";
 import bbcImg from "../../assets/bbc.png";
 import chewbaccaImg from "../../assets/chewbacca.png";
-import spotifyImg from "../../assets/spotify.png";
+import spotifyImg from "../../assets/spotify.gif";
 import winterImg from "../../assets/winter.png";
-import audioGif from "../../assets/audio.gif";
+
+const carouselImages = [
+  {
+    src: microsoftImg,
+    alt: "Text: Developers! Developers! Developers! with email sb@microsoft.com",
+  },
+  { src: xkcdImg, alt: "XKCD-style stick figure drawing showing a graph and two people" },
+  { src: gandalfImg, alt: "Text: You shall not pass! with email gandalf@ring.company" },
+  { src: spotifyImg, alt: "Audio waveform visualization" },
+  { src: chewbaccaImg, alt: "Text: Rrruuuurr with email chewbacca@kashyyyk.space" },
+  { src: bbcImg, alt: "HTML code snippet showing a news article structure", heightClass: "h-30" },
+  { src: winterImg, alt: "Text: Winter is Coming with email winter@got.com" },
+];
 ---
 
 <section class="relative px-4 md:px-6 md:pt-12 pt-8 md:pb-14 pb-9">
@@ -32,92 +45,7 @@ import audioGif from "../../assets/audio.gif";
       <p class="text-md sm:text-xl md:text-2xl text-neutral-300 mx-auto max-w-4xl">
         VeraId is a decentralised protocol that securely attributes content to domain names.
       </p>
-      <!-- Carousel -->
-      <div class="mt-6 md:mt-14 relative overflow-hidden w-full">
-        <div class="carousel-scroll flex gap-8 items-center" id="carousel">
-          <!-- First set -->
-          <div class="flex gap-8 sm:gap-16 items-center min-w-max pr-4 sm:pr-8">
-            <Image src={microsoftImg} alt="Microsoft" class="h-24 w-auto object-contain" />
-            <Image src={xkcdImg} alt="XKCD" class="h-24 w-auto object-contain" />
-            <Image src={gandalfImg} alt="Gandalf" class="h-24 w-auto object-contain" />
-            <div class="relative">
-              <Image src={spotifyImg} alt="Spotify" class="h-24 w-auto object-contain" />
-              <Image
-                src={audioGif}
-                alt="Waveform gif"
-                class="absolute top-1/2 left-1/2 -translate-x-[53%] -translate-y-1/2"
-              />
-            </div>
-            <Image src={chewbaccaImg} alt="Chewbacca" class="h-24 w-auto object-contain" />
-            <Image src={bbcImg} alt="BBC" class="h-30 w-auto object-contain" />
-            <Image src={winterImg} alt="Winter" class="h-24 w-auto object-contain" />
-          </div>
-          <!-- Second set (identical to first) -->
-          <div class="flex gap-8 sm:gap-16 items-center min-w-max pr-4 sm:pr-8">
-            <Image src={microsoftImg} alt="Microsoft" class="h-24 w-auto object-contain" />
-            <Image src={xkcdImg} alt="XKCD" class="h-24 w-auto object-contain" />
-            <Image src={gandalfImg} alt="Gandalf" class="h-24 w-auto object-contain" />
-            <div class="relative">
-              <Image src={spotifyImg} alt="Spotify" class="h-24 w-auto object-contain" />
-              <Image
-                src={audioGif}
-                alt="Waveform gif"
-                class="absolute top-1/2 left-1/2 -translate-x-[53%] -translate-y-1/2"
-              />
-            </div>
-            <Image src={chewbaccaImg} alt="Chewbacca" class="h-24 w-auto object-contain" />
-            <Image src={bbcImg} alt="BBC" class="h-30 w-auto object-contain" />
-            <Image src={winterImg} alt="Winter" class="h-24 w-auto object-contain" />
-          </div>
-        </div>
-
-        <style>
-          @keyframes scroll {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-50%);
-            }
-          }
-          .carousel-scroll {
-            display: flex;
-            width: max-content;
-            animation: scroll 30s linear infinite;
-          }
-          @media (min-width: 768px) {
-            .carousel-scroll {
-              animation: scroll 30s linear infinite;
-            }
-          }
-          .carousel-paused {
-            animation-play-state: paused;
-          }
-        </style>
-      </div>
+      <Carousel images={carouselImages} />
     </div>
   </div>
 </section>
-<!-- Pause the carousel on click/tap -->
-<script>
-  const carousel = document.getElementById("carousel");
-  let isPaused = false;
-
-  // Pause on hover (desktop only)
-  const mediaQuery = window.matchMedia("(hover: hover)");
-  if (mediaQuery.matches) {
-    carousel?.addEventListener("mouseenter", () => {
-      carousel.classList.add("carousel-paused");
-    });
-
-    carousel?.addEventListener("mouseleave", () => {
-      carousel.classList.remove("carousel-paused");
-    });
-  }
-
-  // Tap functionality for mobile
-  carousel?.addEventListener("click", () => {
-    isPaused = !isPaused;
-    carousel.classList.toggle("carousel-paused", isPaused);
-  });
-</script>

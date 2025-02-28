@@ -1,0 +1,14 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  heightClass?: string;
+}
+
+const { src, alt, heightClass = "h-24" } = Astro.props;
+---
+
+<Image src={src} alt={alt} class={`${heightClass} w-auto object-contain`} />
+
