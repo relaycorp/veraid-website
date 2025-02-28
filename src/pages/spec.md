@@ -231,7 +231,7 @@ _veraid.example.com. IN TXT "1 3 dGhpcyBpcyBub3QgYSByZWFsIGtleSBkaWdlc3Q 86400"
 
 This example specifies an RSA-2048 key identified by its SHA-512 digest with a TTL override of 24 hours (86400 seconds).
 
-### 3.3. DNSSEC Chain Serialization
+### 3.3. DNSSEC Chain Serialisation
 
 The DNSSEC chain for a VeraId signature MUST be serialised in a format that allows for offline verification. The serialisation format is based on the DNS message format defined in RFC 1035, with specific requirements for VeraId:
 
@@ -845,7 +845,7 @@ Service developers integrating VeraId should adhere to the following guidelines 
    - Use dependency injection to allow for testing and component replacement.
    - Consider signature verification as a security boundary in the application.
 
-4. **Performance Optimizations:**
+4. **Performance Optimisations:**
 
    - Cache verification results when appropriate (respecting validity periods).
    - Implement efficient ASN.1 parsing routines.
@@ -961,7 +961,7 @@ Domain ownership changes represent a fundamental challenge to any domain-based a
 
 Offline verification introduces specific security considerations:
 
-1. **Time Synchronization:**
+1. **Time Synchronisation:**
 
    - Accurate verification requires correct system time.
    - Devices with incorrect clocks may incorrectly validate expired signatures.
@@ -1054,9 +1054,9 @@ To ensure interoperability between different VeraId implementations:
 
 Regular interoperability testing between different implementations is recommended to ensure ongoing compatibility.
 
-### 10.3. Performance Optimizations
+### 10.3. Performance Optimisations
 
-VeraId implementations can benefit from several performance optimizations whilst maintaining security:
+VeraId implementations can benefit from several performance optimisations whilst maintaining security:
 
 1. **Caching Strategies:**
 
@@ -1065,7 +1065,7 @@ VeraId implementations can benefit from several performance optimizations whilst
    - Use LRU (Least Recently Used) or similar algorithms for cache management.
    - Ensure cache entries are invalidated when they expire.
 
-2. **Size Optimizations:**
+2. **Size Optimisations:**
 
    - Minimise the size of DNSSEC chains by removing redundant records.
    - Use the minimum required set of certificates in signature bundles.
@@ -1086,11 +1086,11 @@ VeraId implementations can benefit from several performance optimizations whilst
    - Consider memory constraints on resource-limited devices.
 
 5. **Parallel Processing:**
-   - Parallelize independent verification steps when possible.
+   - Parallelise independent verification steps when possible.
    - Consider using worker threads for CPU-intensive operations.
-   - Balance parallelization benefits against overhead costs.
+   - Balance parallelisation benefits against overhead costs.
 
-These optimizations MUST NOT compromise security or correctness. Performance-critical applications SHOULD profile their verification code to identify bottlenecks and focus optimization efforts accordingly.
+These optimisations MUST NOT compromise security or correctness. Performance-critical applications SHOULD profile their verification code to identify bottlenecks and focus optimisation efforts accordingly.
 
 ## Appendices
 
