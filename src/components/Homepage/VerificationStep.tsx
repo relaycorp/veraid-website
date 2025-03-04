@@ -12,7 +12,7 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
   showArrow = false,
 }) => {
   return (
-    <div className="mb-2 relative">
+    <div className="relative">
       <div className="border-3 border-amber-500 rounded-md p-4 text-white">
         <div className="font-mono">
           <div className="font-bold text-sm">{title}</div>
@@ -20,7 +20,7 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
         </div>
       </div>
       {showArrow && (
-        <div className="flex justify-center my-1">
+        <div className="flex justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

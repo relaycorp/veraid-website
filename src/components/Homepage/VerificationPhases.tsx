@@ -58,7 +58,7 @@ const VerificationPhases: React.FC = () => {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="text-white md:hidden"
+        className="text-neutral-300 md:hidden"
       >
         <path d="M12 5v14" />
         <path d="m5 12 7 7 7-7" />
@@ -75,7 +75,7 @@ const VerificationPhases: React.FC = () => {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="text-white hidden md:block"
+        className="text-neutral-300 hidden md:block"
       >
         <path d="M5 12h14" />
         <path d="m12 5 7 7-7 7" />
@@ -84,10 +84,10 @@ const VerificationPhases: React.FC = () => {
   );
 
   return (
-    <div className="bg-neutral-900 py-12 md:py-16 px-4 sm:px-6">
+    <div className="py-2 md:py-6 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between">
-          <div className="w-full md:w-[30%]">
+          <div className="w-full md:w-[33%]">
             <PhaseColumn
               title="DNSSEC Chain"
               steps={dnssecSteps}
@@ -100,7 +100,7 @@ const VerificationPhases: React.FC = () => {
             <DirectionalArrow />
           </div>
 
-          <div className="w-full md:w-[32%]">
+          <div className="w-full md:w-[33%]">
             <PhaseColumn
               title="X.509 Certificate Chain"
               steps={x509Steps}
@@ -113,7 +113,7 @@ const VerificationPhases: React.FC = () => {
             <DirectionalArrow />
           </div>
 
-          <div className="w-full md:w-[30%]">
+          <div className="w-full md:w-[33%]">
             <PhaseColumn
               title="CMS SignedData"
               steps={cmsSteps}
