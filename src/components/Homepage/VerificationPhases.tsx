@@ -48,13 +48,24 @@ const VerificationPhases: React.FC = () => {
     <div className="bg-neutral-900 py-12 md:py-16 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          <PhaseColumn title="DNSSEC Chain" steps={dnssecSteps} result="caltech.edu." />
+          <PhaseColumn
+            title="DNSSEC Chain"
+            steps={dnssecSteps}
+            result="caltech.edu."
+            showTick={true}
+          />
           <PhaseColumn
             title="X.509 Certificate Chain"
             steps={x509Steps}
             result="sheldon@caltech.edu"
+            showTick={true}
           />
-          <PhaseColumn title="CMS SignedData" steps={cmsSteps} result='"Bazinga!"' />
+          <PhaseColumn
+            title="CMS SignedData"
+            steps={cmsSteps}
+            result='"Bazinga!"'
+            showTick={true}
+          />
         </div>
       </div>
     </div>
