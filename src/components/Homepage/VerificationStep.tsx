@@ -2,7 +2,7 @@ import React from "react";
 
 export interface VerificationStepProps {
   title: string;
-  description: string;
+  description?: string;
   showArrow?: boolean;
 }
 
@@ -16,7 +16,7 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
       <div className="border-3 border-amber-500 rounded-md p-4 text-white">
         <div className="font-mono">
           <div className="font-bold text-sm">{title}</div>
-          <div className="text-sm text-gray-300">{description}</div>
+          <div className="hidden md:block text-sm text-gray-300">{description}</div>
         </div>
       </div>
       {showArrow && (

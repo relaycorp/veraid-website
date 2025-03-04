@@ -6,7 +6,7 @@ import tickIcon from "../../assets/icons/tick.svg";
 
 export interface VerificationStepData {
   title: string;
-  description: string;
+  description?: string;
   showArrow?: boolean;
 }
 

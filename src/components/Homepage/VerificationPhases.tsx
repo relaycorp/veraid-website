@@ -6,20 +6,18 @@ const VerificationPhases: React.FC = () => {
   // Data for DNSSEC Chain
   const dnssecSteps: VerificationStepData[] = [
     {
-      title: ". DNSSEC Root (IANA)",
-      description: "NS record",
+      title: ".",
+      description: "DNSSEC Root (IANA)",
     },
     {
       title: "edu.",
-      description: "NS record",
     },
     {
-      title: "caltech.com.",
-      description: "NS record",
+      title: "caltech.edu.",
     },
     {
       title: "_veraid.caltech.edu.",
-      description: "TXT record; contains digest of public key of organisation.",
+      description: "TXT record containing digest of public key of organisation.",
     },
   ];
 
