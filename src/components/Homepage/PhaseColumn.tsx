@@ -24,8 +24,8 @@ export const PhaseColumn: React.FC<PhaseColumnProps> = ({
   showTick = false,
 }) => {
   return (
-    <div className="flex flex-col h-full bg-black rounded-lg p-6">
-      <h3 className="text-white text-xl font-bold text-center mb-4">{title}</h3>
+    <div className="flex flex-col h-full bg-black rounded-lg p-4 lg:p-6">
+      <h3 className="text-white text-md lg:text-xl font-bold text-center mb-4">{title}</h3>
 
       <div className="flex-grow">
         {steps.map((step, index) => (

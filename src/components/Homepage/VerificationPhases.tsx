@@ -24,13 +24,13 @@ const VerificationPhases: React.FC = () => {
   // Data for X.509 Certificate Chain
   const x509Steps: VerificationStepData[] = [
     {
-      title: "VeraId organisation certificate",
-      description: "CN=caltech.edu",
+      title: "caltech.edu",
+      description: "VeraId organisation",
       showArrow: true,
     },
     {
-      title: "VeraId member certificate",
-      description: "CN=sheldon",
+      title: "sheldon",
+      description: "VeraId member",
     },
   ];
 
@@ -82,7 +82,7 @@ const VerificationPhases: React.FC = () => {
   );
 
   return (
-    <div className="pt-2 pb-6">
+    <div className="pt-2 pb-6 lg:pt-4 lg:pb-8">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="w-full md:w-[33%]">

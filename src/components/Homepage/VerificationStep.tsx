@@ -15,8 +15,8 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
     <div className="relative">
       <div className="border-3 border-amber-500 rounded-md p-3 text-white">
         <div className="font-mono">
-          <div className="font-bold text-sm">{title}</div>
-          <div className="hidden md:block text-sm text-gray-300">{description}</div>
+          <div className="font-bold text-xs lg:text-sm">{title}</div>
+          <div className="hidden md:block text-xs lg:text-sm text-gray-300">{description}</div>
         </div>
       </div>
       {showArrow && (
