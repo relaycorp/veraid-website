@@ -35,7 +35,7 @@ export const PhaseColumn: React.FC<PhaseColumnProps> = ({
         ))}
       </div>
 
-      <div className="text-white text-center mt-4 font-mono flex items-center justify-center">
+      <div className="text-sm lg:text-base text-white text-center mt-4 font-mono flex items-center justify-center">
         {result}
         {showTick && (
           <svg

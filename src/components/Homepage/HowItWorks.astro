@@ -1,8 +1,8 @@
 ---
-import VerificationPhases from "./VerificationPhases.astro";
+import VerificationPhases from "../VerificationChain/VerificationPhases";
 ---
 
-<section class="bg-neutral-900 px-4 sm:px-6 py-12 md:py-16 text-sm md:text-base">
+<section class="bg-neutral-900 px-4 sm:px-4 lg:px-6 py-12 md:py-16 text-sm md:text-base">
   <div class="max-w-6xl mx-auto">
     <h2 class="text-3xl text-white sm:text-4xl md:text-6xl text-center mb-8">How it works</h2>
 
@@ -19,7 +19,7 @@ import VerificationPhases from "./VerificationPhases.astro";
         (TLS), where many trust anchors (Certificate Authorities) can issue certificates for any
         domain.
       </p>
-      <VerificationPhases />
+      <VerificationPhases client:load />
       <div class="flex flex-wrap gap-4 justify-center pt-4">
         <a
           href="/architecture"

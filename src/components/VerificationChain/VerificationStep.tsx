@@ -13,12 +13,13 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
 }) => {
   return (
     <div className="relative">
-      <div className="border-2 lg:border-3 border-amber-500 rounded-md p-1.5 lg:p-3 text-white">
+      <div className="border-2 lg:border-3 border-amber-500 rounded-md p-1 lg:p-3 text-white">
         <div className="font-mono">
           <div className="font-bold text-xs lg:text-sm">{title}</div>
           <div className="hidden md:block text-xs lg:text-sm text-gray-300">{description}</div>
         </div>
       </div>
+      {/* Vertical arrow component */}
       {showArrow && (
         <div className="flex justify-center">
           <svg
