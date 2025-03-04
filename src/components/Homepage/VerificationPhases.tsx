@@ -44,7 +44,7 @@ const VerificationPhases: React.FC = () => {
 
   // Arrow component that changes direction based on screen size
   const DirectionalArrow = () => (
-    <div className="flex items-center justify-center py-4 md:py-0">
+    <div className="flex items-center justify-center">
       {/* Vertical arrow for small screens */}
       <svg
         xmlns="http://www.w3.org/2000/svg"

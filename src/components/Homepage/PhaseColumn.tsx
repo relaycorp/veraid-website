@@ -1,9 +1,6 @@
 import React from "react";
 import VerificationStep from "./VerificationStep";
 
-// Import the tick SVG
-import tickIcon from "../../assets/icons/tick.svg";
-
 export interface VerificationStepData {
   title: string;
   description?: string;
@@ -25,7 +22,7 @@ export const PhaseColumn: React.FC<PhaseColumnProps> = ({
 }) => {
   return (
     <div className="flex flex-col h-full bg-black rounded-lg p-4 lg:p-6">
-      <h3 className="text-white text-md lg:text-xl font-bold text-center mb-4">{title}</h3>
+      <h3 className="text-white text-[1rem] lg:text-xl font-bold text-center mb-4">{title}</h3>
 
       <div className="flex-grow">
         {steps.map((step, index) => (
