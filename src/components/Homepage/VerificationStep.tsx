@@ -13,7 +13,7 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
 }) => {
   return (
     <div className="relative">
-      <div className="border-3 border-amber-500 rounded-md p-4 text-white">
+      <div className="border-3 border-amber-500 rounded-md p-3 text-white">
         <div className="font-mono">
           <div className="font-bold text-sm">{title}</div>
           <div className="hidden md:block text-sm text-gray-300">{description}</div>

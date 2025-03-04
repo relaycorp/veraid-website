@@ -82,7 +82,7 @@ const VerificationPhases: React.FC = () => {
   );
 
   return (
-    <div className="py-2 md:py-6 px-4 sm:px-6">
+    <div className="pt-2 pb-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="w-full md:w-[33%]">
