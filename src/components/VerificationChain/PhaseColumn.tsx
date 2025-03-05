@@ -12,6 +12,10 @@ interface PhaseColumnProps {
   steps: VerificationStepData[];
   result: string;
   showTick?: boolean;
+  isActive?: boolean;
+  verifyingIndex?: number;
+  verifiedIndices?: number[];
+  isCompleted?: boolean;
 }
 
 export const PhaseColumn: React.FC<PhaseColumnProps> = ({
@@ -19,6 +23,10 @@ export const PhaseColumn: React.FC<PhaseColumnProps> = ({
   steps,
   result,
   showTick = false,
+  isActive = false,
+  verifyingIndex = -1,
+  verifiedIndices = [],
+  isCompleted = false,
 }) => {
   return (
     <div className="flex flex-col h-full bg-black rounded-lg p-4 lg:p-6">
@@ -31,13 +39,15 @@ export const PhaseColumn: React.FC<PhaseColumnProps> = ({
             title={step.title}
             description={step.description}
             showArrow={index !== steps.length - 1}
+            isVerifying={isActive && index === verifyingIndex}
+            isVerified={verifiedIndices.includes(index)}
           />
         ))}
       </div>
 
       <div className="text-sm lg:text-base text-white text-center mt-4 font-mono flex items-center justify-center">
         {result}
-        {showTick && (
+        {showTick && isCompleted && (
           <svg
             width="28"
             height="28"
