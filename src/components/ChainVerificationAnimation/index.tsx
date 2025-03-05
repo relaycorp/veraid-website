@@ -56,7 +56,7 @@ const VerificationPhases: React.FC = () => {
 
   const cmsSteps: VerificationStepData[] = [
     {
-      title: '"Bazinga!"',
+      title: "Bazinga!",
     },
   ];
 
@@ -196,63 +196,73 @@ const VerificationPhases: React.FC = () => {
   return (
     <div className="pb-6 lg:pb-8">
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between relative">
-          <div className="w-full md:w-[33%]">
-            <PhaseColumn
-              title="DNSSEC Chain"
-              steps={dnssecSteps}
-              result="caltech.edu."
-              status={
-                state.completedPhases[0]
-                  ? VerificationStatus.VERIFIED
-                  : state.status === "running" && state.currentPhase === 0
-                    ? VerificationStatus.VERIFYING
-                    : VerificationStatus.PENDING
-              }
-              verifiedSteps={state.verifiedSteps[0].length}
-              currentStep={state.verifyingIndices[0]}
-            />
+        <div className="relative">
+          {/* Animation content */}
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="w-full md:w-[33%]">
+              <PhaseColumn
+                title="DNSSEC Chain"
+                steps={dnssecSteps}
+                result="caltech.edu."
+                status={
+                  state.completedPhases[0]
+                    ? VerificationStatus.VERIFIED
+                    : state.status === "running" && state.currentPhase === 0
+                      ? VerificationStatus.VERIFYING
+                      : VerificationStatus.PENDING
+                }
+                verifiedSteps={state.verifiedSteps[0].length}
+                currentStep={state.verifyingIndices[0]}
+              />
+            </div>
+
+            <ResponsiveArrow />
+
+            <div className="w-full md:w-[33%]">
+              <PhaseColumn
+                title="X.509 Certificate Chain"
+                steps={x509Steps}
+                result="sheldon@caltech.edu"
+                status={
+                  state.completedPhases[1]
+                    ? VerificationStatus.VERIFIED
+                    : state.status === "running" && state.currentPhase === 1
+                      ? VerificationStatus.VERIFYING
+                      : VerificationStatus.PENDING
+                }
+                verifiedSteps={state.verifiedSteps[1].length}
+                currentStep={state.verifyingIndices[1]}
+              />
+            </div>
+
+            <ResponsiveArrow />
+
+            <div className="w-full md:w-[33%]">
+              <PhaseColumn
+                title="CMS SignedData"
+                steps={cmsSteps}
+                result='"Bazinga!"'
+                status={
+                  state.completedPhases[2]
+                    ? VerificationStatus.VERIFIED
+                    : state.status === "running" && state.currentPhase === 2
+                      ? VerificationStatus.VERIFYING
+                      : VerificationStatus.PENDING
+                }
+                verifiedSteps={state.verifiedSteps[2].length}
+                currentStep={state.verifyingIndices[2]}
+              />
+            </div>
           </div>
 
-          <ResponsiveArrow />
+          {/* Dark overlay - visible only when idle */}
+          <div
+            className={`absolute inset-0 bg-black/90 transition-opacity duration-300 ${
+              state.status === "idle" ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+          />
 
-          <div className="w-full md:w-[33%]">
-            <PhaseColumn
-              title="X.509 Certificate Chain"
-              steps={x509Steps}
-              result="sheldon@caltech.edu"
-              status={
-                state.completedPhases[1]
-                  ? VerificationStatus.VERIFIED
-                  : state.status === "running" && state.currentPhase === 1
-                    ? VerificationStatus.VERIFYING
-                    : VerificationStatus.PENDING
-              }
-              verifiedSteps={state.verifiedSteps[1].length}
-              currentStep={state.verifyingIndices[1]}
-            />
-          </div>
-
-          <ResponsiveArrow />
-
-          <div className="w-full md:w-[33%]">
-            <PhaseColumn
-              title="CMS SignedData"
-              steps={cmsSteps}
-              result='"Bazinga!"'
-              status={
-                state.completedPhases[2]
-                  ? VerificationStatus.VERIFIED
-                  : state.status === "running" && state.currentPhase === 2
-                    ? VerificationStatus.VERIFYING
-                    : VerificationStatus.PENDING
-              }
-              verifiedSteps={state.verifiedSteps[2].length}
-              currentStep={state.verifyingIndices[2]}
-            />
-          </div>
-
-          {/* Overlay button positioned in the center */}
+          {/* Overlay button positioned in the center - above the dark overlay */}
           <div
             className={`absolute inset-0 flex items-center justify-center z-10 pointer-events-none transition-opacity duration-300 ${
               state.status === "running" ? "opacity-0" : "opacity-100"
