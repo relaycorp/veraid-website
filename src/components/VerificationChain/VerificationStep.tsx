@@ -15,7 +15,6 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
   showArrow = false,
   status = VerificationStatus.PENDING,
 }) => {
-  // Determine the border class based on verification state
   const getBorderClass = () => {
     if (status === VerificationStatus.VERIFIED) {
       return "border-2 lg:border-3 border-green-500 rounded-md";
@@ -27,7 +26,6 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
     <div className="relative">
       {status === VerificationStatus.VERIFYING ? (
         <div className="relative">
-          {/* Animated gradient border using the Cruip approach */}
           <div className="w-full rounded-md animate-border [background:linear-gradient(45deg,#000,#000_50%,#000)_padding-box,conic-gradient(from_var(--border-angle),theme(colors.amber.500/.48)_20%,theme(colors.green.500)_30%,theme(colors.green.300)_40%,theme(colors.green.500)_50%,theme(colors.amber.500/.48)_60%)_border-box] border-2 lg:border-3 border-transparent p-1 lg:p-3 text-white">
             <div className="font-mono">
               <div className="font-bold text-xs lg:text-sm">{title}</div>
@@ -44,7 +42,6 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
         </div>
       )}
 
-      {/* Arrow component */}
       {showArrow && <Arrow direction="down" className="text-white" />}
     </div>
   );
