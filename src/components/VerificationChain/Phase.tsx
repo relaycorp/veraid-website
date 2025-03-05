@@ -1,6 +1,7 @@
 import React from "react";
 import VerificationStep from "./VerificationStep";
 import TickIcon from "../../assets/icons/tick.svg?raw";
+import { VerificationStatus } from "./VerificationStatus";
 
 export interface VerificationStepData {
   title: string;
@@ -8,31 +9,31 @@ export interface VerificationStepData {
   showArrow?: boolean;
 }
 
-interface PhaseColumnProps {
+interface PhaseProps {
   title: string;
   steps: VerificationStepData[];
   result: string;
-  showTick?: boolean;
-  isActive?: boolean;
-  verifyingIndex?: number;
-  verifiedIndices?: number[];
-  isCompleted?: boolean;
+  status: VerificationStatus;
+  verifiedSteps: number;
+  currentStep?: number;
 }
 
-export const PhaseColumn: React.FC<PhaseColumnProps> = ({
+export const PhaseColumn: React.FC<PhaseProps> = ({
   title,
   steps,
   result,
-  showTick = false,
-  isActive = false,
-  verifyingIndex = -1,
-  verifiedIndices = [],
-  isCompleted = false,
+  status,
+  verifiedSteps = 0,
+  currentStep = -1,
 }) => {
+  const isActive = status === VerificationStatus.VERIFYING;
+  const isCompleted = status === VerificationStatus.VERIFIED;
+  const showTick = isCompleted;
+
   return (
     <div
       className={`flex flex-col h-full bg-black rounded-lg p-4 lg:p-6 ${
-        showTick && isCompleted ? "border-2 lg:border-3 border-green-500" : ""
+        showTick ? "border-2 lg:border-3 border-green-500" : ""
       }`}
     >
       <h3 className="text-white text-[1rem] lg:text-xl font-bold text-center mb-4">{title}</h3>
@@ -44,8 +45,8 @@ export const PhaseColumn: React.FC<PhaseColumnProps> = ({
             title={step.title}
             description={step.description}
             showArrow={index !== steps.length - 1}
-            isVerifying={isActive && index === verifyingIndex}
-            isVerified={verifiedIndices.includes(index)}
+            isVerifying={isActive && index === currentStep}
+            isVerified={index < verifiedSteps}
           />
         ))}
       </div>
@@ -58,7 +59,7 @@ export const PhaseColumn: React.FC<PhaseColumnProps> = ({
             __html: TickIcon.replace(
               "<svg",
               `<svg width="28" height="28" class="ml-2" style="visibility: ${
-                showTick && isCompleted ? "visible" : "hidden"
+                showTick ? "visible" : "hidden"
               }"`,
             ),
           }}

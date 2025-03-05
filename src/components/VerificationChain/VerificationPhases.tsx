@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PhaseColumn from "./Phase";
 import type { VerificationStepData } from "./Phase";
 import { Arrow } from "./Arrow";
+import { VerificationStatus } from "./VerificationStatus";
 
 const VerificationPhases: React.FC = () => {
   // Data for DNSSEC Chain
@@ -155,11 +156,15 @@ const VerificationPhases: React.FC = () => {
               title="DNSSEC Chain"
               steps={dnssecSteps}
               result="caltech.edu."
-              showTick={true}
-              isActive={verificationStarted && currentPhase === 0}
-              verifyingIndex={verifyingIndices[0]}
-              verifiedIndices={verifiedSteps[0]}
-              isCompleted={completedPhases[0]}
+              status={
+                completedPhases[0]
+                  ? VerificationStatus.VERIFIED
+                  : verificationStarted && currentPhase === 0
+                    ? VerificationStatus.VERIFYING
+                    : VerificationStatus.PENDING
+              }
+              verifiedSteps={verifiedSteps[0].length}
+              currentStep={verifyingIndices[0]}
             />
           </div>
 
@@ -172,11 +177,15 @@ const VerificationPhases: React.FC = () => {
               title="X.509 Certificate Chain"
               steps={x509Steps}
               result="sheldon@caltech.edu"
-              showTick={true}
-              isActive={verificationStarted && currentPhase === 1}
-              verifyingIndex={verifyingIndices[1]}
-              verifiedIndices={verifiedSteps[1]}
-              isCompleted={completedPhases[1]}
+              status={
+                completedPhases[1]
+                  ? VerificationStatus.VERIFIED
+                  : verificationStarted && currentPhase === 1
+                    ? VerificationStatus.VERIFYING
+                    : VerificationStatus.PENDING
+              }
+              verifiedSteps={verifiedSteps[1].length}
+              currentStep={verifyingIndices[1]}
             />
           </div>
 
@@ -188,12 +197,16 @@ const VerificationPhases: React.FC = () => {
             <PhaseColumn
               title="CMS SignedData"
               steps={cmsSteps}
-              result='"Bazinga!"'
-              showTick={true}
-              isActive={verificationStarted && currentPhase === 2}
-              verifyingIndex={verifyingIndices[2]}
-              verifiedIndices={verifiedSteps[2]}
-              isCompleted={completedPhases[2]}
+              result="Verified"
+              status={
+                completedPhases[2]
+                  ? VerificationStatus.VERIFIED
+                  : verificationStarted && currentPhase === 2
+                    ? VerificationStatus.VERIFYING
+                    : VerificationStatus.PENDING
+              }
+              verifiedSteps={verifiedSteps[2].length}
+              currentStep={verifyingIndices[2]}
             />
           </div>
         </div>
