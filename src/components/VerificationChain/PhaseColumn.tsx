@@ -31,7 +31,7 @@ export const PhaseColumn: React.FC<PhaseColumnProps> = ({
   return (
     <div
       className={`flex flex-col h-full bg-black rounded-lg p-4 lg:p-6 ${
-        showTick && isCompleted ? "border-1 lg:border-2 border-green-500" : ""
+        showTick && isCompleted ? "border-2 lg:border-3 border-green-500" : ""
       }`}
     >
       <h3 className="text-white text-[1rem] lg:text-xl font-bold text-center mb-4">{title}</h3>
