@@ -32,7 +32,7 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
 
   return (
     <div
-      className={`flex flex-col h-full bg-black rounded-lg p-4 lg:p-6 ${
+      className={`flex flex-col h-full bg-black border-3 border-amber-500 rounded-lg p-4 lg:p-6 ${
         showTick ? "border-2 lg:border-3 border-green-500" : ""
       }`}
     >

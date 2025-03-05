@@ -1,5 +1,5 @@
 ---
-import VerificationPhases from "../VerificationChain/VerificationPhases";
+import ChainVerificationAnimation from "../ChainVerificationAnimation";
 ---
 
 <section class="bg-neutral-900 px-4 sm:px-4 lg:px-6 py-12 md:py-16 text-sm md:text-base">
@@ -19,7 +19,7 @@ import VerificationPhases from "../VerificationChain/VerificationPhases";
         (TLS), where many trust anchors (Certificate Authorities) can issue certificates for any
         domain.
       </p>
-      <VerificationPhases client:load />
+      <ChainVerificationAnimation client:load />
       <div class="flex flex-wrap gap-4 justify-center pt-4">
         <a
           href="/architecture"
