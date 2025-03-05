@@ -1,10 +1,12 @@
 import React from "react";
 
+type Direction = "down" | "right";
+
 interface ArrowProps {
-  direction?: "up" | "down" | "left" | "right";
+  direction?: Direction;
   responsiveDirection?: {
-    mobile?: "up" | "down" | "left" | "right";
-    desktop?: "up" | "down" | "left" | "right";
+    mobile?: Direction;
+    desktop?: Direction;
   };
   className?: string;
 }
@@ -14,27 +16,13 @@ export const Arrow: React.FC<ArrowProps> = ({
   responsiveDirection,
   className = "",
 }) => {
-  const getPathsForDirection = (dir: "up" | "down" | "left" | "right") => {
+  const getPathsForDirection = (dir: Direction) => {
     switch (dir) {
-      case "up":
-        return (
-          <>
-            <path d="M12 19v-14" />
-            <path d="m5 12 7-7 7 7" />
-          </>
-        );
       case "down":
         return (
           <>
             <path d="M12 5v14" />
             <path d="m5 12 7 7 7-7" />
-          </>
-        );
-      case "left":
-        return (
-          <>
-            <path d="M19 12h-14" />
-            <path d="m12 5-7 7 7 7" />
           </>
         );
       case "right":
@@ -47,41 +35,39 @@ export const Arrow: React.FC<ArrowProps> = ({
     }
   };
 
+  // Create a reusable SVG component
+  const ArrowSvg = ({
+    dir,
+    additionalClassName = "",
+  }: {
+    dir: Direction;
+    additionalClassName?: string;
+  }) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`${additionalClassName} ${className}`}
+    >
+      {getPathsForDirection(dir)}
+    </svg>
+  );
+
   // If we have responsive directions, render two SVGs with different visibility
   if (responsiveDirection) {
     return (
       <div className="flex items-center justify-center">
-        {/* Mobile arrow */}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className={`md:hidden ${className}`}
-        >
-          {getPathsForDirection(responsiveDirection.mobile || direction)}
-        </svg>
-
-        {/* Desktop arrow */}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className={`hidden md:block ${className}`}
-        >
-          {getPathsForDirection(responsiveDirection.desktop || direction)}
-        </svg>
+        <ArrowSvg dir={responsiveDirection.mobile || direction} additionalClassName="md:hidden" />
+        <ArrowSvg
+          dir={responsiveDirection.desktop || direction}
+          additionalClassName="hidden md:block"
+        />
       </div>
     );
   }
@@ -89,20 +75,7 @@ export const Arrow: React.FC<ArrowProps> = ({
   // Otherwise, render a single arrow
   return (
     <div className="flex items-center justify-center">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={className}
-      >
-        {getPathsForDirection(direction)}
-      </svg>
+      <ArrowSvg dir={direction} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import PhaseColumn from "./PhaseColumn";
-import type { VerificationStepData } from "./PhaseColumn";
+import PhaseColumn from "./Phase";
+import type { VerificationStepData } from "./Phase";
 import { Arrow } from "./Arrow";
 
 const VerificationPhases: React.FC = () => {
@@ -39,7 +39,6 @@ const VerificationPhases: React.FC = () => {
   const cmsSteps: VerificationStepData[] = [
     {
       title: "Bazinga!",
-      description: "",
     },
   ];
 
