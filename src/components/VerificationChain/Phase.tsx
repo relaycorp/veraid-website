@@ -45,8 +45,13 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
             title={step.title}
             description={step.description}
             showArrow={index !== steps.length - 1}
-            isVerifying={isActive && index === currentStep}
-            isVerified={index < verifiedSteps}
+            status={
+              index < verifiedSteps
+                ? VerificationStatus.VERIFIED
+                : isActive && index === currentStep
+                  ? VerificationStatus.VERIFYING
+                  : VerificationStatus.PENDING
+            }
           />
         ))}
       </div>
