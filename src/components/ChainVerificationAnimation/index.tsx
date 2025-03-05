@@ -10,15 +10,13 @@ interface AnimationState {
   verifyingIndices: number[];
   completedPhases: boolean[];
   verifiedSteps: number[][];
-  status: "idle" | "running" | "paused" | "completed";
+  status: "idle" | "running" | "completed";
   animationSpeed: number; // milliseconds per step
 }
 
 // Action types
 type AnimationAction =
   | { type: "START_ANIMATION" }
-  | { type: "PAUSE_ANIMATION" }
-  | { type: "RESUME_ANIMATION" }
   | { type: "RESET_ANIMATION" }
   | { type: "SET_ANIMATION_SPEED"; payload: number }
   | { type: "VERIFY_STEP"; payload: { phase: number; step: number } }
@@ -70,7 +68,7 @@ const VerificationPhases: React.FC = () => {
     completedPhases: [false, false, false],
     verifiedSteps: [[], [], []],
     status: "idle",
-    animationSpeed: 1000, // Default animation speed in ms
+    animationSpeed: 1000,
   };
 
   function animationReducer(state: AnimationState, action: AnimationAction): AnimationState {
@@ -80,18 +78,6 @@ const VerificationPhases: React.FC = () => {
           ...state,
           status: "running",
           verifyingIndices: [0, -1, -1],
-        };
-
-      case "PAUSE_ANIMATION":
-        return {
-          ...state,
-          status: "paused",
-        };
-
-      case "RESUME_ANIMATION":
-        return {
-          ...state,
-          status: "running",
         };
 
       case "RESET_ANIMATION":
@@ -204,12 +190,6 @@ const VerificationPhases: React.FC = () => {
     return () => clearTimeout(timer);
   }, [state.status, state.currentPhase, state.verifyingIndices, state.animationSpeed]);
 
-  // Auto-start animation on mount (can be removed if manual control is preferred)
-  useEffect(() => {
-    dispatch({ type: "START_ANIMATION" });
-    return () => {}; // Cleanup function
-  }, []);
-
   // Arrow component that changes direction based on screen size
   const ResponsiveArrow = () => (
     <div>
@@ -224,9 +204,9 @@ const VerificationPhases: React.FC = () => {
   );
 
   return (
-    <div className="pt-2 pb-6 lg:pt-4 lg:pb-8">
+    <div className="pb-6 lg:pb-8">
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between">
+        <div className="flex flex-col md:flex-row items-center justify-between relative">
           <div className="w-full md:w-[33%]">
             <PhaseColumn
               title="DNSSEC Chain"
@@ -280,6 +260,57 @@ const VerificationPhases: React.FC = () => {
               verifiedSteps={state.verifiedSteps[2].length}
               currentStep={state.verifyingIndices[2]}
             />
+          </div>
+
+          {/* Overlay button positioned in the center */}
+          <div
+            className={`absolute inset-0 flex items-center justify-center z-10 pointer-events-none transition-opacity duration-300 ${
+              state.status === "running" ? "opacity-0" : "opacity-100"
+            }`}
+          >
+            <button
+              className="pointer-events-auto px-6 py-3 bg-neutral-800 hover:bg-neutral-700 text-white text-sm rounded-full shadow-lg transform transition-all hover:scale-105"
+              onClick={() => {
+                if (state.status === "idle") {
+                  dispatch({ type: "START_ANIMATION" });
+                } else {
+                  dispatch({ type: "RESET_ANIMATION" });
+                  dispatch({ type: "START_ANIMATION" });
+                }
+              }}
+            >
+              <span className="flex items-center gap-3">
+                {state.status === "idle" ? (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      viewBox="0 0 384 512"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"
+                      />
+                    </svg>
+                    Play
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      viewBox="0 0 512 512"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"
+                      />
+                    </svg>
+                    Restart
+                  </>
+                )}
+              </span>
+            </button>
           </div>
         </div>
       </div>
