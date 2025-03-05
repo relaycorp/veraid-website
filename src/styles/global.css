@@ -5,3 +5,17 @@
   initial-value: 0deg;
   syntax: "<angle>";
 }
+@theme {
+  /* Animation definition */
+  --animate-border: border 2s linear;
+
+  /* Define keyframes inside @theme */
+  @keyframes border {
+    from {
+      --border-angle: 0deg;
+    }
+    to {
+      --border-angle: 360deg;
+    }
+  }
+}
