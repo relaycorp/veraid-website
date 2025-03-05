@@ -7,7 +7,7 @@
 }
 @theme {
   /* Animation definition */
-  --animate-border: border 2s linear;
+  --animate-border: border 1s linear;
 
   /* Define keyframes inside @theme */
   @keyframes border {
