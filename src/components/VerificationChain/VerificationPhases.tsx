@@ -117,14 +117,16 @@ const VerificationPhases: React.FC = () => {
   }, []);
 
   // Arrow component that changes direction based on screen size
-  const DirectionalArrow = () => (
-    <Arrow
-      responsiveDirection={{
-        mobile: "down",
-        desktop: "right",
-      }}
-      className="text-neutral-300"
-    />
+  const ResponsiveArrow = () => (
+    <div>
+      <Arrow
+        responsiveDirection={{
+          mobile: "down",
+          desktop: "right",
+        }}
+        className="text-neutral-300"
+      />
+    </div>
   );
 
   return (
@@ -148,9 +150,7 @@ const VerificationPhases: React.FC = () => {
             />
           </div>
 
-          <div>
-            <DirectionalArrow />
-          </div>
+          <ResponsiveArrow />
 
           <div className="w-full md:w-[33%]">
             <PhaseColumn
@@ -169,9 +169,7 @@ const VerificationPhases: React.FC = () => {
             />
           </div>
 
-          <div>
-            <DirectionalArrow />
-          </div>
+          <ResponsiveArrow />
 
           <div className="w-full md:w-[33%]">
             <PhaseColumn
