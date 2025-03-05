@@ -3,6 +3,8 @@ import PhaseColumn from "./Phase";
 import type { VerificationStepData } from "./Phase";
 import { Arrow } from "./Arrow";
 import { VerificationStatus } from "./VerificationStatus";
+import PlayIcon from "../../assets/icons/play.svg?raw";
+import RestartIcon from "../../assets/icons/restart.svg?raw";
 
 interface AnimationState {
   currentPhase: number;
@@ -81,7 +83,7 @@ const VerificationPhases: React.FC = () => {
       case "RESET_ANIMATION":
         return {
           ...initialState,
-          animationSpeed: state.animationSpeed, // Preserve user's speed setting
+          animationSpeed: state.animationSpeed,
         };
 
       case "SET_ANIMATION_SPEED":
@@ -95,12 +97,10 @@ const VerificationPhases: React.FC = () => {
         const newVerifiedSteps = [...state.verifiedSteps];
         const newVerifyingIndices = [...state.verifyingIndices];
 
-        // Mark previous step as verified
         if (step > 0 && !newVerifiedSteps[phase].includes(step - 1)) {
           newVerifiedSteps[phase] = [...newVerifiedSteps[phase], step - 1];
         }
 
-        // Set current verifying step
         newVerifyingIndices[phase] = step;
 
         return {
@@ -116,10 +116,8 @@ const VerificationPhases: React.FC = () => {
         const newVerifiedSteps = [...state.verifiedSteps];
         const phaseSteps = allSteps[phase];
 
-        // Mark all steps in phase as verified
         newVerifiedSteps[phase] = Array.from({ length: phaseSteps.length }, (_, i) => i);
 
-        // Mark phase as completed
         newCompletedPhases[phase] = true;
 
         return {
@@ -157,28 +155,23 @@ const VerificationPhases: React.FC = () => {
     if (state.status !== "running") return;
 
     const timer = setTimeout(() => {
-      // Determine next action based on current state
       const currentPhase = state.currentPhase;
       const currentStepIndex = state.verifyingIndices[currentPhase];
       const phaseSteps = allSteps[currentPhase];
 
       if (currentStepIndex < phaseSteps.length - 1) {
-        // Move to next step in current phase
         dispatch({
           type: "VERIFY_STEP",
           payload: { phase: currentPhase, step: currentStepIndex + 1 },
         });
       } else {
-        // Complete current phase
         dispatch({ type: "COMPLETE_PHASE", payload: currentPhase });
 
         // Short delay before moving to next phase
         setTimeout(() => {
           if (currentPhase < allSteps.length - 1) {
-            // Move to next phase
             dispatch({ type: "ADVANCE_TO_NEXT_PHASE" });
           } else {
-            // Animation complete
             dispatch({ type: "COMPLETE_ANIMATION" });
           }
         }, state.animationSpeed / 2);
@@ -188,7 +181,6 @@ const VerificationPhases: React.FC = () => {
     return () => clearTimeout(timer);
   }, [state.status, state.currentPhase, state.verifyingIndices, state.animationSpeed]);
 
-  // Arrow component that changes direction based on screen size
   const ResponsiveArrow = () => (
     <div>
       <Arrow
@@ -280,30 +272,20 @@ const VerificationPhases: React.FC = () => {
               <span className="flex items-center gap-3">
                 {state.status === "idle" ? (
                   <>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      viewBox="0 0 384 512"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"
-                      />
-                    </svg>
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: PlayIcon.replace("<svg", `<svg class="h-5 w-5"`),
+                      }}
+                    />
                     Play
                   </>
                 ) : (
                   <>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      viewBox="0 0 512 512"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"
-                      />
-                    </svg>
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: RestartIcon.replace("<svg", `<svg class="h-5 w-5"`),
+                      }}
+                    />
                     Restart
                   </>
                 )}
