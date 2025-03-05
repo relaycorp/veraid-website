@@ -4,17 +4,15 @@ import type { VerificationStepData } from "./Phase";
 import { Arrow } from "./Arrow";
 import { VerificationStatus } from "./VerificationStatus";
 
-// Animation state types
 interface AnimationState {
   currentPhase: number;
   verifyingIndices: number[];
   completedPhases: boolean[];
   verifiedSteps: number[][];
   status: "idle" | "running" | "completed";
-  animationSpeed: number; // milliseconds per step
+  animationSpeed: number;
 }
 
-// Action types
 type AnimationAction =
   | { type: "START_ANIMATION" }
   | { type: "RESET_ANIMATION" }
@@ -56,7 +54,7 @@ const VerificationPhases: React.FC = () => {
 
   const cmsSteps: VerificationStepData[] = [
     {
-      title: "Bazinga!",
+      title: '"Bazinga!"',
     },
   ];
 
@@ -249,7 +247,7 @@ const VerificationPhases: React.FC = () => {
             <PhaseColumn
               title="CMS SignedData"
               steps={cmsSteps}
-              result="Verified"
+              result='"Bazinga!"'
               status={
                 state.completedPhases[2]
                   ? VerificationStatus.VERIFIED
