@@ -29,7 +29,11 @@ export const PhaseColumn: React.FC<PhaseColumnProps> = ({
   isCompleted = false,
 }) => {
   return (
-    <div className="flex flex-col h-full bg-black rounded-lg p-4 lg:p-6">
+    <div
+      className={`flex flex-col h-full bg-black rounded-lg p-4 lg:p-6 ${
+        showTick && isCompleted ? "border-1 lg:border-2 border-green-500" : ""
+      }`}
+    >
       <h3 className="text-white text-[1rem] lg:text-xl font-bold text-center mb-4">{title}</h3>
 
       <div className="flex-grow">
