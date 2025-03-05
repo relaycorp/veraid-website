@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PhaseColumn from "./PhaseColumn";
 import type { VerificationStepData } from "./PhaseColumn";
+import { Arrow } from "./Arrow";
 
 const VerificationPhases: React.FC = () => {
   // Data for DNSSEC Chain
@@ -137,41 +138,13 @@ const VerificationPhases: React.FC = () => {
 
   // Arrow component that changes direction based on screen size
   const DirectionalArrow = () => (
-    <div className="flex items-center justify-center">
-      {/* Vertical arrow for small screens */}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="text-neutral-300 md:hidden"
-      >
-        <path d="M12 5v14" />
-        <path d="m5 12 7 7 7-7" />
-      </svg>
-
-      {/* Horizontal arrow for medium screens and up */}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="text-neutral-300 hidden md:block"
-      >
-        <path d="M5 12h14" />
-        <path d="m12 5 7 7-7 7" />
-      </svg>
-    </div>
+    <Arrow
+      responsiveDirection={{
+        mobile: "down",
+        desktop: "right",
+      }}
+      className="text-neutral-300"
+    />
   );
 
   return (
