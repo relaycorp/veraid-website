@@ -1,8 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useReducer, useEffect } from "react";
 import PhaseColumn from "./Phase";
 import type { VerificationStepData } from "./Phase";
 import { Arrow } from "./Arrow";
 import { VerificationStatus } from "./VerificationStatus";
+
+// Animation state types
+interface AnimationState {
+  currentPhase: number;
+  verifyingIndices: number[];
+  completedPhases: boolean[];
+  verifiedSteps: number[][];
+  status: "idle" | "running" | "paused" | "completed";
+  animationSpeed: number; // milliseconds per step
+}
+
+// Action types
+type AnimationAction =
+  | { type: "START_ANIMATION" }
+  | { type: "PAUSE_ANIMATION" }
+  | { type: "RESUME_ANIMATION" }
+  | { type: "RESET_ANIMATION" }
+  | { type: "SET_ANIMATION_SPEED"; payload: number }
+  | { type: "VERIFY_STEP"; payload: { phase: number; step: number } }
+  | { type: "COMPLETE_PHASE"; payload: number }
+  | { type: "ADVANCE_TO_NEXT_PHASE" }
+  | { type: "COMPLETE_ANIMATION" };
 
 const VerificationPhases: React.FC = () => {
   const dnssecSteps: VerificationStepData[] = [
@@ -40,80 +62,152 @@ const VerificationPhases: React.FC = () => {
     },
   ];
 
-  const [currentPhase, setCurrentPhase] = useState<number>(0);
-  const [verifyingIndices, setVerifyingIndices] = useState<number[]>([-1, -1, -1]);
-  const [completedPhases, setCompletedPhases] = useState<boolean[]>([false, false, false]);
-  const [verifiedSteps, setVerifiedSteps] = useState<number[][]>([[], [], []]);
-  const [verificationStarted, setVerificationStarted] = useState<boolean>(false);
-
   const allSteps = [dnssecSteps, x509Steps, cmsSteps];
 
+  const initialState: AnimationState = {
+    currentPhase: 0,
+    verifyingIndices: [-1, -1, -1],
+    completedPhases: [false, false, false],
+    verifiedSteps: [[], [], []],
+    status: "idle",
+    animationSpeed: 1000, // Default animation speed in ms
+  };
+
+  function animationReducer(state: AnimationState, action: AnimationAction): AnimationState {
+    switch (action.type) {
+      case "START_ANIMATION":
+        return {
+          ...state,
+          status: "running",
+          verifyingIndices: [0, -1, -1],
+        };
+
+      case "PAUSE_ANIMATION":
+        return {
+          ...state,
+          status: "paused",
+        };
+
+      case "RESUME_ANIMATION":
+        return {
+          ...state,
+          status: "running",
+        };
+
+      case "RESET_ANIMATION":
+        return {
+          ...initialState,
+          animationSpeed: state.animationSpeed, // Preserve user's speed setting
+        };
+
+      case "SET_ANIMATION_SPEED":
+        return {
+          ...state,
+          animationSpeed: action.payload,
+        };
+
+      case "VERIFY_STEP": {
+        const { phase, step } = action.payload;
+        const newVerifiedSteps = [...state.verifiedSteps];
+        const newVerifyingIndices = [...state.verifyingIndices];
+
+        // Mark previous step as verified
+        if (step > 0 && !newVerifiedSteps[phase].includes(step - 1)) {
+          newVerifiedSteps[phase] = [...newVerifiedSteps[phase], step - 1];
+        }
+
+        // Set current verifying step
+        newVerifyingIndices[phase] = step;
+
+        return {
+          ...state,
+          verifiedSteps: newVerifiedSteps,
+          verifyingIndices: newVerifyingIndices,
+        };
+      }
+
+      case "COMPLETE_PHASE": {
+        const phase = action.payload;
+        const newCompletedPhases = [...state.completedPhases];
+        const newVerifiedSteps = [...state.verifiedSteps];
+        const phaseSteps = allSteps[phase];
+
+        // Mark all steps in phase as verified
+        newVerifiedSteps[phase] = Array.from({ length: phaseSteps.length }, (_, i) => i);
+
+        // Mark phase as completed
+        newCompletedPhases[phase] = true;
+
+        return {
+          ...state,
+          completedPhases: newCompletedPhases,
+          verifiedSteps: newVerifiedSteps,
+          verifyingIndices: state.verifyingIndices.map((idx, i) => (i === phase ? -1 : idx)),
+        };
+      }
+
+      case "ADVANCE_TO_NEXT_PHASE":
+        return {
+          ...state,
+          currentPhase: state.currentPhase + 1,
+          verifyingIndices: state.verifyingIndices.map((idx, i) =>
+            i === state.currentPhase + 1 ? 0 : idx,
+          ),
+        };
+
+      case "COMPLETE_ANIMATION":
+        return {
+          ...state,
+          status: "completed",
+        };
+
+      default:
+        return state;
+    }
+  }
+
+  const [state, dispatch] = useReducer(animationReducer, initialState);
+
+  // Animation loop controlled by a single effect
   useEffect(() => {
-    // This ensures all components are rendered with amber borders first
-    const initialDelay = setTimeout(() => {
-      setVerificationStarted(true);
-      setVerifyingIndices([0, -1, -1]);
+    if (state.status !== "running") return;
 
-      const verifyStep = (phase: number, stepIndex: number) => {
+    const timer = setTimeout(() => {
+      // Determine next action based on current state
+      const currentPhase = state.currentPhase;
+      const currentStepIndex = state.verifyingIndices[currentPhase];
+      const phaseSteps = allSteps[currentPhase];
+
+      if (currentStepIndex < phaseSteps.length - 1) {
+        // Move to next step in current phase
+        dispatch({
+          type: "VERIFY_STEP",
+          payload: { phase: currentPhase, step: currentStepIndex + 1 },
+        });
+      } else {
+        // Complete current phase
+        dispatch({ type: "COMPLETE_PHASE", payload: currentPhase });
+
+        // Short delay before moving to next phase
         setTimeout(() => {
-          setVerifiedSteps((prev) => {
-            const newVerifiedSteps = [...prev];
-            if (!newVerifiedSteps[phase].includes(stepIndex)) {
-              newVerifiedSteps[phase] = [...newVerifiedSteps[phase], stepIndex];
-            }
-            return newVerifiedSteps;
-          });
-
-          const phaseSteps = allSteps[phase];
-
-          if (stepIndex < phaseSteps.length - 1) {
-            setVerifyingIndices((prev) => {
-              const newIndices = [...prev];
-              newIndices[phase] = stepIndex + 1;
-              return newIndices;
-            });
-
-            setTimeout(() => {
-              verifyStep(phase, stepIndex + 1);
-            }, 500);
+          if (currentPhase < allSteps.length - 1) {
+            // Move to next phase
+            dispatch({ type: "ADVANCE_TO_NEXT_PHASE" });
           } else {
-            setVerifyingIndices((prev) => {
-              const newIndices = [...prev];
-              newIndices[phase] = -1;
-              return newIndices;
-            });
-
-            setTimeout(() => {
-              setCompletedPhases((prev) => {
-                const newCompleted = [...prev];
-                newCompleted[phase] = true;
-                return newCompleted;
-              });
-
-              if (phase < allSteps.length - 1) {
-                setCurrentPhase(phase + 1);
-
-                setTimeout(() => {
-                  setVerifyingIndices((prev) => {
-                    const newIndices = [...prev];
-                    newIndices[phase + 1] = 0;
-                    return newIndices;
-                  });
-
-                  verifyStep(phase + 1, 0);
-                }, 1000);
-              }
-            }, 500);
+            // Animation complete
+            dispatch({ type: "COMPLETE_ANIMATION" });
           }
-        }, 2000); // Wait for the animation to complete before marking as verified
-      };
+        }, state.animationSpeed / 2);
+      }
+    }, state.animationSpeed);
 
-      verifyStep(0, 0);
-    }, 500);
+    return () => clearTimeout(timer);
+  }, [state.status, state.currentPhase, state.verifyingIndices, state.animationSpeed]);
 
-    return () => {
-      clearTimeout(initialDelay);
-    };
+  // Auto-start animation on mount (can be removed if manual control is preferred)
+  useEffect(() => {
+    dispatch({ type: "START_ANIMATION" });
+    return () => {}; // Cleanup function
   }, []);
 
   // Arrow component that changes direction based on screen size
@@ -139,14 +233,14 @@ const VerificationPhases: React.FC = () => {
               steps={dnssecSteps}
               result="caltech.edu."
               status={
-                completedPhases[0]
+                state.completedPhases[0]
                   ? VerificationStatus.VERIFIED
-                  : verificationStarted && currentPhase === 0
+                  : state.status === "running" && state.currentPhase === 0
                     ? VerificationStatus.VERIFYING
                     : VerificationStatus.PENDING
               }
-              verifiedSteps={verifiedSteps[0].length}
-              currentStep={verifyingIndices[0]}
+              verifiedSteps={state.verifiedSteps[0].length}
+              currentStep={state.verifyingIndices[0]}
             />
           </div>
 
@@ -158,14 +252,14 @@ const VerificationPhases: React.FC = () => {
               steps={x509Steps}
               result="sheldon@caltech.edu"
               status={
-                completedPhases[1]
+                state.completedPhases[1]
                   ? VerificationStatus.VERIFIED
-                  : verificationStarted && currentPhase === 1
+                  : state.status === "running" && state.currentPhase === 1
                     ? VerificationStatus.VERIFYING
                     : VerificationStatus.PENDING
               }
-              verifiedSteps={verifiedSteps[1].length}
-              currentStep={verifyingIndices[1]}
+              verifiedSteps={state.verifiedSteps[1].length}
+              currentStep={state.verifyingIndices[1]}
             />
           </div>
 
@@ -177,14 +271,14 @@ const VerificationPhases: React.FC = () => {
               steps={cmsSteps}
               result="Verified"
               status={
-                completedPhases[2]
+                state.completedPhases[2]
                   ? VerificationStatus.VERIFIED
-                  : verificationStarted && currentPhase === 2
+                  : state.status === "running" && state.currentPhase === 2
                     ? VerificationStatus.VERIFYING
                     : VerificationStatus.PENDING
               }
-              verifiedSteps={verifiedSteps[2].length}
-              currentStep={verifyingIndices[2]}
+              verifiedSteps={state.verifiedSteps[2].length}
+              currentStep={state.verifyingIndices[2]}
             />
           </div>
         </div>
