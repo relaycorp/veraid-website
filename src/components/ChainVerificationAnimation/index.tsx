@@ -268,39 +268,39 @@ const VerificationPhases: React.FC = () => {
               state.status === "running" ? "opacity-0" : "opacity-100"
             }`}
           >
-            <button
-              className="pointer-events-auto px-6 py-3 bg-neutral-800 hover:bg-neutral-700 text-white text-sm rounded-full shadow-lg transform transition-all hover:scale-105"
-              onClick={() => {
-                if (state.status === "idle") {
-                  dispatch({ type: "START_ANIMATION" });
-                } else {
-                  dispatch({ type: "RESET_ANIMATION" });
-                  dispatch({ type: "START_ANIMATION" });
-                }
-              }}
-            >
-              <span className="flex items-center gap-3">
+            <div className="flex flex-col items-center">
+              <button
+                className="pointer-events-auto w-16 h-16 bg-green-400 hover:bg-green-300 text-black rounded-full shadow-lg transform transition-all hover:scale-105 flex items-center justify-center"
+                onClick={() => {
+                  if (state.status === "idle") {
+                    dispatch({ type: "START_ANIMATION" });
+                  } else {
+                    dispatch({ type: "RESET_ANIMATION" });
+                    dispatch({ type: "START_ANIMATION" });
+                  }
+                }}
+              >
                 {state.status === "idle" ? (
-                  <>
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: PlayIcon.replace("<svg", `<svg class="h-5 w-5"`),
-                      }}
-                    />
-                    Play
-                  </>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-8 h-8"
+                  >
+                    <path d="M8 5.14v14l11-7-11-7z" />
+                  </svg>
                 ) : (
-                  <>
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: RestartIcon.replace("<svg", `<svg class="h-5 w-5"`),
-                      }}
-                    />
-                    Restart
-                  </>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: RestartIcon.replace("<svg", `<svg class="h-6 w-6"`),
+                    }}
+                  />
                 )}
+              </button>
+              <span className="mt-2 text-white text-sm pointer-events-none">
+                {state.status === "idle" ? "Play" : "Restart"}
               </span>
-            </button>
+            </div>
           </div>
         </div>
       </div>
