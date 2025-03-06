@@ -1,6 +1,7 @@
 import React from "react";
 import { Arrow } from "./Arrow";
 import { VerificationStatus } from "./VerificationStatus";
+import "./BorderAnimation.css";
 
 export interface VerificationStepProps {
   title: string;
