@@ -30,13 +30,20 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
   const isCompleted = status === VerificationStatus.VERIFIED;
   const showTick = isCompleted;
 
+  const getBorderColorClass = () => {
+    return isCompleted ? "border-green-500" : "border-amber-500";
+  };
+
+  // Common style classes
+  const borderClasses = "border-2 lg:border-3 rounded-lg";
+  const containerClasses = "flex flex-col h-full bg-black p-3 lg:p-5";
+  const titleClasses = "text-white text-[1rem] lg:text-xl font-bold text-center mb-3 lg:mb-4";
+  const resultClasses =
+    "text-xs lg:text-sm text-white text-center mt-3 lg:mt-5 font-mono font-bold flex items-center justify-center";
+
   return (
-    <div
-      className={`flex flex-col h-full bg-black border-2 lg:border-3 border-amber-500 rounded-lg p-4 lg:p-6 ${
-        showTick ? "border-1 lg:border-3 border-green-500" : ""
-      }`}
-    >
-      <h3 className="text-white text-[1rem] lg:text-xl font-bold text-center mb-4">{title}</h3>
+    <div className={`${containerClasses} ${borderClasses} ${getBorderColorClass()}`}>
+      <h3 className={titleClasses}>{title}</h3>
 
       <div className="flex-grow">
         {steps.map((step, index) => (
@@ -56,14 +63,14 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
         ))}
       </div>
 
-      <div className="text-sm lg:text-base text-white text-center mt-4 font-mono flex items-center justify-center">
+      <div className={resultClasses}>
         {result}
         <div
           className="flex items-center"
           dangerouslySetInnerHTML={{
             __html: TickIcon.replace(
               "<svg",
-              `<svg width="28" height="28" class="ml-2" style="visibility: ${
+              `<svg width="26" height="26" class="ml-1" style="visibility: ${
                 showTick ? "visible" : "hidden"
               }"`,
             ),
