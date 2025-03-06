@@ -7,20 +7,20 @@
 
 @media (min-width: 1024px) {
   .border-fill {
-    border-width: 3px;
+    border-width: 2px;
   }
 
   .border-fill::before {
-    inset: -3px;
-    border-width: 3px;
+    inset: -2px;
+    border-width: 2px;
   }
 }
 
 .border-fill::before {
   content: "";
   position: absolute;
-  inset: -3px;
-  border: 3px solid #22c55e; /* green-500 */
+  inset: -2px;
+  border: 2px solid #22c55e; /* green-500 */
   border-radius: inherit;
   clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
   animation: fillBorderClip 1s linear forwards;

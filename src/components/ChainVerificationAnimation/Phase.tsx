@@ -35,7 +35,7 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
   };
 
   // Common style classes
-  const borderClasses = "border-2 lg:border-3 rounded-lg";
+  const borderClasses = "border-2 rounded-lg";
   const containerClasses = "flex flex-col h-full bg-black p-3 lg:p-5";
   const titleClasses = "text-white text-[1rem] lg:text-xl font-bold text-center mb-3 lg:mb-4";
   const resultClasses =
