@@ -261,7 +261,7 @@ const VerificationPhases: React.FC = () => {
 
           {/* Dark overlay - visible only when idle */}
           <div
-            className={`absolute inset-0 bg-black/70 transition-opacity duration-300 ${
+            className={`absolute inset-0 bg-black/75 rounded-lg transition-opacity duration-300 ${
               state.status === "idle" ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
           />
