@@ -34,7 +34,7 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
       {status === VerificationStatus.VERIFYING ? (
         <div className="relative">
           <div
-            className={`w-full animate-border [background:linear-gradient(45deg,#000,#000_50%,#000)_padding-box,conic-gradient(from_var(--border-angle),theme(colors.amber.500/.48)_20%,theme(colors.green.500)_30%,theme(colors.green.300)_40%,theme(colors.green.500)_50%,theme(colors.amber.500/.48)_60%)_border-box] ${borderClasses} border-transparent ${commonClasses}`}
+            className={`border-fill rounded-md p-1 lg:p-2 text-white ${borderClasses.replace("border-2 lg:border-3", "")}`}
           >
             <div className={fontContainerClasses}>
               <div className={titleClasses}>{title}</div>

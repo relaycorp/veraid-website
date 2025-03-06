@@ -5,17 +5,81 @@
   initial-value: 0deg;
   syntax: "<angle>";
 }
-@theme {
-  /* Animation definition */
-  --animate-border: border 1s linear;
 
-  /* Define keyframes inside @theme */
-  @keyframes border {
-    from {
-      --border-angle: 0deg;
-    }
-    to {
-      --border-angle: 360deg;
-    }
+@property --percentage {
+  inherits: false;
+  initial-value: 0;
+  syntax: "<number>";
+}
+
+.border-progress {
+  --percentage: 0;
+  --primary: #22c55e;
+  --secondary: #f59e0b;
+  animation: border-progress 1s forwards;
+  border: 2px solid transparent;
+  background:
+    #000 padding-box,
+    conic-gradient(var(--primary) calc(var(--percentage) * 1%), var(--secondary) 0) border-box;
+}
+
+@media (min-width: 1024px) {
+  .border-progress {
+    border-width: 3px;
+  }
+}
+
+@keyframes border-progress {
+  0% {
+    --percentage: 0;
+  }
+  100% {
+    --percentage: 100;
+  }
+}
+
+/* Border fill animation */
+.border-fill {
+  position: relative;
+  border: 2px solid #f59e0b; /* amber-500 */
+  background-color: #000;
+}
+
+@media (min-width: 1024px) {
+  .border-fill {
+    border-width: 3px;
+  }
+
+  .border-fill::before {
+    inset: -3px;
+    border-width: 3px;
+  }
+}
+
+.border-fill::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border: 3px solid #22c55e; /* green-500 */
+  border-radius: inherit;
+  clip-path: polygon(50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+  animation: fillBorderClip 1s linear forwards;
+}
+
+@keyframes fillBorderClip {
+  0% {
+    clip-path: polygon(50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+  }
+  25% {
+    clip-path: polygon(50% 0%, 100% 0%, 100% 50%, 50% 0%, 50% 0%, 50% 0%);
+  }
+  50% {
+    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%, 50% 0%, 50% 0%);
+  }
+  75% {
+    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%, 50% 0%);
+  }
+  100% {
+    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 50% 0%);
   }
 }
