@@ -3,7 +3,7 @@ import PhaseColumn from "./Phase";
 import type { VerificationStepData } from "./Phase";
 import { Arrow } from "./Arrow";
 import { VerificationStatus } from "./VerificationStatus";
-import PlayIcon from "../../assets/icons/play.svg?raw";
+import PlayTriangleIcon from "../../assets/icons/play.svg?raw";
 import RestartIcon from "../../assets/icons/restart.svg?raw";
 
 interface AnimationState {
@@ -261,7 +261,7 @@ const VerificationPhases: React.FC = () => {
 
           {/* Dark overlay - visible only when idle */}
           <div
-            className={`absolute inset-0 bg-black/75 rounded-lg transition-opacity duration-300 ${
+            className={`absolute inset-0 bg-black/70 transition-opacity duration-300 ${
               state.status === "idle" ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
           />
@@ -279,28 +279,27 @@ const VerificationPhases: React.FC = () => {
                   dispatch({ type: "START_ANIMATION" });
                 }}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-8 h-8"
-                >
-                  <path d="M8 5.14v14l11-7-11-7z" />
-                </svg>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: PlayTriangleIcon.replace("<svg", `<svg class="h-8 w-8"`),
+                  }}
+                />
               </button>
               <span className="mt-2 text-white text-sm pointer-events-none">Play</span>
             </div>
           </div>
 
-          {/* Restart button - centered on mobile, top-right on desktop */}
+          {/* Restart button - positioned based on screen size */}
           <div
-            className={`absolute z-10 pointer-events-none transition-opacity duration-300 ${
-              state.status !== "idle" && state.status !== "running" ? "opacity-100" : "opacity-0"
-            } inset-0 flex items-center justify-center md:items-start md:justify-end md:inset-auto md:top-0 md:right-0`}
+            className={`transition-opacity duration-300 ${
+              state.status !== "idle" && state.status !== "running"
+                ? "opacity-100"
+                : "opacity-0 pointer-events-none"
+            } md:absolute md:top-0 md:right-0 md:z-10 w-full flex justify-center mt-6 md:mt-0 md:w-auto`}
           >
             <div className="flex flex-col items-center">
               <button
-                className="pointer-events-auto w-16 h-16 md:w-12 md:h-12 bg-neutral-700 hover:bg-neutral-600 text-white rounded-full shadow-lg transform transition-all hover:scale-105 flex items-center justify-center md:opacity-80 md:hover:opacity-100"
+                className="pointer-events-auto w-12 h-12 bg-neutral-700 hover:bg-neutral-600 text-white rounded-full shadow-lg transform transition-all hover:scale-105 flex items-center justify-center md:opacity-80 md:hover:opacity-100"
                 onClick={() => {
                   dispatch({ type: "RESET_ANIMATION" });
                   dispatch({ type: "START_ANIMATION" });
