@@ -194,7 +194,9 @@ const VerificationPhases: React.FC = () => {
   );
 
   return (
-    <div className="pb-6 lg:pb-8">
+    <div
+      className={`pb-6 lg:pb-8 ${state.status !== "idle" && state.status !== "running" ? "pb-6" : ""}`}
+    >
       <div className="max-w-6xl mx-auto">
         <div className="relative">
           {/* Animation content */}
@@ -289,33 +291,29 @@ const VerificationPhases: React.FC = () => {
             </div>
           </div>
 
-          {/* Restart button - positioned based on screen size */}
-          <div
-            className={`transition-opacity duration-300 ${
-              state.status !== "idle" && state.status !== "running"
-                ? "opacity-100"
-                : "opacity-0 pointer-events-none"
-            } md:absolute md:top-0 md:right-0 md:z-10 w-full flex justify-center mt-6 md:mt-0 md:w-auto`}
-          >
-            <div className="flex flex-col items-center">
-              <button
-                className="pointer-events-auto w-12 h-12 bg-neutral-700 hover:bg-neutral-600 text-white rounded-full shadow-lg transform transition-all hover:scale-105 flex items-center justify-center md:opacity-80 md:hover:opacity-100"
-                onClick={() => {
-                  dispatch({ type: "RESET_ANIMATION" });
-                  dispatch({ type: "START_ANIMATION" });
-                }}
-              >
-                <span
-                  dangerouslySetInnerHTML={{
-                    __html: RestartIcon.replace("<svg", `<svg class="h-6 w-6 md:h-5 md:w-5"`),
+          {/* Restart button - only rendered when animation is completed */}
+          {state.status !== "idle" && state.status !== "running" && (
+            <div className="w-full flex justify-center mt-8 md:absolute md:mt-0 md:top-0 md:right-0 md:z-10 md:w-auto">
+              <div className="flex flex-col items-center">
+                <button
+                  className="pointer-events-auto w-12 h-12 bg-neutral-700 hover:bg-neutral-600 text-white rounded-full shadow-lg transform transition-all hover:scale-105 flex items-center justify-center md:opacity-80 md:hover:opacity-100"
+                  onClick={() => {
+                    dispatch({ type: "RESET_ANIMATION" });
+                    dispatch({ type: "START_ANIMATION" });
                   }}
-                />
-              </button>
-              <span className="mt-2 md:mt-1 text-white text-sm md:text-xs pointer-events-none">
-                Replay
-              </span>
+                >
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: RestartIcon.replace("<svg", `<svg class="h-6 w-6 md:h-5 md:w-5"`),
+                    }}
+                  />
+                </button>
+                <span className="mt-2 md:mt-1 text-white text-sm md:text-xs pointer-events-none">
+                  Replay
+                </span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
