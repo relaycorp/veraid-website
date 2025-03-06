@@ -1,7 +1,6 @@
 /* CSS Variables */
 :root {
-  --border-width-base: 3px;
-  --border-width-large: 3px;
+  --border-width: 3px;
   --border-color-primary: #f59e0b;
   --border-color-secondary: #22c55e;
   --animation-duration: 1s;
@@ -11,25 +10,14 @@
 /* Border fill animation */
 .border-fill {
   position: relative;
-  border: var(--border-width-base) solid var(--border-color-primary);
-}
-
-@media (min-width: 1024px) {
-  .border-fill {
-    border-width: var(--border-width-large);
-  }
-
-  .border-fill::before {
-    inset: var(--border-inset);
-    border-width: var(--border-width-large);
-  }
+  border: var(--border-width) solid var(--border-color-primary);
 }
 
 .border-fill::before {
   content: "";
   position: absolute;
   inset: var(--border-inset);
-  border: var(--border-width-large) solid var(--border-color-secondary);
+  border: var(--border-width) solid var(--border-color-secondary);
   border-radius: inherit;
   clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
   animation: fillBorderClip var(--animation-duration) linear forwards;

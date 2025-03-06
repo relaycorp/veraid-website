@@ -35,21 +35,13 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
     return isCompleted ? "border-green-500" : "border-amber-500";
   };
 
-  // Custom animation duration for DNSSEC Chain
+  // Calculate animation duration dynamically based on the number of steps
   const customStyle = isActive
     ? ({
-        "--animation-duration":
-          title === "DNSSEC Chain"
-            ? "6s"
-            : title === "X.509 Certificate Chain"
-              ? "2s"
-              : title === "CMS SignedData"
-                ? "1s"
-                : "1s",
+        "--animation-duration": `${Math.max(1, steps.length)}s`,
       } as React.CSSProperties)
     : {};
 
-  // Common style classes
   const borderClasses = `border-3 rounded-lg ${isActive ? "border-fill" : ""}`;
   const containerClasses = "flex flex-col h-full bg-black p-3 lg:p-5";
   const titleClasses = "text-white text-[1rem] lg:text-xl font-bold text-center mb-3 lg:mb-4";
