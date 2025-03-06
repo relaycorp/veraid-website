@@ -1,9 +1,9 @@
 /* CSS Variables */
 :root {
-  --border-width-base: 2px;
+  --border-width-base: 3px;
   --border-width-large: 3px;
-  --border-color-primary: #f59e0b; /* amber-500 */
-  --border-color-secondary: #22c55e; /* green-500 */
+  --border-color-primary: #f59e0b;
+  --border-color-secondary: #22c55e;
   --animation-duration: 1s;
   --border-inset: -3px;
 }
@@ -12,7 +12,6 @@
 .border-fill {
   position: relative;
   border: var(--border-width-base) solid var(--border-color-primary);
-  background-color: #000;
 }
 
 @media (min-width: 1024px) {
