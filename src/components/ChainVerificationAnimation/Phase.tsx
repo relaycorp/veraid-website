@@ -2,6 +2,7 @@ import React from "react";
 import VerificationStep from "./VerificationStep";
 import TickIcon from "../../assets/icons/tick.svg?raw";
 import { VerificationStatus } from "./VerificationStatus";
+import "./BorderAnimation.css";
 
 export interface VerificationStepData {
   title: string;
@@ -34,15 +35,32 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
     return isCompleted ? "border-green-500" : "border-amber-500";
   };
 
+  // Custom animation duration for DNSSEC Chain
+  const customStyle = isActive
+    ? ({
+        "--animation-duration":
+          title === "DNSSEC Chain"
+            ? "6s"
+            : title === "X.509 Certificate Chain"
+              ? "2s"
+              : title === "CMS SignedData"
+                ? "1s"
+                : "1s",
+      } as React.CSSProperties)
+    : {};
+
   // Common style classes
-  const borderClasses = "border-3 rounded-lg";
+  const borderClasses = `border-3 rounded-lg ${isActive ? "border-fill" : ""}`;
   const containerClasses = "flex flex-col h-full bg-black p-3 lg:p-5";
   const titleClasses = "text-white text-[1rem] lg:text-xl font-bold text-center mb-3 lg:mb-4";
   const resultClasses =
     "text-xs lg:text-sm text-white text-center mt-3 lg:mt-5 font-mono font-bold flex items-center justify-center";
 
   return (
-    <div className={`${containerClasses} ${borderClasses} ${getBorderColorClass()}`}>
+    <div
+      className={`${containerClasses} ${borderClasses} ${getBorderColorClass()}`}
+      style={customStyle}
+    >
       <h3 className={titleClasses}>{title}</h3>
 
       <div className="flex-grow">
