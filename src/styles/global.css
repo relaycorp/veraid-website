@@ -1,42 +1,5 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
-@property --border-angle {
-  inherits: false;
-  initial-value: 0deg;
-  syntax: "<angle>";
-}
-
-@property --percentage {
-  inherits: false;
-  initial-value: 0;
-  syntax: "<number>";
-}
-
-.border-progress {
-  --percentage: 0;
-  --primary: #22c55e;
-  --secondary: #f59e0b;
-  animation: border-progress 1s forwards;
-  border: 2px solid transparent;
-  background:
-    #000 padding-box,
-    conic-gradient(var(--primary) calc(var(--percentage) * 1%), var(--secondary) 0) border-box;
-}
-
-@media (min-width: 1024px) {
-  .border-progress {
-    border-width: 3px;
-  }
-}
-
-@keyframes border-progress {
-  0% {
-    --percentage: 0;
-  }
-  100% {
-    --percentage: 100;
-  }
-}
 
 /* Border fill animation */
 .border-fill {

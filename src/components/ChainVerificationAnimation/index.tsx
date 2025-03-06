@@ -3,8 +3,8 @@ import PhaseColumn from "./Phase";
 import type { VerificationStepData } from "./Phase";
 import { Arrow } from "./Arrow";
 import { VerificationStatus } from "./VerificationStatus";
-import PlayTriangleIcon from "../../assets/icons/play.svg?raw";
-import RestartIcon from "../../assets/icons/restart.svg?raw";
+import PlayTriangleIcon from "../../assets/icons/play.svg?react";
+import RestartIcon from "../../assets/icons/restart.svg?react";
 
 interface AnimationState {
   currentPhase: number;
@@ -281,11 +281,7 @@ const VerificationPhases: React.FC = () => {
                   dispatch({ type: "START_ANIMATION" });
                 }}
               >
-                <span
-                  dangerouslySetInnerHTML={{
-                    __html: PlayTriangleIcon.replace("<svg", `<svg class="h-8 w-8"`),
-                  }}
-                />
+                <PlayTriangleIcon className="h-8 w-8" />
               </button>
               <span className="mt-2 text-white text-sm pointer-events-none">Play</span>
             </div>
@@ -302,11 +298,7 @@ const VerificationPhases: React.FC = () => {
                     dispatch({ type: "START_ANIMATION" });
                   }}
                 >
-                  <span
-                    dangerouslySetInnerHTML={{
-                      __html: RestartIcon.replace("<svg", `<svg class="h-6 w-6 md:h-5 md:w-5"`),
-                    }}
-                  />
+                  <RestartIcon className="h-6 w-6 md:h-5 md:w-5" />
                 </button>
                 <span className="mt-2 md:mt-1 text-white text-sm md:text-xs pointer-events-none">
                   Replay
