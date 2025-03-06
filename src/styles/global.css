@@ -25,24 +25,27 @@
   inset: -3px;
   border: 3px solid #22c55e; /* green-500 */
   border-radius: inherit;
-  clip-path: polygon(50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+  clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
   animation: fillBorderClip 1s linear forwards;
 }
 
 @keyframes fillBorderClip {
   0% {
-    clip-path: polygon(50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+    clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
   }
-  25% {
-    clip-path: polygon(50% 0%, 100% 0%, 100% 50%, 50% 0%, 50% 0%, 50% 0%);
+  20% {
+    clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 50% 50%);
   }
-  50% {
-    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%, 50% 0%, 50% 0%);
+  40% {
+    clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 50% 50%);
   }
-  75% {
-    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%, 50% 0%);
+  60% {
+    clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%, 50% 50%);
+  }
+  80% {
+    clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 50% 50%);
   }
   100% {
-    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 50% 0%);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%);
   }
 }

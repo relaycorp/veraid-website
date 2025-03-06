@@ -34,7 +34,7 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
       {status === VerificationStatus.VERIFYING ? (
         <div className="relative">
           <div
-            className={`border-fill rounded-md p-1 lg:p-2 text-white ${borderClasses.replace("border-2 lg:border-3", "")}`}
+            className={`border-2 lg:border-3 border-amber-500 rounded-md border-fill p-1 lg:p-2 text-white`}
           >
             <div className={fontContainerClasses}>
               <div className={titleClasses}>{title}</div>
