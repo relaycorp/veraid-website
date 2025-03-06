@@ -4,7 +4,9 @@ import ChainVerificationAnimation from "../ChainVerificationAnimation";
 
 <section class="bg-neutral-900 px-4 sm:px-4 lg:px-6 py-12 md:py-16 text-sm md:text-base">
   <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl text-white sm:text-4xl md:text-6xl text-center mb-8">How it works</h2>
+    <h2 id="how-it-works" class="text-3xl text-white sm:text-4xl md:text-6xl text-center mb-8">
+      How it works
+    </h2>
 
     <div class="space-y-6 text-gray-300">
       <p>
@@ -14,12 +16,18 @@ import ChainVerificationAnimation from "../ChainVerificationAnimation";
       </p>
 
       <p>
+        For example, this is how we'd verify a <em>VeraId Signature Bundle</em> attributing "Bazinga!"
+        to <code>sheldon@caltech.edu</code>:
+      </p>
+
+      <ChainVerificationAnimation client:load />
+
+      <p>
         Any DNSSEC-enabled domain can be a trust anchor in the PKI, but it only has control over
         itself. This offers far better security than PKIs such as the Transport Layer Security
         (TLS), where many trust anchors (Certificate Authorities) can issue certificates for any
         domain.
       </p>
-      <ChainVerificationAnimation client:load />
       <div class="flex flex-wrap gap-4 justify-center pt-4">
         <a
           href="/architecture"
