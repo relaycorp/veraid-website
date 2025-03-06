@@ -1,29 +1,39 @@
+/* CSS Variables */
+:root {
+  --border-width-base: 2px;
+  --border-width-large: 3px;
+  --border-color-primary: #f59e0b; /* amber-500 */
+  --border-color-secondary: #22c55e; /* green-500 */
+  --animation-duration: 1s;
+  --border-inset: -3px;
+}
+
 /* Border fill animation */
 .border-fill {
   position: relative;
-  border: 2px solid #f59e0b; /* amber-500 */
+  border: var(--border-width-base) solid var(--border-color-primary);
   background-color: #000;
 }
 
 @media (min-width: 1024px) {
   .border-fill {
-    border-width: 2px;
+    border-width: var(--border-width-large);
   }
 
   .border-fill::before {
-    inset: -2px;
-    border-width: 2px;
+    inset: var(--border-inset);
+    border-width: var(--border-width-large);
   }
 }
 
 .border-fill::before {
   content: "";
   position: absolute;
-  inset: -2px;
-  border: 2px solid #22c55e; /* green-500 */
+  inset: var(--border-inset);
+  border: var(--border-width-large) solid var(--border-color-secondary);
   border-radius: inherit;
   clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
-  animation: fillBorderClip 1s linear forwards;
+  animation: fillBorderClip var(--animation-duration) linear forwards;
 }
 
 @keyframes fillBorderClip {
