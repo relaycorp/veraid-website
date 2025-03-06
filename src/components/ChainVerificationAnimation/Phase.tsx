@@ -35,13 +35,6 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
     return isCompleted ? "border-green-500" : "border-amber-500";
   };
 
-  // Calculate animation duration dynamically based on the number of steps
-  const customStyle = isActive
-    ? ({
-        "--animation-duration": `${Math.max(1, steps.length)}s`,
-      } as React.CSSProperties)
-    : {};
-
   const borderClasses = `border-3 rounded-lg ${isActive ? "border-fill" : ""}`;
   const containerClasses = "flex flex-col h-full bg-black p-3 lg:p-5";
   const titleClasses = "text-white text-[1rem] lg:text-xl font-bold text-center mb-3 lg:mb-4";
@@ -49,10 +42,7 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
     "text-xs lg:text-sm text-white text-center mt-3 lg:mt-5 font-mono font-bold flex items-center justify-center";
 
   return (
-    <div
-      className={`${containerClasses} ${borderClasses} ${getBorderColorClass()}`}
-      style={customStyle}
-    >
+    <div className={`${containerClasses} ${borderClasses} ${getBorderColorClass()}`}>
       <h3 className={titleClasses}>{title}</h3>
 
       <div className="flex-grow">
