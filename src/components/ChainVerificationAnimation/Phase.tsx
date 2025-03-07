@@ -31,6 +31,9 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
   const isCompleted = status === VerificationStatus.VERIFIED;
   const showTick = isCompleted;
 
+  // Calculate animation duration based on number of steps. Ensure minimum duration of 1 second even if no steps
+  const animationDuration = `${Math.max(1, steps.length)}s`;
+
   const getBorderColorClass = () => {
     return isCompleted ? "border-green-500" : "border-amber-500";
   };
@@ -41,8 +44,15 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
   const resultClasses =
     "text-xs lg:text-sm text-white text-center mt-3 lg:mt-5 font-mono font-bold flex items-center justify-center";
 
+  const customStyle = isActive
+    ? ({ "--animation-duration": animationDuration } as React.CSSProperties)
+    : {};
+
   return (
-    <div className={`${containerClasses} ${borderClasses} ${getBorderColorClass()}`}>
+    <div
+      className={`${containerClasses} ${borderClasses} ${getBorderColorClass()}`}
+      style={customStyle}
+    >
       <h3 className={titleClasses}>{title}</h3>
 
       <div className="flex-grow">
