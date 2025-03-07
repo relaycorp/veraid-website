@@ -2,6 +2,7 @@ import React from "react";
 import VerificationStep from "./VerificationStep";
 import TickIcon from "../../assets/icons/tick.svg?raw";
 import { VerificationStatus } from "./VerificationStatus";
+import "./BorderAnimation.css";
 
 export interface VerificationStepData {
   title: string;
@@ -34,8 +35,7 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
     return isCompleted ? "border-green-500" : "border-amber-500";
   };
 
-  // Common style classes
-  const borderClasses = "border-2 rounded-lg";
+  const borderClasses = `border-3 rounded-lg ${isActive ? "border-fill" : ""}`;
   const containerClasses = "flex flex-col h-full bg-black p-3 lg:p-5";
   const titleClasses = "text-white text-[1rem] lg:text-xl font-bold text-center mb-3 lg:mb-4";
   const resultClasses =
