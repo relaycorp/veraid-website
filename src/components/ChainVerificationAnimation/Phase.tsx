@@ -32,7 +32,7 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
   const showTick = isCompleted;
 
   // Calculate animation duration based on number of steps. Ensure minimum duration of 1 second even if no steps
-  const animationDuration = steps.length > 0 ? `${steps.length}s` : "1s";
+  const animationDuration = `${Math.max(1, steps.length)}s`;
 
   const getBorderColorClass = () => {
     return isCompleted ? "border-green-500" : "border-amber-500";
