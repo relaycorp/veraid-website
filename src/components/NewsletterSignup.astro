@@ -1,0 +1,43 @@
+<div
+  class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-24 items-center text-xs pb-10 mb-10 border-b-1 border-neutral-800"
+>
+  <!-- Left column: Heading and text -->
+  <div class="bg-green-400">
+    <h2 class="text-3xl font-bold mb-4 text-white">Get important updates in your inbox!</h2>
+    <p>
+      Unsubscribe at anytime. We'll only share your data with Mailchimp, where it will be processed
+      according to their policies.
+    </p>
+  </div>
+
+  <!-- Right column: Form with input, button, and checkbox -->
+  <div class="bg-green-400">
+    <form>
+      <div class="flex flex-row gap-4 mb-4">
+        <input
+          type="email"
+          placeholder="you@example.com"
+          required
+          class="flex-grow bg-neutral-800 text-white px-4 py-2 rounded-full"
+          aria-label="Email address"
+        />
+        <button
+          type="submit"
+          class="bg-green-400 hover:bg-green-300 text-black font-medium px-8 py-2 rounded-full"
+        >
+          Subscribe
+        </button>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <input type="checkbox" id="privacy-policy" required class="h-4 w-4" />
+        <label for="privacy-policy">
+          I understand <a
+            href="/privacy-policy "
+            class="text-green-300 hover:text-green-200 hover:underline">Relaycorp's policies</a
+          > and authorise them to send me emails about Awala.
+        </label>
+      </div>
+    </form>
+  </div>
+</div>

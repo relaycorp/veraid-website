@@ -4,7 +4,7 @@ import VeraIdLogo from "../assets/images/veraid-logo-dark.png";
 import XIcon from "../assets/icons/x.svg?raw";
 import GithubIcon from "../assets/icons/github.svg?raw";
 import RedditIcon from "../assets/icons/reddit.svg?raw";
-
+import NewsletterSignup from "./NewsletterSignup.astro";
 const veraidLinks = [
   { href: "/ux", text: "User Experience" },
   { href: "/architecture", text: "Architecture" },
@@ -23,6 +23,7 @@ const currentYear = new Date().getFullYear();
 <footer
   class="py-10 sm:py-16 px-4 sm:px-6 mx-auto text-sm border-t border-neutral-800 bg-neutral-950"
 >
+  <NewsletterSignup />
   <div class="max-w-6xl mx-auto">
     <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-8 sm:gap-24">
       <div class="space-y-4">
