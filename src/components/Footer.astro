@@ -4,12 +4,14 @@ import VeraIdLogo from "../assets/images/veraid-logo-dark.png";
 import XIcon from "../assets/icons/x.svg?raw";
 import GithubIcon from "../assets/icons/github.svg?raw";
 import RedditIcon from "../assets/icons/reddit.svg?raw";
+import BlueskyIcon from "../assets/icons/bluesky.svg?raw";
 import NewsletterSignup from "./NewsletterSignup.astro";
+
 const veraidLinks = [
   { href: "/ux", text: "User Experience" },
-  { href: "/architecture", text: "Architecture" },
+  { href: "/overview", text: "Tech overview" },
+  { href: "/about", text: "About" },
   { href: "/spec", text: "Spec" },
-  { href: "/prior-art", text: "Prior art" },
 ];
 
 const relaycorpLinks = [
@@ -31,15 +33,20 @@ const currentYear = new Date().getFullYear();
           <Image src={VeraIdLogo} alt="VeraId Logo" class="h-8 w-auto" />
         </a>
         <p class="text-sm">User- and developer-friendly authentication based on DNS.</p>
-        <div class="flex gap-4 [&>a]:text-neutral-400 [&>a]:hover:text-neutral-300">
+        <div
+          class="flex gap-4 [&>a]:text-neutral-400 [&>a]:hover:text-white [&>a]:transition-colors [&>a>div]:h-6 [&>a>div]:w-6"
+        >
           <a href="https://x.com/CheVeraId">
-            <div class="h-6 w-6" set:html={XIcon} />
+            <div set:html={XIcon} />
           </a>
-          <a href="https://github.com/CheVeraId">
-            <div class="h-6 w-6" set:html={GithubIcon} />
+          <a href="https://bsky.app/profile/veraid.net">
+            <div set:html={BlueskyIcon} />
+          </a>
+          <a href="https://github.com/topics/veraid">
+            <div set:html={GithubIcon} />
           </a>
           <a href="https://www.reddit.com/r/VeraId/about/">
-            <div class="h-6 w-6" set:html={RedditIcon} />
+            <div set:html={RedditIcon} />
           </a>
         </div>
       </div>
