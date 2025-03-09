@@ -1,6 +1,6 @@
 ---
 title: How to use VeraId
-description: VeraId users
+description: How to use VeraId to verify and produce signatures with your own domain name
 layout: ../layouts/Page.astro
 permalink: /users
 ---
