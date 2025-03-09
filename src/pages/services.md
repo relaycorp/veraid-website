@@ -7,7 +7,7 @@ permalink: /integrations
 
 # VeraId integrations
 
-VeraId itself is a generic protocol, meant to be integrated in a broader protocol known as _services_.
+VeraId itself is a generic protocol, meant to be integrated in a broader protocol known as a _service_.
 
 ## VeraId services
 
