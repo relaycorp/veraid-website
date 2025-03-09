@@ -35,18 +35,10 @@ DNSSEC serves as the foundation of VeraId's trust model, providing cryptographic
 
 - **Trust Anchor**: VeraId inherits trust from the DNSSEC root zone, which is globally recognised and maintained.
 - **Domain Verification**: DNSSEC proves that a specific TXT record at `_veraid.<domain>` is authentic and authorised by the domain owner.
-- **Key Publication**: The TXT record contains critical information about the organisation's public key:
-  - Cryptographic algorithm (RSA-PSS with modulus 2048, 3072, or 4096 bits)
-  - Key identification method (SHA-256, SHA-384, or SHA-512 digest)
-  - The Base64-encoded key digest
-  - Maximum validity period for signatures (8 hours to 30 days)
-  - Optional service-specific identifiers
-
-Example TXT record for `example.com`:
-
-```
-_veraid.example.com. IN TXT "1 3 dGhpcyBpcyBub3QgYSByZWFsIGtleSBkaWdlc3Q 86400"
-```
+- **Key Publication**: The TXT record contains critical information about the organisation's public key. For example, the following TXT record specifies that `example.com` uses VeraId with an RSA-2048 key identified by its SHA-512 digest and has a TTL override of 24 hours (86400 seconds).
+  ```
+  _veraid.example.com. IN TXT "1 3 dGhpcyBpcyBub3QgYSByZWFsIGtleSBkaWdlc3Q 86400"
+  ```
 
 ### X.509 Certificate Chain
 
