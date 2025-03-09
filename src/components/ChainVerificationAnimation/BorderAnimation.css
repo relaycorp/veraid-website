@@ -2,43 +2,60 @@
   --border-width: 3px;
   --border-color-primary: #f59e0b;
   --border-color-secondary: #22c55e;
-  --animation-duration: 1s;
   --border-inset: -3px;
 }
 
-/* Border fill animation */
-.border-fill {
+.border-conic {
   position: relative;
-  border: var(--border-width) solid var(--border-color-primary);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  border: solid var(--border-width) transparent;
+  background-image:
+    linear-gradient(to right, black, black),
+    conic-gradient(
+      from 0deg,
+      var(--border-color-secondary) var(--angle, 0deg),
+      var(--border-color-primary) var(--angle, 0deg)
+    );
 }
 
-.border-fill::before {
-  content: "";
-  position: absolute;
-  inset: var(--border-inset);
-  border: var(--border-width) solid var(--border-color-secondary);
-  border-radius: inherit;
-  clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
-  animation: fillBorderClip var(--animation-duration) linear forwards;
+.border-conic--progress {
+  --angle: calc(var(--progress, 0) * 360deg);
 }
 
-@keyframes fillBorderClip {
+.border-conic--animated {
+  animation:
+    fillBorderConic 1ms linear forwards,
+    fillBorderAngle var(--animation-duration) linear forwards;
+}
+
+@keyframes fillBorderConic {
+  0%,
+  100% {
+    background-image:
+      linear-gradient(to right, black, black),
+      conic-gradient(
+        from 0deg,
+        var(--border-color-secondary) var(--keyframe-angle, 0deg),
+        var(--border-color-primary) var(--keyframe-angle, 0deg)
+      );
+  }
+}
+
+@keyframes fillBorderAngle {
   0% {
-    clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
+    --keyframe-angle: 0deg;
   }
-  20% {
-    clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 50% 50%);
+  25% {
+    --keyframe-angle: 90deg;
   }
-  40% {
-    clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 50% 50%);
+  50% {
+    --keyframe-angle: 180deg;
   }
-  60% {
-    clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%, 50% 50%);
-  }
-  80% {
-    clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 50% 50%);
+  75% {
+    --keyframe-angle: 270deg;
   }
   100% {
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%);
+    --keyframe-angle: 360deg;
   }
 }

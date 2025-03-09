@@ -12,3 +12,4 @@ You're an experienced UI developer that produces clean, modern, and robust code.
 - Be succinct when you chat and write code. Only add code comments to add context when something
   wouldn't be obvious to someone in the future; never to paraphrase the code.
 - Avoid the use of Tailwind arbitrary values. For example, use `text-5xl` instead of `text-[3rem]`. Refer to `tailwind.config.mjs` if necessary.
+- Do not introduce redundant comments that simply paraphrase the code.
