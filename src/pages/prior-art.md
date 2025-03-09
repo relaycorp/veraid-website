@@ -7,7 +7,7 @@ permalink: /prior-art
 
 # Prior art
 
-We need a mechanism to assign customisable, user-friendly, universally-unique, offline-compatible identifiers to [Letro](https://letro.app/en/) users to avoid phishing. We didn't find any prior attempt to achieve this in a decentralised manner, so we decided to build our own solution based on DNS.
+We needed a mechanism to assign customisable, user-friendly, universally-unique, offline-compatible identifiers to [Letro](https://letro.app/en/) users to avoid phishing. We didn't find any prior attempt to achieve this in a decentralised manner, so we decided to build our own solution based on DNS.
 
 We did consider the following technologies, but we decided not to use them or build upon them:
 

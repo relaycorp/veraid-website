@@ -1,0 +1,112 @@
+---
+title: "Technical Overview of VeraId"
+description: "Technical overview of VeraId's decentralised authentication protocol, including cryptographic foundation, trust model, and implementation architecture"
+layout: ../layouts/Page.astro
+permalink: /overview
+---
+
+import ChainVerificationAnimation from "../components/ChainVerificationAnimation/index.tsx";
+
+# Technical Overview of VeraId
+
+This document provides a technical overview of VeraId for anyone looking to understand the protocol and its reference implementations. This includes protocol designers and (Sec)DevOps engineers seeking to integrate it into their existing systems, and prospective contributors to the project, for example.
+
+## Introduction
+
+VeraId is a decentralised, user-friendly, offline-first authentication protocol that securely attributes content to domain names. It enables verification of content authenticity without requiring continuous Internet connectivity, making it ideal for offline or intermittently connected environments.
+
+VeraId was created to address a critical need for customisable, user-friendly, universally-unique, offline-compatible identifiers that can withstand sophisticated attacks, particularly for users of [Letro](https://letro.app/en/). After extensive research, [we found no existing technology that could satisfy these requirements in a decentralised manner](/prior-art).
+
+_Organisations_ and _members_ are key concepts in VeraId. Organisations are represented by domain names (e.g., `example.com`) and serve as the foundation of identity. Members are entities that act on behalf of organisations, including _users_ who are identified by a username within an organisation (e.g., `alice@example.com`) and _bots_ that act on behalf of the organisation as a whole (identified simply as `example.com`).
+
+VeraId leverages the domain name system as the basis for identity. Domain ownership, verified through DNSSEC, establishes the right to issue certificates and create signatures for that domain. The protocol uses X.509 certificates to establish a chain of trust where organisations create self-signed certificates, which then issue certificates to members. This certification path links members to their organisation. Members use their private keys to create digital signatures using the Cryptographic Message Syntax (CMS) SignedData format that cryptographically proves they authored specific content.
+
+A key innovation of VeraId is its "verify anywhere" approach. All the information needed to verify a signature—including DNSSEC proofs, certificates, and the signature itself—is packaged into a self-contained _VeraId Signature Bundle_ that can be verified entirely offline. For example, this is how we'd verify a bundle attributing `Bazinga!` to `sheldon@caltech.edu`:
+
+<ChainVerificationAnimation client:load />
+
+## VeraId Chain
+
+VeraId's security model is built on a chain of cryptographic proofs that establish trust from the DNS root all the way to individual signatures. This chain combines three distinct technologies—DNSSEC, X.509 certificates, and CMS SignedData—into a cohesive verification path that can be validated entirely offline. Each link in this chain serves a specific purpose: DNSSEC anchors identity in domain ownership, X.509 certificates establish organisational and member identities, and CMS SignedData provides the cryptographic binding between content and identity.
+
+### DNSSEC Chain
+
+DNSSEC serves as the foundation of VeraId's trust model, providing cryptographic authentication of DNS records without requiring centralised certificate authorities:
+
+- **Trust Anchor**: VeraId inherits trust from the DNSSEC root zone, which is globally recognised and maintained.
+- **Domain Verification**: DNSSEC proves that a specific TXT record at `_veraid.<domain>` is authentic and authorised by the domain owner.
+- **Key Publication**: The TXT record contains critical information about the organisation's public key. For example, the following TXT record specifies that `example.com` uses VeraId with an RSA-2048 key identified by its SHA-512 digest and has a TTL override of 24 hours (86400 seconds).
+  ```
+  _veraid.example.com. IN TXT "1 3 dGhpcyBpcyBub3QgYSByZWFsIGtleSBkaWdlc3Q 86400"
+  ```
+
+### X.509 Certificate Chain
+
+VeraId uses X.509 certificates to establish a domain-specific hierarchy of trust:
+
+- **Organisation certificates**: Self-signed certificates that serve as the root of trust for a domain. These certificates must have a public key matching the digest published in the DNSSEC-protected TXT record.
+- **Member certificates**: Issued by the organisation certificate to individual users or bots. These certificates are issued by the organisation certificate, contain the username (for users) or `@` sign (for bots) in the Subject CommonName, and can't issue other certificates.
+
+Unlike traditional PKI where any certificate authority can issue certificates for any domain, VeraId enforces a strict one-to-many relationship where an organisation can only issue certificates for its own domain, significantly reducing the attack surface.
+
+### CMS SignedData
+
+The final link in the VeraId chain is the signature itself, which uses the Cryptographic Message Syntax (CMS) SignedData format. Depending on the signature type, this signed data is produced either directly by a member using their private key (for member signatures) or by the organisation (for organisation signatures).
+
+## Signature Types
+
+VeraId supports two distinct types of signatures, each with different trust models and use cases:
+
+1. **Member Signatures**: The member uses their private key to sign content, creating a direct cryptographic link between the member and the content. The verification chain goes from DNSSEC to the organisation certificate to the member certificate to the signature.
+2. **Organisation Signatures**: The organisation signs the content and claims (but does not cryptographically prove) that a specific member created it. The verification chain goes directly from DNSSEC to the organisation certificate to the signature.
+
+Organisation signatures should be used sparingly, and only when member certificate management is impractical or unnecessary.
+For example, organisation signatures were introduced to support workflow identities, such as GitHub Actions workflows or server-side applications, where it would be undesirable to use shared secrets for authentication.
+
+## Architecture
+
+VeraId's implementation architecture consists of core libraries and supporting services that enable organisations to integrate the protocol into their systems. The following diagram illustrates the key components and their relationships:
+
+![VeraId Architecture Diagram](/diagrams/architecture.svg)
+
+### Core Libraries
+
+VeraId provides implementations in JavaScript ([`@relaycorp/veraid`](https://github.com/relaycorp/veraid-js)) and Kotlin ([`tech.relaycorp:veraid`](https://github.com/relaycorp/veraid-jvm)) to enable integration across different platforms.
+
+Both libraries implement the same core protocol operations: MemberIdBundle and SignatureBundle creation and verification, as well as the building blocks to implement custom tooling.
+
+### VeraId Authority
+
+[VeraId Authority](https://docs.relaycorp.tech/veraid-authority/) is a cloud-native, multi-tenant application that helps organisations manage their VeraId members and issue Member Bundles. Whilst not part of the protocol itself, it serves as a reference implementation and administration tool to facilitate the operation of the protocol.
+
+VeraId Authority provides workflows for:
+
+- Organisation registration and key management.
+- Member certificate issuance and renewal.
+- Member id bundle generation and distribution.
+
+## Letro Integration Case Study
+
+[Letro](https://letro.app/en/) is an offline-compatible email alternative that uses VeraId for secure authentication. It serves as a practical demonstration of VeraId's capabilities in a real-world application:
+
+- **Offline, user-friendly authentication:** Letro leverages VeraId to enable users to use their own domain names, or [get free identifiers](https://docs.relaycorp.tech/letro-server/account-creation) from domains like `cuppa.fans` (UK English) or `applepie.rocks` (US English). Either way, the user obtains a member id bundle that can be used to sign messages offline.
+- **Contact pairing:** Because Letro requires consent from both parties before they can begin to message each other, it implements a [contact pairing protocol](https://docs.relaycorp.tech/letro-server/contact-pairing). This protocol leverages VeraId to enable users to verify each other's identity offline, thus ensuring they're talking to the right person.
+
+Note that Letro uses member signatures, rather than organisation signatures, so that users can sign messages offline.
+
+## Security Considerations
+
+VeraId's security model comes with several important considerations that operators and service designers should be aware of:
+
+1. **DNSSEC Dependency and Trust Assumptions:** VeraId inherits trust from the DNSSEC root zone, which means the security of the entire system depends on the integrity of this foundation. A compromise of the root DNSSEC zone would undermine the entire system. Additionally, a malicious TLD operator could theoretically issue fraudulent DNSSEC responses, potentially compromising domains under their control.
+2. **Homographic Attacks and Character Encoding Issues:** Different Unicode characters that appear visually similar can be used for spoofing attacks. Implementations should detect and warn about mixed-script identifiers to mitigate this risk. User interfaces should display domain names in Punycode when they contain non-ASCII characters to make potentially deceptive domains more apparent to users.
+3. **Domain Ownership Changes:** Organisations should delay implementing VeraId until at least the maximum TTL (30 days) after acquiring a domain to ensure previous owners cannot interfere with the setup. It's important to note that signatures created before a domain transfer remain cryptographically valid, which could potentially lead to confusion or misattribution.
+4. **Offline Verification Limitations:** The offline verification capability comes with inherent constraints. Accurate verification requires a correct system time on the verifying device. Valid signatures can be replayed beyond their intended context if not properly constrained by the application. The protocol relies on short validity periods rather than revocation checking, which means compromised keys remain valid until their certificates expire.
+5. **Organisation Signatures and Member Attribution:** Whilst member signatures provide cryptographic proof of authorship, organisation signatures only provide a claim by the organisation about who created the content. Malicious or compromised organisations could falsely attribute content to members when using organisation signatures. Where relevant, user interfaces should clearly distinguish between these signature types to avoid confusion.
+6. **TTL Considerations:** The protocol favours short-lived certificates over complex revocation mechanisms for simplicity and offline compatibility. VeraId requires a minimum TTL of 8 hours and a maximum of 30 days to balance security and usability. Service designers should specify the shortest TTL that satisfies their requirements to minimise the window of vulnerability in case of key compromise.
+
+## Additional Resources
+
+- [VeraId V1 Specification](/spec): Complete technical specification.
+- [Prior Art Analysis](/prior-art): Comparison with alternative technologies.
+- [VeraId Authority Documentation](https://docs.relaycorp.tech/veraid-authority/): Guide to running the Authority server.
