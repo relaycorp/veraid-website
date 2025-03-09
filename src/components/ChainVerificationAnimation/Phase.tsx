@@ -28,7 +28,7 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
   currentStep = -1,
 }) => {
   const isActive = status === VerificationStatus.VERIFYING;
-  const isCompleted = status === VerificationStatus.VERIFIED;
+  const isCompleted = status === VerificationStatus.VERIFIED && currentStep === -1;
   const showTick = isCompleted;
 
   // Calculate animation duration based on number of steps. Ensure minimum duration of 1 second even if no steps
@@ -38,21 +38,37 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
     return isCompleted ? "border-green-500" : "border-amber-500";
   };
 
-  const borderClasses = `border-3 rounded-lg ${isActive ? "border-fill" : ""}`;
+  // Calculate progress for the border animation
+  const getProgress = () => {
+    // If all steps are verified, return 1 (100%)
+    if (verifiedSteps >= steps.length) return 1;
+
+    // Calculate progress including current step being verified
+    if (isActive && currentStep >= 0) {
+      // Include partial progress for the current step being verified (0.5)
+      return (verifiedSteps + 0.5) / steps.length;
+    } else {
+      return verifiedSteps / steps.length;
+    }
+  };
+
+  const borderClasses = isCompleted
+    ? `border-3 rounded-lg ${getBorderColorClass()}`
+    : "rounded-lg border-conic border-conic--progress";
   const containerClasses = "flex flex-col h-full bg-black p-3 lg:p-5";
   const titleClasses = "text-white text-[1rem] lg:text-xl font-bold text-center mb-3 lg:mb-4";
   const resultClasses =
     "text-xs lg:text-sm text-white text-center mt-3 lg:mt-5 font-mono font-bold flex items-center justify-center";
 
-  const customStyle = isActive
-    ? ({ "--animation-duration": animationDuration } as React.CSSProperties)
+  const customStyle = !isCompleted
+    ? ({
+        "--animation-duration": animationDuration,
+        "--progress": getProgress(),
+      } as React.CSSProperties)
     : {};
 
   return (
-    <div
-      className={`${containerClasses} ${borderClasses} ${getBorderColorClass()}`}
-      style={customStyle}
-    >
+    <div className={`${containerClasses} ${borderClasses}`} style={customStyle}>
       <h3 className={titleClasses}>{title}</h3>
 
       <div className="flex-grow">
@@ -69,6 +85,7 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
                   ? VerificationStatus.VERIFYING
                   : VerificationStatus.PENDING
             }
+            progress={index < verifiedSteps ? 1 : isActive && index === currentStep ? 0.5 : 0}
           />
         ))}
       </div>
