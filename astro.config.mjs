@@ -7,9 +7,11 @@ import svgr from "vite-plugin-svgr";
 
 import mdx from "@astrojs/mdx";
 
+import cloudflareRedirects from "astro-cloudflare-redirects";
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react(), mdx()],
+  integrations: [react(), mdx(), cloudflareRedirects()],
 
   vite: {
     plugins: [tailwindcss(), svgr()],
