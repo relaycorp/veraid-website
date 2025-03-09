@@ -5,7 +5,6 @@
   --border-inset: -3px;
 }
 
-/* Base class for conic gradient borders */
 .border-conic {
   position: relative;
   background-origin: padding-box, border-box;
@@ -13,20 +12,17 @@
   border: solid var(--border-width) transparent;
   background-image:
     linear-gradient(to right, black, black),
-    /* Inner background */
-      conic-gradient(
-        from 0deg,
-        var(--border-color-secondary) var(--angle, 0deg),
-        var(--border-color-primary) var(--angle, 0deg)
-      );
+    conic-gradient(
+      from 0deg,
+      var(--border-color-secondary) var(--angle, 0deg),
+      var(--border-color-primary) var(--angle, 0deg)
+    );
 }
 
-/* Border animation using conic gradient with progress variable */
 .border-conic--progress {
   --angle: calc(var(--progress, 0) * 360deg);
 }
 
-/* Animation for the border fill */
 .border-conic--animated {
   animation:
     fillBorderConic 1ms linear forwards,

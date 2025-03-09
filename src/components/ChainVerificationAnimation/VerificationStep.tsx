@@ -34,7 +34,6 @@ export const VerificationStep: React.FC<VerificationStepProps> = ({
 
   const animationDuration = "1s";
 
-  // Custom style for progress animation
   const customStyle =
     status === VerificationStatus.VERIFYING
       ? ({

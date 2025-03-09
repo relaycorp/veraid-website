@@ -31,21 +31,16 @@ export const PhaseColumn: React.FC<PhaseProps> = ({
   const isCompleted = status === VerificationStatus.VERIFIED && currentStep === -1;
   const showTick = isCompleted;
 
-  // Calculate animation duration based on number of steps. Ensure minimum duration of 1 second even if no steps
   const animationDuration = `${Math.max(1, steps.length)}s`;
 
   const getBorderColorClass = () => {
     return isCompleted ? "border-green-500" : "border-amber-500";
   };
 
-  // Calculate progress for the border animation
   const getProgress = () => {
-    // If all steps are verified, return 1 (100%)
     if (verifiedSteps >= steps.length) return 1;
 
-    // Calculate progress including current step being verified
     if (isActive && currentStep >= 0) {
-      // Include partial progress for the current step being verified (0.5)
       return (verifiedSteps + 0.5) / steps.length;
     } else {
       return verifiedSteps / steps.length;
