@@ -16,17 +16,3 @@ We're also working on a service to leverage VeraId to bring service accounts to 
 allowing clients to authenticate by proving their identity (e.g. `alice@example.com`) rather than using API keys.
 Think AWS roles or Azure managed identities, but for the entire Internet.
 Stay tuned!
-
-## Create a VeraId service
-
-To create a VeraId service, you need to: XXX
-
-### Define the protocol
-
-Service OID.
-
-### Produce signatures
-
-Retrieve member id bundles from the VeraId Authority.
-
-### Verify signatures
