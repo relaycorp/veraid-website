@@ -1,5 +1,6 @@
 ---
 import Banner from "./Banner.astro";
+import xkcdImage from "../../assets/images/xkcd.svg"; // Add this image to your assets
 ---
 
 <div class="mt-6 md:mt-14 relative overflow-hidden w-full">
@@ -7,11 +8,41 @@ import Banner from "./Banner.astro";
     {
       [...Array(2)].map(() => (
         <div class="flex gap-8 sm:gap-16 items-center min-w-max pr-4 sm:pr-8">
-          {[...Array(7)].map(() => (
-            <div class="relative pb-3">
-              <Banner />
-            </div>
-          ))}
+          <div class="relative pb-3">
+            <Banner message="Developers! Developers! Developers!" source="sb@microsoft.com" />
+          </div>
+          <div class="relative pb-3">
+            <Banner type="image" source="xkcd.com" imageSrc={xkcdImage} imageAlt="XKCD comic" />
+          </div>
+
+          <div class="relative pb-3">
+            <Banner message="You shall not pass!" source="gandalf@ring.company" />
+          </div>
+
+          <div class="relative pb-3">
+            <Banner type="image" source="xkcd.com" imageSrc={xkcdImage} imageAlt="XKCD comic" />
+          </div>
+
+          <div class="relative pb-3">
+            <Banner message="Rrrruuuurrr" source="chewbacca@kashyyyk.space" />
+          </div>
+
+          <div class="relative pb-3">
+            <Banner
+              type="code"
+              source="bbc.com"
+              code={`<html lang="en">
+<head><title>The news</title></head>
+<body>
+<h1>Major discovery</h2>
+<p>This is the story</p>
+</body>`}
+            />
+          </div>
+
+          <div class="relative pb-3">
+            <Banner message="Winter is coming" source="jon@nightswatch.mil" />
+          </div>
         </div>
       ))
     }

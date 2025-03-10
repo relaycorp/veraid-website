@@ -1,6 +1,26 @@
 ---
 import { Image } from "astro:assets";
 import tickIcon from "../../assets/icons/tick.svg";
+
+interface Props {
+  type?: "simple" | "image" | "code";
+  message?: string;
+  source: string;
+  imageSrc?: ImageMetadata;
+  imageAlt?: string;
+  code?: string;
+  domain?: boolean;
+}
+
+const {
+  type = "simple",
+  message = "",
+  source,
+  imageSrc,
+  imageAlt = "",
+  code,
+  domain = false,
+} = Astro.props;
 ---
 
 <div class="pixelated-frame pt-3 px-12 text-center w-fit mx-auto bg-black">
@@ -15,9 +35,28 @@ import tickIcon from "../../assets/icons/tick.svg";
   <div class="frame-part left-bar"></div>
   <div class="frame-part right-bar"></div>
 
-  <p class="text-white font-bold font-JetBrainsMono text-sm">You shall not pass!</p>
+  <!-- Banner content based on type -->
+  {
+    type === "image" && imageSrc && (
+      <div class="mb-3">
+        <Image src={imageSrc} alt={imageAlt} width={150} height={100} class="mx-auto" />
+      </div>
+    )
+  }
+
+  {
+    type === "code" && code && (
+      <div class="mb-3 text-left">
+        <pre class="text-white font-JetBrainsMono text-xs overflow-x-auto p-2">
+          <code>{code}</code>
+        </pre>
+      </div>
+    )
+  }
+
+  <p class="text-white font-bold font-JetBrainsMono text-sm">{message}</p>
   <div class="flex items-center justify-center translate-y-2">
-    <span class="text-white text-sm font-mono font-normal">gandalf@ring.company</span>
+    <span class="text-white text-sm font-mono font-normal">{source}</span>
     <Image src={tickIcon} alt="Verified" width={24} height={24} class="ml-1" />
   </div>
 </div>
