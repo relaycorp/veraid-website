@@ -1,18 +1,18 @@
 <div
-  class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1.8fr_1fr] gap-6 lg:gap-10 items-center pb-10 mb-10 border-b-1 border-neutral-800"
+  class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1.8fr_1fr] gap-8 lg:gap-14 items-center pb-10 mb-10 border-b-1 border-neutral-800"
 >
-  <!-- Left column: Heading and text -->
   <div class="text-xs">
     <h2 class="text-2xl lg:text-3xl font-bold mb-4 text-white">
       Get important updates in your inbox!
     </h2>
     <p>
-      Unsubscribe at anytime. We'll only share your data with Mailchimp, where it will be processed
-      according to their policies.
+      Unsubscribe at anytime. We'll only share your data with Zoho, where it will be processed
+      according to their <a
+        href="https://www.zoho.com/mail/help/usage-policy.html"
+        class="text-green-300 hover:text-green-200">policies</a
+      >.
     </p>
   </div>
-
-  <!-- Right column: Form with input, button, and checkbox -->
   <div>
     <form
       method="POST"
@@ -23,7 +23,7 @@
       <div class="flex flex-col lg:flex-row flex-wrap gap-2 lg:gap-4 mb-4">
         <input
           type="text"
-          placeholder="Email"
+          placeholder="you@example.com"
           name="CONTACT_EMAIL"
           required
           class="w-full lg:w-auto lg:flex-grow bg-neutral-800 text-white px-4 py-2.5 rounded-full"
@@ -32,11 +32,21 @@
         <button
           type="submit"
           name="SIGNUP_SUBMIT_BUTTON"
-          value="Sign up"
+          value="Subscribe"
           class="w-full lg:w-auto bg-green-400 hover:bg-green-300 text-black font-bold px-4 lg:px-8 py-2.5 rounded-full"
         >
-          Sign up
+          Subscribe
         </button>
+      </div>
+
+      <div class="flex items-start gap-2 mb-4">
+        <input type="checkbox" id="consent" name="CONSENT" required class="mt-1" />
+        <label for="consent" class="text-xs">
+          I understand <a
+            href="https://awala.app/en/legal/"
+            class="text-green-300 hover:text-green-200 hover:underline">Relaycorp's policies</a
+          > and authorise them to send me emails about VeraId.
+        </label>
       </div>
 
       <input type="hidden" name="submitType" value="optinCustomView" />
