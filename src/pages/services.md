@@ -26,6 +26,8 @@ To integrate VeraId into your protocol, thus creating a _VeraId service_, you ne
 2. Produce signatures.
 3. Verify signatures.
 
+Make sure to try the [VeraId demo](/demo) to see how to produce and verify signatures with your own domain name, and tinker with the SDK to see what's possible.
+
 ### Define the service
 
 VeraId is flexible enough to be integrated into any protocol,
