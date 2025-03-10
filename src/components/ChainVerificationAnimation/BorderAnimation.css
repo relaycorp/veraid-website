@@ -24,38 +24,53 @@
 }
 
 .border-conic--animated {
-  animation:
-    fillBorderConic 1ms linear forwards,
-    fillBorderAngle var(--animation-duration) linear forwards;
+  animation: fillBorder var(--animation-duration) linear forwards;
 }
 
-@keyframes fillBorderConic {
-  0%,
+@keyframes fillBorder {
+  0% {
+    background-image:
+      linear-gradient(to right, black, black),
+      conic-gradient(
+        from 0deg,
+        var(--border-color-secondary) 0deg,
+        var(--border-color-primary) 0deg
+      );
+  }
+  25% {
+    background-image:
+      linear-gradient(to right, black, black),
+      conic-gradient(
+        from 0deg,
+        var(--border-color-secondary) 90deg,
+        var(--border-color-primary) 90deg
+      );
+  }
+  50% {
+    background-image:
+      linear-gradient(to right, black, black),
+      conic-gradient(
+        from 0deg,
+        var(--border-color-secondary) 180deg,
+        var(--border-color-primary) 180deg
+      );
+  }
+  75% {
+    background-image:
+      linear-gradient(to right, black, black),
+      conic-gradient(
+        from 0deg,
+        var(--border-color-secondary) 270deg,
+        var(--border-color-primary) 270deg
+      );
+  }
   100% {
     background-image:
       linear-gradient(to right, black, black),
       conic-gradient(
         from 0deg,
-        var(--border-color-secondary) var(--keyframe-angle, 0deg),
-        var(--border-color-primary) var(--keyframe-angle, 0deg)
+        var(--border-color-secondary) 360deg,
+        var(--border-color-primary) 360deg
       );
-  }
-}
-
-@keyframes fillBorderAngle {
-  0% {
-    --keyframe-angle: 0deg;
-  }
-  25% {
-    --keyframe-angle: 90deg;
-  }
-  50% {
-    --keyframe-angle: 180deg;
-  }
-  75% {
-    --keyframe-angle: 270deg;
-  }
-  100% {
-    --keyframe-angle: 360deg;
   }
 }
