@@ -46,7 +46,8 @@ To enable VeraId for your domain name, you need to:
 
 Once VeraId is enabled for your domain,
 you can integrate it with any end user app implementing a VeraId service.
-This process depends on how the service uses VeraId.
+This process depends on how the service uses VeraId,
+so you have to refer to the documentation of the service.
 For example,
 in a service like Letro,
 where users are able to produce signatures offline,
