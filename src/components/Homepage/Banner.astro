@@ -22,7 +22,7 @@ const {
 } = Astro.props;
 ---
 
-<div class="pixelated-frame pt-3 px-12 text-center w-fit mx-auto bg-black">
+<div class="pixelated-frame pt-3 px-10 text-center w-fit mx-auto bg-black">
   <!-- Frame parts -->
   <div class="frame-part top-bar"></div>
   <div class="frame-part top-right-corner"></div>
@@ -37,7 +37,7 @@ const {
   <!-- Banner content based on type -->
   {
     type === "image" && imageSrc && (
-      <div class="mb-3">
+      <div class="py-1">
         <Image src={imageSrc} alt={imageAlt} width={150} height={100} class="mx-auto" />
       </div>
     )
@@ -51,85 +51,101 @@ const {
 </div>
 
 <style>
+  /* CSS Variables for common dimensions */
+  :root {
+    --frame-thickness: 3px;
+    --frame-offset: 3px;
+    --frame-inner-offset: 6px;
+    --segment-width: 30px;
+  }
+
   .pixelated-frame {
     position: relative;
   }
 
+  /* Common properties for all frame parts */
   .frame-part {
     position: absolute;
     background-color: white;
     z-index: 10;
   }
 
-  /* Top horizontal bar */
+  /* All corner elements */
+  .top-right-corner,
+  .bottom-right-corner,
+  .bottom-left-corner,
+  .top-left-corner {
+    width: var(--frame-thickness);
+    height: var(--frame-thickness);
+  }
+
+  /* Top corners */
+  .top-right-corner,
+  .top-left-corner {
+    top: var(--frame-offset);
+  }
+
+  /* Bottom corners */
+  .bottom-right-corner,
+  .bottom-left-corner {
+    bottom: var(--frame-offset);
+  }
+
+  /* Left corners */
+  .top-left-corner,
+  .bottom-left-corner {
+    left: var(--frame-offset);
+  }
+
+  /* Right corners */
+  .top-right-corner,
+  .bottom-right-corner {
+    right: var(--frame-offset);
+  }
+
+  /* Horizontal bars */
+  .top-bar,
+  .bottom-left-segment,
+  .bottom-right-segment {
+    height: var(--frame-thickness);
+  }
+
+  /* Vertical bars */
+  .left-bar,
+  .right-bar {
+    width: var(--frame-thickness);
+    height: calc(100% - var(--frame-inner-offset) * 2);
+    top: var(--frame-inner-offset);
+  }
+
+  /* Left and right bars positioning */
+  .left-bar {
+    left: 0;
+  }
+
+  .right-bar {
+    right: 0;
+  }
+
+  /* Top bar */
   .top-bar {
     top: 0;
-    left: 6px;
-    width: calc(100% - 12px);
-    height: 3px;
+    left: var(--frame-inner-offset);
+    width: calc(100% - var(--frame-inner-offset) * 2);
   }
 
-  /* Top-right corner */
-  .top-right-corner {
-    top: 3px;
-    right: 3px;
-    width: 3px;
-    height: 3px;
-  }
-
-  /* Bottom-right corner */
-  .bottom-right-corner {
-    bottom: 3px;
-    right: 3px;
-    width: 3px;
-    height: 3px;
-  }
-
-  /* Bottom-left segment */
-  .bottom-left-segment {
-    bottom: 0;
-    left: 6px;
-    width: 40px;
-    height: 3px;
-  }
-
-  /* Bottom-right segment */
+  /* Bottom segments */
+  .bottom-left-segment,
   .bottom-right-segment {
     bottom: 0;
-    right: 6px;
-    width: 40px;
-    height: 3px;
+    width: var(--segment-width);
   }
 
-  /* Bottom-left corner */
-  .bottom-left-corner {
-    bottom: 3px;
-    left: 3px;
-    width: 3px;
-    height: 3px;
+  .bottom-left-segment {
+    left: var(--frame-inner-offset);
   }
 
-  /* Top-left corner */
-  .top-left-corner {
-    top: 3px;
-    left: 3px;
-    width: 3px;
-    height: 3px;
-  }
-
-  /* Left vertical bar */
-  .left-bar {
-    top: 6px;
-    left: 0;
-    width: 3px;
-    height: calc(100% - 12px);
-  }
-
-  /* Right vertical bar */
-  .right-bar {
-    top: 6px;
-    right: 0;
-    width: 3px;
-    height: calc(100% - 12px);
+  .bottom-right-segment {
+    right: var(--frame-inner-offset);
   }
 </style>
