@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import tickIcon from "../../assets/icons/tick.svg";
 
 interface Props {
-  type?: "simple" | "image" | "code";
+  type?: "simple" | "image";
   message?: string;
   source: string;
   imageSrc?: ImageMetadata;
@@ -18,7 +18,6 @@ const {
   source,
   imageSrc,
   imageAlt = "",
-  code,
   domain = false,
 } = Astro.props;
 ---
@@ -40,16 +39,6 @@ const {
     type === "image" && imageSrc && (
       <div class="mb-3">
         <Image src={imageSrc} alt={imageAlt} width={150} height={100} class="mx-auto" />
-      </div>
-    )
-  }
-
-  {
-    type === "code" && code && (
-      <div class="mb-3 text-left">
-        <pre class="text-white font-JetBrainsMono text-xs overflow-x-auto p-2">
-          <code>{code}</code>
-        </pre>
       </div>
     )
   }

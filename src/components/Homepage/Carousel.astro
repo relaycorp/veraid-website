@@ -1,6 +1,8 @@
 ---
 import Banner from "./Banner.astro";
-import xkcdImage from "../../assets/images/xkcd.svg"; // Add this image to your assets
+import xkcdImage from "../../assets/images/xkcd.svg";
+import audioGif from "../../assets/images/audio-final.gif";
+import bbcImage from "../../assets/images/bbc.png";
 ---
 
 <div class="mt-6 md:mt-14 relative overflow-hidden w-full">
@@ -20,24 +22,15 @@ import xkcdImage from "../../assets/images/xkcd.svg"; // Add this image to your 
           </div>
 
           <div class="relative pb-3">
-            <Banner type="image" source="xkcd.com" imageSrc={xkcdImage} imageAlt="XKCD comic" />
+            <Banner type="image" source="xkcd.com" imageSrc={audioGif} imageAlt="XKCD comic" />
           </div>
 
           <div class="relative pb-3">
             <Banner message="Rrrruuuurrr" source="chewbacca@kashyyyk.space" />
           </div>
 
-          <div class="relative pb-3">
-            <Banner
-              type="code"
-              source="bbc.com"
-              code={`<html lang="en">
-<head><title>The news</title></head>
-<body>
-<h1>Major discovery</h2>
-<p>This is the story</p>
-</body>`}
-            />
+          <div class="relative">
+            <img src={bbcImage.src} alt="BBC News" class="w-70 h-auto rounded-lg shadow-md" />
           </div>
 
           <div class="relative pb-3">
