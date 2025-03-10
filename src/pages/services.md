@@ -55,21 +55,23 @@ Once you have a member id bundle, you can produce member signatures using one of
 
 #### Produce organisation signatures
 
-To produce organisation signatures, you need to obtain an organisation id bundle,
-which you can do from a VeraId Authority instance or your own custom integration.
+You need to use a VeraId Authority instance,
+or your own custom integration powered by a [VeraId library](/overview#core-libraries),
+to produce organisation signatures.
 
 As of this writing,
 support for organisation signatures in VeraId Authority is in progress,
 and limited to the form of _workload identities_,
 meant to authenticate server-side apps (e.g. GitHub Actions workflows, AWS Lambda functions) rather than human users.
 
-To request an organisation id bundle via the VeraId Authority API,
-you will need to:
+If you're using VeraId Authority to produce organisation signatures,
+you will need to register the workload identity under the member to which it should be attributed, including the fixed plaintext to be attached to the signatures. For example, you could authorise the GitHub Actions workflows for the repository `your-org/your-repo` to act on behalf of `your-company.com` or `employee@your-company.com` on a third-party server implementing your service. You only need to do this once per workload identity.
 
-1. Register the workload identity under the member to which it should be attributed, including the fixed plaintext to be attached to the signatures. For example, you could authorise the GitHub Actions workflows for the repository `your-org/your-repo` to act on behalf of `your-company.com` or `employee@your-company.com` on a third-party server implementing your service.
-2. Have the workload request an organisation id bundle whenever it needs to authenticate with the third-party server. These credentials are short-lived, and will be valid for as long as the workload's JSON Web Token (JWT) is valid (capped at 60 minutes).
-
-Once you have an organisation id bundle, you can produce organisation signatures using one of the [VeraId libraries](/overview#core-libraries).
+Whatever the mechanism you use to produce organisation signatures,
+you will then need to have the workload request a signature whenever it needs to authenticate with a third-party server implementing your service.
+In the case of VeraId Authority,
+signatures can be requested via the API,
+and they will be valid for as long as the workload's original JSON Web Token (JWT) was valid (capped at 60 minutes).
 
 ### Verify signatures
 
