@@ -220,7 +220,7 @@ The DNSSEC chain for a VeraId signature MUST be serialised in a format that allo
 
 The serialised chain is encoded as an ASN.1 SET OF OCTET STRING, where each OCTET STRING contains a complete DNS message contributing to the validation chain.
 
-```asn1
+```
 DnssecChain ::= SET OF OCTET STRING
 ```
 
@@ -524,7 +524,7 @@ The reliance on short-lived certificates significantly reduces the impact of key
 
 The Member ID Bundle is a self-contained package that provides all the information needed for a member to produce verifiable signatures. It is serialised using ASN.1 DER encoding with the following structure:
 
-```asn1
+```
 MemberIdBundle ::= SEQUENCE {
     version                  [0] INTEGER DEFAULT 0,
     dnssecChain              [1] DnssecChain,
@@ -548,7 +548,7 @@ Member ID Bundles are not inherently confidential, as they contain only public i
 
 The Signature Bundle is the core artefact of the VeraId protocol, containing a digital signature and all the information needed to verify it offline. It is serialised using ASN.1 DER encoding with the following structure:
 
-```asn1
+```
 SignatureBundle ::= SEQUENCE {
     version                  [0] INTEGER DEFAULT 0,
     dnssecChain              [1] DnssecChain,
@@ -590,7 +590,7 @@ Each VeraId signature includes metadata that binds it to a specific service and 
 
 The signature metadata is encoded as an ASN.1 structure:
 
-```asn1
+```
 SignatureMetadata ::= SEQUENCE {
     serviceOid      [0] OBJECT IDENTIFIER,
     validityPeriod  [1] DatePeriod
@@ -678,7 +678,7 @@ The verification process MUST be performed in full, without skipping any steps, 
 
 For organisation signatures, a required signed attribute is included in the CMS `SignedData` structure to attribute the content to a specific member:
 
-```asn1
+```
 MemberAttribution ::= UTF8String
 ```
 
@@ -1028,7 +1028,7 @@ Developers integrating VeraId into their applications must decide whether to use
 
 The following ASN.1 schemas define the data structures used in the VeraId protocol:
 
-```asn1
+```
 -- Top-level schemas for VeraId components
 
 -- DNSSEC chain is a set of DNS messages
