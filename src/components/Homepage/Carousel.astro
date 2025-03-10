@@ -11,10 +11,22 @@ import bbcImage from "../../assets/images/bbc.png";
       [...Array(2)].map(() => (
         <div class="flex gap-8 sm:gap-16 items-center min-w-max pr-4 sm:pr-8">
           <div class="relative pb-3">
-            <Banner message="Developers! Developers! Developers!" source="sb@microsoft.com" />
+            <Banner
+              message="Developers! Developers! Developers!"
+              source="sb@microsoft.com"
+              bottomLeftWidth={115}
+              bottomRightWidth={115}
+            />
           </div>
           <div class="relative pb-3">
-            <Banner type="image" source="xkcd.com" imageSrc={xkcdImage} imageAlt="XKCD comic" />
+            <Banner
+              type="image"
+              source="xkcd.com"
+              imageSrc={xkcdImage}
+              imageAlt="XKCD comic"
+              bottomLeftWidth={50}
+              bottomRightWidth={50}
+            />
           </div>
 
           <div class="relative pb-3">

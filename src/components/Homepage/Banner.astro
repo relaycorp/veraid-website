@@ -8,8 +8,8 @@ interface Props {
   source: string;
   imageSrc?: ImageMetadata;
   imageAlt?: string;
-  code?: string;
-  domain?: boolean;
+  bottomLeftWidth?: number;
+  bottomRightWidth?: number;
 }
 
 const {
@@ -18,11 +18,15 @@ const {
   source,
   imageSrc,
   imageAlt = "",
-  domain = false,
+  bottomLeftWidth = 30,
+  bottomRightWidth = 30,
 } = Astro.props;
 ---
 
-<div class="pixelated-frame pt-3 px-10 text-center w-fit mx-auto bg-black">
+<div
+  class="pixelated-frame pt-3 px-9 text-center w-fit mx-auto bg-black"
+  style={`--bottom-left-width: ${bottomLeftWidth}px; --bottom-right-width: ${bottomRightWidth}px;`}
+>
   <!-- Frame parts -->
   <div class="frame-part top-bar"></div>
   <div class="frame-part top-right-corner"></div>
@@ -138,14 +142,15 @@ const {
   .bottom-left-segment,
   .bottom-right-segment {
     bottom: 0;
-    width: var(--segment-width);
   }
 
   .bottom-left-segment {
     left: var(--frame-inner-offset);
+    width: var(--bottom-left-width, 30px);
   }
 
   .bottom-right-segment {
     right: var(--frame-inner-offset);
+    width: var(--bottom-right-width, 30px);
   }
 </style>
