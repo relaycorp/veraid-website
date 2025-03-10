@@ -1,5 +1,6 @@
 ---
 import ChainVerificationAnimation from "../ChainVerificationAnimation";
+import CtaButton from "../CtaButton.astro";
 ---
 
 <section class="bg-neutral-900 px-4 sm:px-4 lg:px-6 py-12 md:py-16 text-sm md:text-base">
@@ -28,13 +29,9 @@ import ChainVerificationAnimation from "../ChainVerificationAnimation";
         (TLS), where many trust anchors (Certificate Authorities) can issue certificates for any
         domain.
       </p>
-      <div class="flex flex-wrap gap-4 justify-center pt-4">
-        <a
-          href="/overview"
-          class="bg-green-400 text-black px-6 sm:py-2 py-2 rounded-full hover:bg-green-300 text-sm md:text-base"
-        >
-          Read technical overview
-        </a>
+
+      <div class="flex justify-center pt-4">
+        <CtaButton href="/overview" text="Read technical overview" />
       </div>
     </div>
   </div>
