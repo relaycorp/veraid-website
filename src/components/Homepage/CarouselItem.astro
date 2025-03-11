@@ -3,30 +3,38 @@ import { Image } from "astro:assets";
 import tickIcon from "../../assets/icons/tick.svg";
 
 interface Props {
-  type?: "simple" | "image";
+  type?: "text" | "image";
   message?: string;
   source: string;
   imageSrc?: ImageMetadata;
   imageAlt?: string;
   bottomLeftWidth?: number;
   bottomRightWidth?: number;
+  imageWidth?: number;
+  imageHeight?: number;
+  paddingLeft?: number;
+  paddingRight?: number;
 }
 
 const {
-  type = "simple",
+  type = "text",
   message = "",
   source,
   imageSrc,
   imageAlt = "",
   bottomLeftWidth = 30,
   bottomRightWidth = 30,
-} = Astro.props;
+  imageWidth = 250,
+  imageHeight = 200,
+  paddingLeft = 40,
+  paddingRight = 40,
+}: Props = Astro.props;
 ---
 
 <div class="relative pb-3">
   <div
-    class="pixelated-frame pt-3 text-center w-fit mx-auto bg-black"
-    style={`--bottom-left-width: ${bottomLeftWidth}px; --bottom-right-width: ${bottomRightWidth}px;`}
+    class="pixelated-frame pt-2 text-center w-fit mx-auto bg-black"
+    style={`--bottom-left-width: ${bottomLeftWidth}px; --bottom-right-width: ${bottomRightWidth}px; padding-left: ${paddingLeft}px; padding-right: ${paddingRight}px;`}
   >
     <!-- Frame parts -->
     <div class="frame-part top-bar"></div>
@@ -43,7 +51,13 @@ const {
     {
       type === "image" && imageSrc && (
         <div class="py-1">
-          <Image src={imageSrc} alt={imageAlt} width={150} height={100} class="mx-auto" />
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            width={imageWidth}
+            height={imageHeight}
+            class="mx-auto"
+          />
         </div>
       )
     }

@@ -1,8 +1,8 @@
 ---
 import CarouselItem from "./CarouselItem.astro";
 import xkcdImage from "../../assets/images/xkcd.svg";
-import audioGif from "../../assets/images/audio-final.gif";
-import bbcImage from "../../assets/images/bbc.png";
+import audioGif from "../../assets/images/audio.gif";
+import codeImage from "../../assets/images/code.png";
 ---
 
 <div class="mt-6 md:mt-14 relative overflow-hidden w-full">
@@ -23,6 +23,10 @@ import bbcImage from "../../assets/images/bbc.png";
             imageAlt="XKCD comic"
             bottomLeftWidth={50}
             bottomRightWidth={50}
+            imageWidth={190}
+            imageHeight={90}
+            paddingLeft={16}
+            paddingRight={16}
           />
           <CarouselItem message="You shall not pass!" source="gandalf@ring.company" />
           <CarouselItem
@@ -30,11 +34,25 @@ import bbcImage from "../../assets/images/bbc.png";
             source="spotify.com"
             imageSrc={audioGif}
             imageAlt="XKCD comic"
+            bottomLeftWidth={40}
+            bottomRightWidth={40}
+            paddingLeft={0}
+            paddingRight={0}
+            imageWidth={250}
           />
           <CarouselItem message="Rrrruuuurrr" source="chewbacca@kashyyyk.space" />
-          <div>
-            <img src={bbcImage.src} alt="BBC News" class="w-70 h-auto rounded-lg shadow-md" />
-          </div>
+          <CarouselItem
+            type="image"
+            source="bbc.com"
+            imageSrc={codeImage}
+            imageAlt="BBC News"
+            bottomLeftWidth={100}
+            bottomRightWidth={100}
+            imageWidth={300}
+            imageHeight={90}
+            paddingLeft={16}
+            paddingRight={16}
+          />
           <CarouselItem message="Winter is coming" source="jon@nightswatch.mil" />
         </div>
       ))
