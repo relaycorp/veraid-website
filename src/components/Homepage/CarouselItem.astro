@@ -23,34 +23,36 @@ const {
 } = Astro.props;
 ---
 
-<div
-  class="pixelated-frame pt-3 px-9 text-center w-fit mx-auto bg-black"
-  style={`--bottom-left-width: ${bottomLeftWidth}px; --bottom-right-width: ${bottomRightWidth}px;`}
->
-  <!-- Frame parts -->
-  <div class="frame-part top-bar"></div>
-  <div class="frame-part top-right-corner"></div>
-  <div class="frame-part bottom-right-corner"></div>
-  <div class="frame-part bottom-left-segment"></div>
-  <div class="frame-part bottom-right-segment"></div>
-  <div class="frame-part bottom-left-corner"></div>
-  <div class="frame-part top-left-corner"></div>
-  <div class="frame-part left-bar"></div>
-  <div class="frame-part right-bar"></div>
+<div class="relative pb-3">
+  <div
+    class="pixelated-frame pt-3 text-center w-fit mx-auto bg-black"
+    style={`--bottom-left-width: ${bottomLeftWidth}px; --bottom-right-width: ${bottomRightWidth}px;`}
+  >
+    <!-- Frame parts -->
+    <div class="frame-part top-bar"></div>
+    <div class="frame-part top-right-corner"></div>
+    <div class="frame-part bottom-right-corner"></div>
+    <div class="frame-part bottom-left-segment"></div>
+    <div class="frame-part bottom-right-segment"></div>
+    <div class="frame-part bottom-left-corner"></div>
+    <div class="frame-part top-left-corner"></div>
+    <div class="frame-part left-bar"></div>
+    <div class="frame-part right-bar"></div>
 
-  <!-- Banner content based on type -->
-  {
-    type === "image" && imageSrc && (
-      <div class="py-1">
-        <Image src={imageSrc} alt={imageAlt} width={150} height={100} class="mx-auto" />
-      </div>
-    )
-  }
+    <!-- Banner content based on type -->
+    {
+      type === "image" && imageSrc && (
+        <div class="py-1">
+          <Image src={imageSrc} alt={imageAlt} width={150} height={100} class="mx-auto" />
+        </div>
+      )
+    }
 
-  <p class="text-white font-bold font-JetBrainsMono text-sm">{message}</p>
-  <div class="flex items-center justify-center translate-y-2">
-    <span class="text-white text-sm font-mono font-normal">{source}</span>
-    <Image src={tickIcon} alt="Verified" width={24} height={24} class="ml-1" />
+    <p class="text-white font-bold font-JetBrainsMono text-sm">{message}</p>
+    <div class="flex items-center justify-center translate-y-2">
+      <span class="text-white text-sm font-mono font-normal">{source}</span>
+      <Image src={tickIcon} alt="Verified" width={24} height={24} class="ml-1" />
+    </div>
   </div>
 </div>
 

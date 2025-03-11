@@ -1,5 +1,5 @@
 ---
-import Banner from "./Banner.astro";
+import CarouselItem from "./CarouselItem.astro";
 import xkcdImage from "../../assets/images/xkcd.svg";
 import audioGif from "../../assets/images/audio-final.gif";
 import bbcImage from "../../assets/images/bbc.png";
@@ -10,44 +10,32 @@ import bbcImage from "../../assets/images/bbc.png";
     {
       [...Array(2)].map(() => (
         <div class="flex gap-8 sm:gap-16 items-center min-w-max pr-4 sm:pr-8">
-          <div class="relative pb-3">
-            <Banner
-              message="Developers! Developers! Developers!"
-              source="sb@microsoft.com"
-              bottomLeftWidth={115}
-              bottomRightWidth={115}
-            />
-          </div>
-          <div class="relative pb-3">
-            <Banner
-              type="image"
-              source="xkcd.com"
-              imageSrc={xkcdImage}
-              imageAlt="XKCD comic"
-              bottomLeftWidth={50}
-              bottomRightWidth={50}
-            />
-          </div>
-
-          <div class="relative pb-3">
-            <Banner message="You shall not pass!" source="gandalf@ring.company" />
-          </div>
-
-          <div class="relative pb-3">
-            <Banner type="image" source="spotify.com" imageSrc={audioGif} imageAlt="XKCD comic" />
-          </div>
-
-          <div class="relative pb-3">
-            <Banner message="Rrrruuuurrr" source="chewbacca@kashyyyk.space" />
-          </div>
-
-          <div class="relative">
+          <CarouselItem
+            message="Developers! Developers! Developers!"
+            source="sb@microsoft.com"
+            bottomLeftWidth={115}
+            bottomRightWidth={115}
+          />
+          <CarouselItem
+            type="image"
+            source="xkcd.com"
+            imageSrc={xkcdImage}
+            imageAlt="XKCD comic"
+            bottomLeftWidth={50}
+            bottomRightWidth={50}
+          />
+          <CarouselItem message="You shall not pass!" source="gandalf@ring.company" />
+          <CarouselItem
+            type="image"
+            source="spotify.com"
+            imageSrc={audioGif}
+            imageAlt="XKCD comic"
+          />
+          <CarouselItem message="Rrrruuuurrr" source="chewbacca@kashyyyk.space" />
+          <div>
             <img src={bbcImage.src} alt="BBC News" class="w-70 h-auto rounded-lg shadow-md" />
           </div>
-
-          <div class="relative pb-3">
-            <Banner message="Winter is coming" source="jon@nightswatch.mil" />
-          </div>
+          <CarouselItem message="Winter is coming" source="jon@nightswatch.mil" />
         </div>
       ))
     }
