@@ -19,7 +19,7 @@ const { title, description, ogImage = OpenGraph.src, ogType = "website" } = Astr
 
 const siteUrl = getSiteUrl(Astro.url);
 const ogImageUrl = new URL(ogImage, siteUrl);
-const ogUrl = new URL(Astro.url, siteUrl);
+const ogUrl = new URL(Astro.url.pathname, siteUrl);
 ---
 
 <!doctype html>
