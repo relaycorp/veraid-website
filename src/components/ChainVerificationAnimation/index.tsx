@@ -195,7 +195,7 @@ const VerificationPhases: React.FC = () => {
 
   return (
     <div
-      className={`pb-6 lg:pb-8 ${state.status !== "idle" && state.status !== "running" ? "pb-6" : ""}`}
+      className={`not-prose pb-6 lg:pb-8 ${state.status !== "idle" && state.status !== "running" ? "pb-6" : ""}`}
     >
       <div className="max-w-6xl mx-auto">
         <div className="relative">
