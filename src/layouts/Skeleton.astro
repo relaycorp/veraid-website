@@ -12,6 +12,9 @@ interface Props {
   ogType?: string;
 }
 
+const rootUrl = getSiteUrl(Astro.url);
+const currentUrl = new URL(Astro.url.pathname, rootUrl);
+
 const { title, description, ogImage = OpenGraph.src, ogType = "website" } = Astro.props;
 
 const siteUrl = getSiteUrl(Astro.url);
