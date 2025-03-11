@@ -2,14 +2,20 @@
 interface Props {
   href: string;
   text: string;
+  variant?: "primary" | "secondary";
 }
 
-const { href, text } = Astro.props;
+const { href, text, variant = "primary" } = Astro.props;
+
+const styles = {
+  primary: "bg-green-400 hover:bg-green-300 text-black",
+  secondary: "bg-transparent hover:bg-green-400/10 text-green-400 border border-green-400",
+};
 ---
 
 <a
   href={href}
-  class={`bg-green-400 hover:bg-green-300  text-black px-6 py-2 rounded-full text-sm md:text-base`}
+  class={`${styles[variant]} w-full md:w-auto px-6 py-2 rounded-full text-sm md:text-base inline-block text-center`}
 >
   {text}
 </a>
