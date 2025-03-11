@@ -89,10 +89,15 @@ const ogUrl = new URL(Astro.url.pathname, siteUrl);
     font-family: "Chakra Petch", sans-serif;
     font-weight: 700;
   }
-  p a {
+  p a,
+  article a,
+  label a {
     color: #7af2a8;
+    text-decoration: none;
   }
-  p a:hover {
+  p a:hover,
+  article a:hover,
+  label a:hover {
     color: #b9f7cf;
     text-decoration: underline;
   }

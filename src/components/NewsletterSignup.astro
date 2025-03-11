@@ -1,0 +1,80 @@
+<script is:inline>
+  function zcScptlessSubmit(parentNode) {
+    if (parentNode.querySelector("#zc_spmSubmit")) {
+      parentNode.querySelector("#zc_spmSubmit")?.remove();
+    }
+    parentNode.submit();
+  }
+</script>
+
+<div
+  class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1.8fr_1fr] gap-6 lg:gap-14 items-center pb-6 mb-10 border-b-1 border-neutral-800"
+>
+  <div class="text-xs">
+    <h2 class="text-2xl lg:text-3xl font-bold mb-4 text-white">
+      Get important updates in your inbox!
+    </h2>
+    <p>
+      Unsubscribe at anytime. We'll only share your data with Zoho, where it will be processed
+      according to their <a href="https://www.zoho.com/privacy.html">policies</a>.
+    </p>
+  </div>
+  <div>
+    <form
+      method="POST"
+      action="https://zcsub-cmpzourl.maillist-manage.com/weboptin.zc"
+      target="_zcSignup"
+      onsubmit="zcScptlessSubmit(this)"
+    >
+      <div class="flex flex-col lg:flex-row flex-wrap gap-2 lg:gap-4 mb-4">
+        <input
+          type="text"
+          placeholder="you@example.com"
+          name="CONTACT_EMAIL"
+          required
+          class="w-full lg:w-auto lg:flex-grow bg-neutral-800 text-white px-4 py-2.5 rounded-full"
+          aria-label="Email address"
+        />
+        <button
+          type="submit"
+          name="SIGNUP_SUBMIT_BUTTON"
+          value="Sign up"
+          class="w-full lg:w-auto bg-green-400 hover:bg-green-300 text-black font-bold px-4 lg:px-8 py-2.5 rounded-full"
+        >
+          Subscribe
+        </button>
+      </div>
+
+      <div class="flex items-start gap-2 mb-4">
+        <input type="checkbox" id="consent" name="CONSENT" required class="mt-0.5" />
+        <label for="consent" class="text-xs">
+          I consent to receiving occasional emails about VeraId from Relaycorp.
+        </label>
+      </div>
+
+      <input type="hidden" name="LASTNAME" value="" />
+      <input type="hidden" name="submitType" value="optinCustomView" />
+      <input type="hidden" name="emailReportId" value="" />
+      <input type="hidden" name="formType" value="QuickForm" />
+      <input type="hidden" name="zx" value="12a19c3a4" />
+      <input type="hidden" name="zcvers" value="3.0" />
+      <input type="hidden" name="oldListIds" value="" />
+      <input type="hidden" name="mode" value="OptinCreateView" />
+      <input type="hidden" name="zcld" value="113d34b06f17e386f" />
+      <input type="hidden" name="zctd" value="113d34b06f17e37a9" />
+      <input type="hidden" name="document_domain" value="" />
+      <input type="hidden" name="zc_Url" value="zcsub-cmpzourl.maillist-manage.com" />
+      <input type="hidden" name="new_optin_response_in" value="1" />
+      <input type="hidden" name="duplicate_optin_response_in" value="1" />
+      <input type="hidden" name="zc_trackCode" value="ZCFORMVIEW" />
+      <input
+        type="hidden"
+        name="zc_formIx"
+        value="3zffe3d0457c18a07ad7087cfa80cb6feeb2371f9c7e512f1d89a9bae1a87306b6"
+      />
+      <input type="hidden" name="viewFrom" value="URL_ACTION" />
+      <input type="hidden" name="scriptless" value="yes" />
+      <input type="hidden" id="zc_spmSubmit" name="zc_spmSubmit" value="ZCSPMSUBMIT" />
+    </form>
+  </div>
+</div>
