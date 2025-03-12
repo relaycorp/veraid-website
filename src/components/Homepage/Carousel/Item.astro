@@ -9,10 +9,7 @@ interface Props {
   source: string;
   imageSrc?: ImageMetadata;
   imageAlt?: string;
-  bottomLeftWidth?: number;
-  bottomRightWidth?: number;
-  imageWidth?: number;
-  imageHeight?: number;
+  bottomWidth?: number;
   padding?: number;
 }
 
@@ -22,18 +19,15 @@ const {
   source,
   imageSrc,
   imageAlt = "",
-  bottomLeftWidth = 30,
-  bottomRightWidth = 30,
-  imageWidth = 250,
-  imageHeight = 200,
+  bottomWidth = 30,
   padding = 40,
 }: Props = Astro.props;
 ---
 
 <div class="relative pb-3">
   <div
-    class="pixelated-frame pt-2 text-center w-fit mx-auto bg-black"
-    style={`--bottom-left-width: ${bottomLeftWidth}px; --bottom-right-width: ${bottomRightWidth}px; padding-left: ${padding}px; padding-right: ${padding}px;`}
+    class="pixelated-frame pt-3 text-center w-fit mx-auto bg-black"
+    style={`--bottom-segment-width: ${bottomWidth}px; padding-left: ${padding}px; padding-right: ${padding}px;`}
   >
     <!-- Frame parts -->
     <div class="frame-part top-bar"></div>
@@ -50,13 +44,7 @@ const {
     {
       type === "image" && imageSrc && (
         <div class="py-1">
-          <Image
-            src={imageSrc}
-            alt={imageAlt}
-            width={imageWidth}
-            height={imageHeight}
-            class="mx-auto"
-          />
+          <Image src={imageSrc} alt={imageAlt} />
         </div>
       )
     }

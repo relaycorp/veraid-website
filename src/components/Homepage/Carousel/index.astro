@@ -6,26 +6,22 @@ import codeImage from "../../../assets/images/code.png";
 import "./Scrolling.css";
 ---
 
-<div class="mt-6 md:mt-14 relative overflow-hidden w-full">
-  <div class="carousel-scroll flex gap-8 items-center" id="carousel">
+<div class="mt-2 md:mt-10 relative overflow-hidden w-full">
+  <div class="carousel-scroll flex gap-8 items-center">
     {
       [...Array(2)].map(() => (
         <div class="flex gap-8 sm:gap-16 items-center min-w-max pr-4 sm:pr-8">
           <CarouselItem
             message="Developers! Developers! Developers!"
             source="sb@microsoft.com"
-            bottomLeftWidth={115}
-            bottomRightWidth={115}
+            bottomWidth={115}
           />
           <CarouselItem
             type="image"
             source="xkcd.com"
             imageSrc={xkcdImage}
             imageAlt="XKCD comic"
-            bottomLeftWidth={50}
-            bottomRightWidth={50}
-            imageWidth={190}
-            imageHeight={90}
+            bottomWidth={40}
             padding={16}
           />
           <CarouselItem message="You shall not pass!" source="gandalf@ring.company" />
@@ -34,10 +30,7 @@ import "./Scrolling.css";
             source="spotify.com"
             imageSrc={audioGif}
             imageAlt="XKCD comic"
-            bottomLeftWidth={40}
-            bottomRightWidth={40}
-            imageWidth={250}
-            padding={0}
+            bottomWidth={40}
           />
           <CarouselItem message="Rrrruuuurrr" source="chewbacca@kashyyyk.space" />
           <CarouselItem
@@ -45,10 +38,7 @@ import "./Scrolling.css";
             source="bbc.com"
             imageSrc={codeImage}
             imageAlt="BBC News"
-            bottomLeftWidth={100}
-            bottomRightWidth={100}
-            imageWidth={300}
-            imageHeight={90}
+            bottomWidth={100}
             padding={16}
           />
           <CarouselItem message="Winter is coming" source="jon@nightswatch.mil" />

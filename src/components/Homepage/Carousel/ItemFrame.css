@@ -89,10 +89,10 @@
 
 .bottom-left-segment {
   left: var(--frame-inner-offset);
-  width: var(--bottom-left-width, 30px);
+  width: var(--bottom-segment-width, 30px);
 }
 
 .bottom-right-segment {
   right: var(--frame-inner-offset);
-  width: var(--bottom-right-width, 30px);
+  width: var(--bottom-segment-width, 30px);
 }
