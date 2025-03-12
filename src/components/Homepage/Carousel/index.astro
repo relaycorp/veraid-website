@@ -1,8 +1,9 @@
 ---
-import CarouselItem from "./CarouselItem.astro";
-import xkcdImage from "../../assets/images/xkcd.svg";
-import audioGif from "../../assets/images/audio.gif";
-import codeImage from "../../assets/images/code.png";
+import CarouselItem from "./Item.astro";
+import xkcdImage from "../../../assets/images/xkcd.svg";
+import audioGif from "../../../assets/images/audio.gif";
+import codeImage from "../../../assets/images/code.png";
+import "./Scrolling.css";
 ---
 
 <div class="mt-6 md:mt-14 relative overflow-hidden w-full">
@@ -58,32 +59,8 @@ import codeImage from "../../assets/images/code.png";
       ))
     }
   </div>
-
-  <style>
-    @keyframes scroll {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
-    }
-    .carousel-scroll {
-      display: flex;
-      width: max-content;
-      animation: scroll 30s linear infinite;
-    }
-    @media (min-width: 768px) {
-      .carousel-scroll {
-        animation: scroll 30s linear infinite;
-      }
-    }
-    .carousel-paused {
-      animation-play-state: paused;
-    }
-  </style>
 </div>
-<!-- This script is used to pause the carousel when the mouse is over it or tap on mobile -->
+
 <script>
   const carousel = document.getElementById("carousel");
   let isPaused = false;

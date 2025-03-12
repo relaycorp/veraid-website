@@ -1,0 +1,21 @@
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.carousel-scroll {
+  display: flex;
+  width: max-content;
+  animation: scroll 30s linear infinite;
+}
+@media (min-width: 768px) {
+  .carousel-scroll {
+    animation: scroll 30s linear infinite;
+  }
+}
+.carousel-paused {
+  animation-play-state: paused;
+}
