@@ -13,8 +13,7 @@ interface Props {
   bottomRightWidth?: number;
   imageWidth?: number;
   imageHeight?: number;
-  paddingLeft?: number;
-  paddingRight?: number;
+  padding?: number;
 }
 
 const {
@@ -27,15 +26,14 @@ const {
   bottomRightWidth = 30,
   imageWidth = 250,
   imageHeight = 200,
-  paddingLeft = 40,
-  paddingRight = 40,
+  padding = 40,
 }: Props = Astro.props;
 ---
 
 <div class="relative pb-3">
   <div
     class="pixelated-frame pt-2 text-center w-fit mx-auto bg-black"
-    style={`--bottom-left-width: ${bottomLeftWidth}px; --bottom-right-width: ${bottomRightWidth}px; padding-left: ${paddingLeft}px; padding-right: ${paddingRight}px;`}
+    style={`--bottom-left-width: ${bottomLeftWidth}px; --bottom-right-width: ${bottomRightWidth}px; padding-left: ${padding}px; padding-right: ${padding}px;`}
   >
     <!-- Frame parts -->
     <div class="frame-part top-bar"></div>
