@@ -1,8 +1,8 @@
 ---
 import CarouselItem from "./Item.astro";
-import xkcdImage from "../../../assets/images/xkcd.svg";
-import audioGif from "../../../assets/images/audio.gif";
-import codeImage from "../../../assets/images/code.png";
+import xkcdImage from "../../../assets/images/carousel/xkcd.svg";
+import audioGif from "../../../assets/images/carousel/audio.gif";
+import codeSnippetImage from "../../../assets/images/carousel/code-snippet.svg";
 import "./Scrolling.css";
 import PauseController from "./PauseController";
 ---
@@ -38,7 +38,7 @@ import PauseController from "./PauseController";
           <CarouselItem
             type="image"
             source="bbc.com"
-            imageSrc={codeImage}
+            imageSrc={codeSnippetImage}
             imageAlt="BBC News"
             bottomWidth={95}
             padding={16}
