@@ -1,9 +1,9 @@
-/* CSS Variables for common dimensions */
+/* CSS Variables for common dimensions  */
 :root {
-  --frame-thickness: 3px;
-  --frame-offset: 3px;
-  --frame-inner-offset: 6px;
-  --segment-width: 30px;
+  --frame-thickness: 0.1875rem;
+  --frame-offset: 0.1875rem;
+  --frame-inner-offset: 0.375rem;
+  --segment-width: 1 75rem;
 }
 
 .pixelated-frame {
@@ -89,10 +89,10 @@
 
 .bottom-left-segment {
   left: var(--frame-inner-offset);
-  width: var(--bottom-segment-width, 30px);
+  width: var(--bottom-segment-width, 1.75rem);
 }
 
 .bottom-right-segment {
   right: var(--frame-inner-offset);
-  width: var(--bottom-segment-width, 30px);
+  width: var(--bottom-segment-width, 1.75rem);
 }

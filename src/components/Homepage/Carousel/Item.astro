@@ -6,8 +6,8 @@ import "./ItemFrame.css";
 interface Item {
   type: string;
   source: string;
-  bottomWidth?: number;
-  padding?: number;
+  bottomWidth?: number; // Value in rem
+  padding?: number; // Value in rem
 }
 
 interface TextItem extends Item {
@@ -23,10 +23,9 @@ interface ImageItem extends Item {
 
 type Props = TextItem | ImageItem;
 
-const { type, source, bottomWidth = 30, padding = 40, ...rest } = Astro.props;
+const { type, source, bottomWidth = 1.75, padding = 2.5, ...rest } = Astro.props;
 
 const message = type === "text" ? (rest as TextItem).message : "";
-// For image items, imageSrc is guaranteed to exist by our type system
 const imageSrc =
   type === "image" ? (rest as ImageItem).imageSrc : (null as unknown as ImageMetadata);
 const imageAlt = type === "image" ? (rest as ImageItem).imageAlt : "";
@@ -35,7 +34,7 @@ const imageAlt = type === "image" ? (rest as ImageItem).imageAlt : "";
 <div class="relative pb-3">
   <div
     class="pixelated-frame pt-3 text-center mx-auto bg-black text-white font-semibold font-mono text-sm"
-    style={`--bottom-segment-width: ${bottomWidth}px; padding-left: ${padding}px; padding-right: ${padding}px;`}
+    style={`--bottom-segment-width: ${bottomWidth}rem; padding-left: ${padding}rem; padding-right: ${padding}rem;`}
   >
     <!-- Frame parts -->
     <div class="frame-part top-bar"></div>
