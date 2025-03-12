@@ -6,7 +6,7 @@ import codeImage from "../../../assets/images/code.png";
 import "./Scrolling.css";
 ---
 
-<div class="mt-2 md:mt-10 relative overflow-hidden w-full">
+<div class="mt-4 md:mt-12 relative overflow-hidden w-full">
   <div class="carousel-scroll flex gap-8 items-center">
     {
       [...Array(2)].map(() => (
@@ -31,6 +31,7 @@ import "./Scrolling.css";
             imageSrc={audioGif}
             imageAlt="XKCD comic"
             bottomWidth={40}
+            padding={16}
           />
           <CarouselItem message="Rrrruuuurrr" source="chewbacca@kashyyyk.space" />
           <CarouselItem
@@ -38,7 +39,7 @@ import "./Scrolling.css";
             source="bbc.com"
             imageSrc={codeImage}
             imageAlt="BBC News"
-            bottomWidth={100}
+            bottomWidth={95}
             padding={16}
           />
           <CarouselItem message="Winter is coming" source="jon@nightswatch.mil" />
