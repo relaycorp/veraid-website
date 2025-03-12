@@ -1,7 +1,7 @@
 // Used to pause the carousel when the mouse is over it or tap on mobile
 import { useState, useEffect } from "react";
 
-export default function CarouselController() {
+export default function PauseController() {
   const [isPaused, setPaused] = useState(false);
 
   useEffect(() => {
