@@ -3,7 +3,7 @@
   --frame-thickness: 3px;
   --frame-offset: 3px;
   --frame-inner-offset: 6px;
-  --segment-width: 20px;
+  --segment-width: 30px;
 }
 
 .pixelated-frame {
@@ -89,10 +89,10 @@
 
 .bottom-left-segment {
   left: var(--frame-inner-offset);
-  width: var(--bottom-segment-width, 20px);
+  width: var(--bottom-segment-width, 30px);
 }
 
 .bottom-right-segment {
   right: var(--frame-inner-offset);
-  width: var(--bottom-segment-width, 20px);
+  width: var(--bottom-segment-width, 30px);
 }

@@ -26,7 +26,7 @@ const {
 
 <div class="relative pb-3">
   <div
-    class="pixelated-frame pt-3 text-center w-fit mx-auto bg-black"
+    class="pixelated-frame pt-3 text-center mx-auto bg-black text-white font-semibold font-mono text-sm"
     style={`--bottom-segment-width: ${bottomWidth}px; padding-left: ${padding}px; padding-right: ${padding}px;`}
   >
     <!-- Frame parts -->
@@ -49,9 +49,9 @@ const {
       )
     }
 
-    <p class="text-white font-bold font-JetBrainsMono text-sm">{message}</p>
+    <p>{message}</p>
     <div class="flex items-center justify-center translate-y-2">
-      <span class="text-white text-sm font-mono font-normal">{source}</span>
+      <span class="font-normal">{source}</span>
       <Image src={tickIcon} alt="Verified" width={24} height={24} class="ml-1" />
     </div>
   </div>
