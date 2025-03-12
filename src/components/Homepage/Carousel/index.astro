@@ -4,6 +4,7 @@ import xkcdImage from "../../../assets/images/xkcd.svg";
 import audioGif from "../../../assets/images/audio.gif";
 import codeImage from "../../../assets/images/code.png";
 import "./Scrolling.css";
+import PauseController from "./PauseController";
 ---
 
 <div class="mt-6 md:mt-12 relative overflow-hidden w-full">
@@ -49,6 +50,4 @@ import "./Scrolling.css";
   </div>
 </div>
 
-<script>
-  import "./Pause.js";
-</script>
+<PauseController client:load />
