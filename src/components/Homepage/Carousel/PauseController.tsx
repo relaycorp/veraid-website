@@ -14,31 +14,23 @@ export default function PauseController() {
       carousel.classList.remove("carousel-paused");
     }
 
-    if (window.matchMedia("(hover: hover)").matches) {
-      const handleMouseEnter = () => setPaused(true);
-      const handleMouseLeave = () => setPaused(false);
+    const handleMouseEnter = () => setPaused(true);
+    const handleMouseLeave = () => setPaused(false);
+    const handleClick = () => setPaused((prev) => !prev);
 
+    if (window.matchMedia("(hover: hover)").matches) {
       carousel.addEventListener("mouseenter", handleMouseEnter);
       carousel.addEventListener("mouseleave", handleMouseLeave);
-
-      return () => {
-        carousel.removeEventListener("mouseenter", handleMouseEnter);
-        carousel.removeEventListener("mouseleave", handleMouseLeave);
-      };
     }
-  }, [isPaused]);
 
-  useEffect(() => {
-    const carousel = document.querySelector("#carousel");
-    if (!carousel) return;
-
-    const handleClick = () => setPaused((prev) => !prev);
     carousel.addEventListener("click", handleClick);
 
     return () => {
+      carousel.removeEventListener("mouseenter", handleMouseEnter);
+      carousel.removeEventListener("mouseleave", handleMouseLeave);
       carousel.removeEventListener("click", handleClick);
     };
-  }, []);
+  }, [isPaused]);
 
-  return null;
+  return <span className="sr-only">Carousel controller</span>;
 }
