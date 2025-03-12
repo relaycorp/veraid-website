@@ -3,25 +3,33 @@ import { Image } from "astro:assets";
 import tickIcon from "../../../assets/icons/tick.svg";
 import "./ItemFrame.css";
 
-interface Props {
-  type?: "text" | "image";
-  message?: string;
+interface Item {
+  type: string;
   source: string;
-  imageSrc?: ImageMetadata;
-  imageAlt?: string;
   bottomWidth?: number;
   padding?: number;
 }
 
-const {
-  type = "text",
-  message = "",
-  source,
-  imageSrc,
-  imageAlt = "",
-  bottomWidth = 30,
-  padding = 40,
-}: Props = Astro.props;
+interface TextItem extends Item {
+  type: "text";
+  message: string;
+}
+
+interface ImageItem extends Item {
+  type: "image";
+  imageSrc: ImageMetadata;
+  imageAlt: string;
+}
+
+type Props = TextItem | ImageItem;
+
+const { type, source, bottomWidth = 30, padding = 40, ...rest } = Astro.props;
+
+const message = type === "text" ? (rest as TextItem).message : "";
+// For image items, imageSrc is guaranteed to exist by our type system
+const imageSrc =
+  type === "image" ? (rest as ImageItem).imageSrc : (null as unknown as ImageMetadata);
+const imageAlt = type === "image" ? (rest as ImageItem).imageAlt : "";
 ---
 
 <div class="relative pb-3">
@@ -42,7 +50,7 @@ const {
 
     <!-- Banner content based on type -->
     {
-      type === "image" && imageSrc && (
+      type === "image" && (
         <div class="py-1">
           <Image src={imageSrc} alt={imageAlt} />
         </div>
@@ -52,7 +60,7 @@ const {
     <p>{message}</p>
     <div class="flex items-center justify-center translate-y-2">
       <span class="font-normal">{source}</span>
-      <Image src={tickIcon} alt="Verified" width={24} height={24} class="ml-1" />
+      <Image src={tickIcon} alt="Verified" class="ml-1" />
     </div>
   </div>
 </div>

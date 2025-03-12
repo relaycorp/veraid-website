@@ -13,6 +13,7 @@ import PauseController from "./PauseController";
       [...Array(2)].map(() => (
         <div class="flex gap-8 sm:gap-16 items-center min-w-max pr-4 sm:pr-8">
           <CarouselItem
+            type="text"
             message="Developers! Developers! Developers!"
             source="sb@microsoft.com"
             bottomWidth={115}
@@ -25,7 +26,7 @@ import PauseController from "./PauseController";
             bottomWidth={40}
             padding={16}
           />
-          <CarouselItem message="You shall not pass!" source="gandalf@ring.company" />
+          <CarouselItem type="text" message="You shall not pass!" source="gandalf@ring.company" />
           <CarouselItem
             type="image"
             source="spotify.com"
@@ -34,7 +35,7 @@ import PauseController from "./PauseController";
             bottomWidth={40}
             padding={16}
           />
-          <CarouselItem message="Rrrruuuurrr" source="chewbacca@kashyyyk.space" />
+          <CarouselItem type="text" message="Rrrruuuurrr" source="chewbacca@kashyyyk.space" />
           <CarouselItem
             type="image"
             source="bbc.com"
@@ -43,7 +44,7 @@ import PauseController from "./PauseController";
             bottomWidth={95}
             padding={16}
           />
-          <CarouselItem message="Winter is coming" source="jon@nightswatch.mil" />
+          <CarouselItem type="text" message="Winter is coming" source="jon@nightswatch.mil" />
         </div>
       ))
     }
