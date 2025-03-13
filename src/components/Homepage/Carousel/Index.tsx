@@ -3,6 +3,7 @@ import CarouselItem from "./Item";
 import { useCarouselAnimation } from "./Scrolling";
 import xkcdImage from "../../../assets/images/carousel/xkcd.svg?react";
 import codeSnippetImage from "../../../assets/images/carousel/code-snippet.svg?react";
+import audioGif from "../../../assets/images/carousel/audio.gif";
 import "./ItemFrame.css";
 
 const Carousel: React.FC = () => {
@@ -40,7 +41,7 @@ const Carousel: React.FC = () => {
       <CarouselItem
         type="image"
         source="spotify.com"
-        imageSrc="/src/assets/images/carousel/audio.gif"
+        imageSrc={audioGif}
         imageAlt="Audio visualization"
         bottomWidthRem={2.2}
         paddingRem={1}
