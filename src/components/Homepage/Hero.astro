@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import Carousel from "./Carousel/index.astro";
+import Carousel from "./Carousel/Index";
 import patternSvg from "../../assets/images/pattern.svg";
 ---
 
@@ -22,7 +22,7 @@ import patternSvg from "../../assets/images/pattern.svg";
       <p class="text-md sm:text-xl md:text-2xl text-neutral-300 mx-auto max-w-4xl">
         VeraId is a decentralised, user-friendly, offline-first authentication protocol.
       </p>
-      <Carousel />
+      <Carousel client:load />
     </div>
   </div>
 </section>
