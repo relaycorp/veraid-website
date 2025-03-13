@@ -12,6 +12,10 @@ const Carousel: React.FC = () => {
   const handleMouseEnter = () => setPaused(true);
   const handleMouseLeave = () => setPaused(false);
   const handleClick = () => setPaused((prevState) => !prevState);
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    e.preventDefault();
+    setPaused((prevState) => !prevState);
+  };
 
   const { position } = useCarouselAnimation(containerRef, 1.5, isPaused);
 
@@ -60,6 +64,7 @@ const Carousel: React.FC = () => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
+      onTouchEnd={handleTouchEnd}
     >
       <div ref={containerRef} className="flex" style={{ transform: `translateX(${position}px)` }}>
         {carouselItems}
