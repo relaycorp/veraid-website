@@ -18,7 +18,7 @@ const Carousel: React.FC = () => {
     setPaused((prevState) => !prevState);
   };
 
-  const { position } = useCarouselAnimation(containerRef, 1.5, isPaused);
+  const { position } = useCarouselAnimation(containerRef, undefined, isPaused);
 
   const carouselItems = (
     <div className="flex gap-8 sm:gap-16 items-center min-w-max pr-8 sm:pr-16">
@@ -26,8 +26,8 @@ const Carousel: React.FC = () => {
         type="text"
         message="Developers! Developers! Developers!"
         source="sb@microsoft.com"
-        bottomWidthRem={4.4}
-        paddingRem={1.25}
+        bottomWidthRem={4}
+        paddingRem={1}
       />
       <CarouselItem
         type="image"

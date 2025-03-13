@@ -3,7 +3,7 @@ import type { RefObject } from "react";
 
 export function useCarouselAnimation(
   containerRef: RefObject<HTMLDivElement | null>,
-  speed: number = 1.5,
+  speed: number = 1.2,
   isPaused: boolean = false,
 ) {
   const [position, setPosition] = useState(0);
