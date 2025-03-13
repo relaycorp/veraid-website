@@ -6,8 +6,8 @@ import "./ItemFrame.css";
 interface Item {
   type: string;
   source: string;
-  bottomWidth?: number; // Value in rem
-  padding?: number; // Value in rem
+  bottomWidthRem?: number;
+  paddingRem?: number;
 }
 
 interface TextItem extends Item {
@@ -23,7 +23,7 @@ interface ImageItem extends Item {
 
 type Props = TextItem | ImageItem;
 
-const { type, source, bottomWidth = 1.75, padding = 2.5, ...rest } = Astro.props;
+const { type, source, bottomWidthRem = 1.75, paddingRem = 2.5, ...rest } = Astro.props;
 
 const message = type === "text" ? (rest as TextItem).message : "";
 const imageSrc =
@@ -33,8 +33,8 @@ const imageAlt = type === "image" ? (rest as ImageItem).imageAlt : "";
 
 <div class="relative pb-3">
   <div
-    class="pixelated-frame pt-3 text-center mx-auto bg-black text-white font-semibold font-mono text-xs lg:text-sm"
-    style={`--bottom-segment-width: ${bottomWidth}rem; padding-left: ${padding}rem; padding-right: ${padding}rem;`}
+    class="pixelated-frame pt-3 text-center mx-auto bg-black text-white font-mono font-normal text-xs lg:text-sm"
+    style={`--bottom-segment-width: ${bottomWidthRem}rem; padding-left: ${paddingRem}rem; padding-right: ${paddingRem}rem;`}
   >
     <!-- Frame parts -->
     <div class="frame-part top-bar"></div>
@@ -58,7 +58,7 @@ const imageAlt = type === "image" ? (rest as ImageItem).imageAlt : "";
 
     <p>{message}</p>
     <div class="flex items-center justify-center translate-y-2">
-      <span class="font-normal">{source}</span>
+      <span>{source}</span>
       <Image src={tickIcon} alt="Verified" class="ml-1" />
     </div>
   </div>
