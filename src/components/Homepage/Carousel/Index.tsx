@@ -3,7 +3,7 @@ import CarouselItem from "./Item";
 import { useCarouselAnimation } from "./Scrolling";
 import xkcdImage from "../../../assets/images/carousel/xkcd.svg?react";
 import codeSnippetImage from "../../../assets/images/carousel/code-snippet.svg?react";
-import audioGif from "../../../assets/images/carousel/audio.gif";
+import audioGif from "../../../assets/images/carousel/audio.gif?url";
 import "./ItemFrame.css";
 
 const Carousel: React.FC = () => {
