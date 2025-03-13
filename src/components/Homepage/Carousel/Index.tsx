@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import CarouselItem from "./Item";
 import { useCarouselAnimation } from "./Scrolling";
 import xkcdImage from "../../../assets/images/carousel/xkcd.svg?react";
@@ -7,7 +7,13 @@ import "./ItemFrame.css";
 
 const Carousel: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { position } = useCarouselAnimation(containerRef);
+  const [isPaused, setPaused] = useState(false);
+
+  const handleMouseEnter = () => setPaused(true);
+  const handleMouseLeave = () => setPaused(false);
+  const handleClick = () => setPaused((prevState) => !prevState);
+
+  const { position } = useCarouselAnimation(containerRef, 1.5, isPaused);
 
   const carouselItems = (
     <div className="flex gap-8 sm:gap-16 items-center min-w-max pr-8 sm:pr-16">
@@ -49,7 +55,12 @@ const Carousel: React.FC = () => {
   );
 
   return (
-    <div className="mt-8 md:mt-14 relative overflow-hidden w-full">
+    <div
+      className="mt-8 md:mt-14 relative overflow-hidden w-full"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
+    >
       <div ref={containerRef} className="flex" style={{ transform: `translateX(${position}px)` }}>
         {carouselItems}
         {carouselItems}

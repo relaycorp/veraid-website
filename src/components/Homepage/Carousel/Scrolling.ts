@@ -4,6 +4,7 @@ import type { RefObject } from "react";
 export function useCarouselAnimation(
   containerRef: RefObject<HTMLDivElement | null>,
   speed: number = 1.5,
+  isPaused: boolean = false,
 ) {
   const [position, setPosition] = useState(0);
   const [itemWidth, setItemWidth] = useState(0);
@@ -30,12 +31,14 @@ export function useCarouselAnimation(
       const deltaTime = timestamp - lastTimestamp;
       lastTimestamp = timestamp;
 
-      setPosition((prevPosition) => {
-        if (Math.abs(prevPosition) >= itemWidth) {
-          return 0;
-        }
-        return prevPosition - speed * (deltaTime / 16);
-      });
+      if (!isPaused) {
+        setPosition((prevPosition) => {
+          if (Math.abs(prevPosition) >= itemWidth) {
+            return 0;
+          }
+          return prevPosition - speed * (deltaTime / 16);
+        });
+      }
 
       animationId = requestAnimationFrame(animate);
     };
@@ -45,7 +48,7 @@ export function useCarouselAnimation(
     return () => {
       cancelAnimationFrame(animationId);
     };
-  }, [isInitialized, itemWidth, speed]);
+  }, [isInitialized, itemWidth, speed, isPaused]);
 
   return { position, isInitialized };
 }
