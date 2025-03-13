@@ -1,15 +1,13 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
 import CarouselItem from "./Item";
+import { useCarouselAnimation } from "./Scrolling";
 import xkcdImage from "../../../assets/images/carousel/xkcd.svg?react";
 import codeSnippetImage from "../../../assets/images/carousel/code-snippet.svg?react";
 import "./ItemFrame.css";
 
 const Carousel: React.FC = () => {
-  const [position, setPosition] = useState(0);
-  const [itemWidth, setItemWidth] = useState(0);
-  const [isInitialized, setIsInitialized] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const speed = 1.5;
+  const { position } = useCarouselAnimation(containerRef);
 
   const carouselItems = (
     <div className="flex gap-8 sm:gap-16 items-center min-w-max pr-8 sm:pr-16">
@@ -49,44 +47,6 @@ const Carousel: React.FC = () => {
       <CarouselItem type="text" message="Winter is coming" source="jon@nightswatch.mil" />
     </div>
   );
-
-  useEffect(() => {
-    if (containerRef.current && !isInitialized) {
-      const firstChild = containerRef.current.children[0] as HTMLElement;
-      if (firstChild) {
-        setItemWidth(firstChild.offsetWidth);
-        setIsInitialized(true);
-      }
-    }
-  }, [isInitialized]);
-
-  useEffect(() => {
-    if (!isInitialized || itemWidth === 0) return;
-
-    let animationId: number;
-    let lastTimestamp = 0;
-
-    const animate = (timestamp: number) => {
-      if (!lastTimestamp) lastTimestamp = timestamp;
-      const deltaTime = timestamp - lastTimestamp;
-      lastTimestamp = timestamp;
-
-      setPosition((prevPosition) => {
-        if (Math.abs(prevPosition) >= itemWidth) {
-          return 0;
-        }
-        return prevPosition - speed * (deltaTime / 16);
-      });
-
-      animationId = requestAnimationFrame(animate);
-    };
-
-    animationId = requestAnimationFrame(animate);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
-  }, [isInitialized, itemWidth]);
 
   return (
     <div className="mt-8 md:mt-14 relative overflow-hidden w-full">
