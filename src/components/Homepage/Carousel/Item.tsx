@@ -37,16 +37,20 @@ const CarouselItem: React.FC<CarouselItemProps> = ({
     if (!imageSrc) return null;
 
     if (typeof imageSrc === "function") {
-      return React.createElement(imageSrc, { "aria-label": imageAlt });
+      return (
+        <div className="py-1">{React.createElement(imageSrc, { "aria-label": imageAlt })}</div>
+      );
     }
 
     return (
-      <img
-        src={imageSrc as any}
-        alt={imageAlt}
-        className="max-w-full h-auto"
-        onError={(e) => console.error("Image failed to load:", e)}
-      />
+      <div className="py-1">
+        <img
+          src={imageSrc as any}
+          alt={imageAlt}
+          className="max-w-full h-auto"
+          onError={(e) => console.error("Image failed to load:", e)}
+        />
+      </div>
     );
   };
 
@@ -72,7 +76,7 @@ const CarouselItem: React.FC<CarouselItemProps> = ({
         <div className="frame-part left-bar"></div>
         <div className="frame-part right-bar"></div>
 
-        {type === "image" && <div className="py-1">{renderImage()}</div>}
+        {type === "image" && renderImage()}
 
         <p>{message}</p>
         <div className="flex items-center justify-center translate-y-2">
