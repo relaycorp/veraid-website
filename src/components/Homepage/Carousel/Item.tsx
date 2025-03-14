@@ -16,7 +16,7 @@ interface TextItem extends BaseItem {
 
 interface ImageItem extends BaseItem {
   type: "image";
-  imageSrc: any;
+  imageSrc: React.ComponentType<React.SVGProps<SVGSVGElement>> | { src: string } | string;
   imageAlt: string;
 }
 
@@ -37,15 +37,20 @@ const CarouselItem: React.FC<CarouselItemProps> = ({
     if (!imageSrc) return null;
 
     if (typeof imageSrc === "function") {
+      const ImageComponent = imageSrc;
       return (
-        <div className="py-1">{React.createElement(imageSrc, { "aria-label": imageAlt })}</div>
+        <div className="py-1">
+          <ImageComponent aria-label={imageAlt} />
+        </div>
       );
     }
+
+    const src = typeof imageSrc === "string" ? imageSrc : (imageSrc as { src: string }).src;
 
     return (
       <div className="py-1">
         <img
-          src={imageSrc as any}
+          src={src}
           alt={imageAlt}
           className="max-w-full h-auto"
           onError={(e) => console.error("Image failed to load:", e)}
