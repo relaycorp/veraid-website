@@ -62,7 +62,6 @@ const CarouselItem: React.FC<CarouselItemProps> = ({
           } as React.CSSProperties
         }
       >
-        {/* Frame parts */}
         <div className="frame-part top-bar"></div>
         <div className="frame-part top-right-corner"></div>
         <div className="frame-part bottom-right-corner"></div>
@@ -73,7 +72,6 @@ const CarouselItem: React.FC<CarouselItemProps> = ({
         <div className="frame-part left-bar"></div>
         <div className="frame-part right-bar"></div>
 
-        {/* Banner content based on type */}
         {type === "image" && <div className="py-1">{renderImage()}</div>}
 
         <p>{message}</p>
