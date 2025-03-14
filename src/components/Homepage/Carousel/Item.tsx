@@ -36,27 +36,24 @@ const CarouselItem: React.FC<CarouselItemProps> = ({
   const renderImage = () => {
     if (!imageSrc) return null;
 
+    let imageElement;
+
     if (typeof imageSrc === "function") {
-      const ImageComponent = imageSrc;
-      return (
-        <div className="py-1">
-          <ImageComponent aria-label={imageAlt} />
-        </div>
-      );
-    }
-
-    const src = typeof imageSrc === "string" ? imageSrc : (imageSrc as { src: string }).src;
-
-    return (
-      <div className="py-1">
+      const SvgComponent = imageSrc;
+      imageElement = <SvgComponent aria-label={imageAlt} />;
+    } else {
+      const src = typeof imageSrc === "string" ? imageSrc : (imageSrc as { src: string }).src;
+      imageElement = (
         <img
           src={src}
           alt={imageAlt}
           className="max-w-full h-auto"
           onError={(e) => console.error("Image failed to load:", e)}
         />
-      </div>
-    );
+      );
+    }
+
+    return <div className="py-1">{imageElement}</div>;
   };
 
   return (
