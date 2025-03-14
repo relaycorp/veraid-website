@@ -1,0 +1,98 @@
+/* CSS Variables for common dimensions  */
+:root {
+  --frame-thickness: 0.156rem;
+  --frame-offset: 0.156rem;
+  --frame-inner-offset: 0.313rem;
+  --segment-width: 1.75rem;
+}
+
+.pixelated-frame {
+  position: relative;
+}
+
+/* Common properties for all frame parts */
+.frame-part {
+  position: absolute;
+  background-color: white;
+  z-index: 10;
+}
+
+/* All corner elements */
+.top-right-corner,
+.bottom-right-corner,
+.bottom-left-corner,
+.top-left-corner {
+  width: var(--frame-thickness);
+  height: var(--frame-thickness);
+}
+
+/* Top corners */
+.top-right-corner,
+.top-left-corner {
+  top: var(--frame-offset);
+}
+
+/* Bottom corners */
+.bottom-right-corner,
+.bottom-left-corner {
+  bottom: var(--frame-offset);
+}
+
+/* Left corners */
+.top-left-corner,
+.bottom-left-corner {
+  left: var(--frame-offset);
+}
+
+/* Right corners */
+.top-right-corner,
+.bottom-right-corner {
+  right: var(--frame-offset);
+}
+
+/* Horizontal bars */
+.top-bar,
+.bottom-left-segment,
+.bottom-right-segment {
+  height: var(--frame-thickness);
+}
+
+/* Vertical bars */
+.left-bar,
+.right-bar {
+  width: var(--frame-thickness);
+  height: calc(100% - var(--frame-inner-offset) * 2);
+  top: var(--frame-inner-offset);
+}
+
+/* Left and right bars positioning */
+.left-bar {
+  left: 0;
+}
+
+.right-bar {
+  right: 0;
+}
+
+/* Top bar */
+.top-bar {
+  top: 0;
+  left: var(--frame-inner-offset);
+  width: calc(100% - var(--frame-inner-offset) * 2);
+}
+
+/* Bottom segments */
+.bottom-left-segment,
+.bottom-right-segment {
+  bottom: 0;
+}
+
+.bottom-left-segment {
+  left: var(--frame-inner-offset);
+  width: var(--bottom-segment-width, 1.75rem);
+}
+
+.bottom-right-segment {
+  right: var(--frame-inner-offset);
+  width: var(--bottom-segment-width, 1.75rem);
+}

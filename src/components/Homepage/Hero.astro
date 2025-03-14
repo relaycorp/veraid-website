@@ -1,27 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import Carousel from "./Carousel.astro";
+import Carousel from "./Carousel/Carousel";
 import patternSvg from "../../assets/images/pattern.svg";
-import microsoftImg from "../../assets/images/microsoft.png";
-import xkcdImg from "../../assets/images/xkcd.png";
-import gandalfImg from "../../assets/images/gandalf.png";
-import bbcImg from "../../assets/images/bbc.png";
-import chewbaccaImg from "../../assets/images/chewbacca.png";
-import spotifyImg from "../../assets/images/spotify.gif";
-import winterImg from "../../assets/images/winter.png";
-
-const carouselImages = [
-  {
-    src: microsoftImg,
-    alt: "Text: Developers! Developers! Developers! with email sb@microsoft.com",
-  },
-  { src: xkcdImg, alt: "XKCD-style stick figure drawing showing a graph and two people" },
-  { src: gandalfImg, alt: "Text: You shall not pass! with email gandalf@ring.company" },
-  { src: spotifyImg, alt: "Audio waveform visualization" },
-  { src: chewbaccaImg, alt: "Text: Rrruuuurr with email chewbacca@kashyyyk.space" },
-  { src: bbcImg, alt: "HTML code snippet showing a news article structure", heightClass: "h-30" },
-  { src: winterImg, alt: "Text: Winter is Coming with email winter@got.com" },
-];
 ---
 
 <section class="relative px-4 md:px-6 md:pt-12 pt-8 md:pb-14 pb-9">
@@ -42,7 +22,7 @@ const carouselImages = [
       <p class="text-md sm:text-xl md:text-2xl text-neutral-300 mx-auto max-w-4xl">
         VeraId is a decentralised, user-friendly, offline-first authentication protocol.
       </p>
-      <Carousel images={carouselImages} />
+      <Carousel client:load />
     </div>
   </div>
 </section>
