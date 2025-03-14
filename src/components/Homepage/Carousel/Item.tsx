@@ -1,5 +1,5 @@
 import React from "react";
-import tickIcon from "../../../assets/icons/tick.svg?react";
+import TickIcon from "../../../assets/icons/tick.svg?react";
 import "./ItemFrame.css";
 
 interface BaseItem {
@@ -81,11 +81,7 @@ const CarouselItem: React.FC<CarouselItemProps> = ({
         <p>{message}</p>
         <div className="flex items-center justify-center translate-y-2">
           <span>{source}</span>
-          {typeof tickIcon === "function" ? (
-            React.createElement(tickIcon, { className: "ml-1" })
-          ) : (
-            <img src={tickIcon as any} alt="Checkmark icon" />
-          )}
+          <TickIcon className="ml-1" />
         </div>
       </div>
     </div>
