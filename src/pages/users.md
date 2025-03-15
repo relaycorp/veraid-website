@@ -7,7 +7,7 @@ permalink: /users
 
 # How to use VeraId
 
-Using VeraId is--we hope--very simple!
+Using VeraId is--we hope--very easy!
 
 ## Verify signatures
 
