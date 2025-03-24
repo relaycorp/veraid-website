@@ -1,5 +1,5 @@
 ---
-import TopNav from "../components/TopNav.astro";
+import TopNav from "../components/TopNav.tsx";
 import Footer from "../components/Footer.astro";
 import OpenGraph from "../assets/images/opengraph.png";
 import "../styles/global.css";
@@ -57,7 +57,7 @@ const ogUrl = new URL(Astro.url.pathname, siteUrl);
     }
   </head>
   <body>
-    <TopNav />
+    <TopNav client:load />
     <slot />
     <Footer />
   </body>
