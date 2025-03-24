@@ -13,7 +13,6 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
 
   const toggleIconClass = "w-5 h-5";
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -28,7 +27,6 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
   }, []);
 
   const handleDropdownClick = (text: string) => {
-    // Only for mobile
     setActiveDropdown(activeDropdown === text ? null : text);
   };
 
@@ -72,7 +70,7 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                         <a
                           key={child.text}
                           href={child.href}
-                          className="block px-4 py-2 text-sm text-white hover:bg-neutral-800 whitespace-nowrap"
+                          className="block px-4 py-2 text-sm text-white hover:bg-neutral-800 hover:text-green-200 whitespace-nowrap"
                           onClick={(e) => handleServiceClick(e, child.text)}
                         >
                           {child.text}
