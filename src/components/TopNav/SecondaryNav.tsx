@@ -10,7 +10,7 @@ export function SecondaryNav({ activeSection, setActiveSection }: SecondaryNavPr
   return (
     <nav className="border-b border-neutral-800 bg-neutral-800 px-4 sm:px-6 py-3">
       <div className="flex max-w-6xl mx-auto justify-between items-center">
-        <a href="/services/kliento">
+        <a href="/kliento">
           <img src={klientoLogo.src} alt="Kliento logo" className="h-4 md:h-5 w-auto" />
         </a>
 
@@ -31,9 +31,11 @@ export function SecondaryNav({ activeSection, setActiveSection }: SecondaryNavPr
             <li key={link.text}>
               <a
                 href={link.href}
-                className={`text-white hover:text-green-200 ${
-                  activeSection === link.id ? "text-green-300" : ""
-                }`}
+                className={
+                  activeSection === link.id
+                    ? "text-green-300 font-medium"
+                    : "text-white hover:text-green-200"
+                }
                 onClick={(e) => {
                   e.preventDefault();
                   setActiveSection(link.id || null);
@@ -54,9 +56,11 @@ export function SecondaryNav({ activeSection, setActiveSection }: SecondaryNavPr
               <li key={link.text}>
                 <a
                   href={link.href}
-                  className={`block text-white hover:text-green-200 ${
-                    activeSection === link.id ? "text-green-300" : ""
-                  }`}
+                  className={
+                    activeSection === link.id
+                      ? "block text-green-300 font-medium"
+                      : "block text-white hover:text-green-200"
+                  }
                   onClick={(e) => {
                     e.preventDefault();
                     setActiveSection(link.id || null);

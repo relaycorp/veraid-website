@@ -9,6 +9,7 @@ import { primaryNavLinks } from "./constants";
 export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [currentPath, setCurrentPath] = useState<string>("");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleIconClass = "w-5 h-5";
@@ -25,6 +26,20 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    // Set the current path when component mounts
+    if (typeof window !== "undefined") {
+      setCurrentPath(window.location.pathname);
+    }
+  }, []);
+
+  const isActive = (href: string): boolean => {
+    if (href === "/") {
+      return currentPath === "/";
+    }
+    return currentPath.startsWith(href);
+  };
 
   const handleDropdownClick = (text: string) => {
     setActiveDropdown(activeDropdown === text ? null : text);
@@ -56,7 +71,9 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                   onMouseEnter={() => setActiveDropdown(link.text)}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <button className="hover:text-green-200 flex items-center space-x-1">
+                  <button
+                    className={`flex items-center space-x-1 ${isActive(link.href) ? "text-green-500 font-medium" : "hover:text-green-200"}`}
+                  >
                     <span>{link.text}</span>
                     <ChevronIcon
                       className={`w-3 h-3 transition-transform ${
@@ -70,7 +87,11 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                         <a
                           key={child.text}
                           href={child.href}
-                          className="block px-4 py-2 text-sm text-white hover:bg-neutral-800 hover:text-green-200 whitespace-nowrap"
+                          className={`block px-4 py-2 text-sm whitespace-nowrap ${
+                            isActive(child.href)
+                              ? "text-green-300 bg-neutral-800 font-medium"
+                              : "text-white hover:bg-neutral-800 hover:text-green-200"
+                          }`}
                           onClick={(e) => handleServiceClick(e, child.text)}
                         >
                           {child.text}
@@ -80,7 +101,12 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                   )}
                 </div>
               ) : (
-                <a href={link.href} className="hover:text-green-200">
+                <a
+                  href={link.href}
+                  className={
+                    isActive(link.href) ? "text-green-300 font-medium" : "hover:text-green-200"
+                  }
+                >
                   {link.text}
                 </a>
               )}
@@ -111,7 +137,11 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                   <div className="space-y-2">
                     <button
                       onClick={() => handleDropdownClick(link.text)}
-                      className="text-white hover:text-green-200 flex items-center justify-between w-full"
+                      className={`flex items-center justify-between w-full ${
+                        isActive(link.href)
+                          ? "text-green-200 font-medium"
+                          : "text-white hover:text-green-200"
+                      }`}
                     >
                       <span>{link.text}</span>
                       <ChevronIcon
@@ -126,7 +156,11 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                           <a
                             key={child.text}
                             href={child.href}
-                            className="block text-white hover:text-green-200"
+                            className={`block ${
+                              isActive(child.href)
+                                ? "text-green-200 font-medium"
+                                : "text-white hover:text-green-200"
+                            }`}
                             onClick={(e) => handleServiceClick(e, child.text)}
                           >
                             {child.text}
@@ -136,7 +170,14 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                     )}
                   </div>
                 ) : (
-                  <a href={link.href} className="text-white hover:text-green-200 block">
+                  <a
+                    href={link.href}
+                    className={`block ${
+                      isActive(link.href)
+                        ? "text-green-300 font-medium"
+                        : "text-white hover:text-green-200"
+                    }`}
+                  >
                     {link.text}
                   </a>
                 )}
