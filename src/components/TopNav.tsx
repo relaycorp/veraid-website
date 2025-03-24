@@ -28,6 +28,7 @@ export default function TopNav() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [showSecondaryNav, setShowSecondaryNav] = useState(false);
   const [activeSecondarySection, setActiveSecondarySection] = useState<string | null>(null);
+  const [isSecondaryMenuOpen, setIsSecondaryMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown when clicking outside
@@ -54,6 +55,7 @@ export default function TopNav() {
       e.preventDefault();
       setShowSecondaryNav(true);
       setActiveSecondarySection("overview");
+      setIsMobileMenuOpen(false);
     }
     setActiveDropdown(null);
   };
@@ -64,14 +66,14 @@ export default function TopNav() {
 
   return (
     <>
-      <nav className="border-b border-neutral-800 px-4 sm:px-6 bg-amber-700 relative z-50">
+      <nav className="border-b border-neutral-800 px-4 sm:px-6 py-3 bg-amber-700 relative z-50">
         <div className="flex max-w-6xl mx-auto justify-between items-center">
           <a href="/">
             <img src={logoDark.src} alt="VeraId logo" className="h-6 w-auto" />
           </a>
 
           {/* Desktop Navigation */}
-          <ul className="hidden md:flex space-x-12 text-white text-sm py-3 bg-green-500">
+          <ul className="hidden md:flex space-x-12 text-white text-sm bg-green-500">
             {navLinks.map((link) => (
               <li key={link.text} className="relative">
                 {link.children ? (
@@ -199,7 +201,31 @@ export default function TopNav() {
               <img src={logoDark.src} alt="VeraId logo" className="h-7 md:h-8 w-auto" />
             </a>
 
-            <ul className="flex space-x-8 text-sm">
+            {/* Secondary Mobile Toggle Button */}
+            <button
+              className="md:hidden text-white flex items-center space-x-1"
+              onClick={() => setIsSecondaryMenuOpen(!isSecondaryMenuOpen)}
+            >
+              <span>Menu</span>
+              <svg
+                className={`w-4 h-4 transition-transform ${
+                  isSecondaryMenuOpen ? "rotate-180" : ""
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+
+            {/* Secondary Desktop Menu */}
+            <ul className="hidden md:flex space-x-8 text-sm">
               <li>
                 <a
                   href="/services/kliento"
@@ -236,7 +262,7 @@ export default function TopNav() {
                   }`}
                   onClick={(e) => {
                     e.preventDefault();
-                    setActiveSecondarySection(" ");
+                    setActiveSecondarySection("overview");
                   }}
                 >
                   Overview
@@ -244,6 +270,59 @@ export default function TopNav() {
               </li>
             </ul>
           </div>
+
+          {/* Secondary Mobile Menu */}
+          {isSecondaryMenuOpen && (
+            <div className="md:hidden w-full mt-3">
+              <ul className="space-y-3 py-3">
+                <li>
+                  <a
+                    href="/services/kliento"
+                    className={`block text-white hover:text-green-200 ${
+                      activeSecondarySection === "clients" ? "text-green-300" : ""
+                    }`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveSecondarySection("clients");
+                      setIsSecondaryMenuOpen(false);
+                    }}
+                  >
+                    Clients
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/services/kliento/servers"
+                    className={`block text-white hover:text-green-200 ${
+                      activeSecondarySection === "servers" ? "text-green-300" : ""
+                    }`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveSecondarySection("servers");
+                      setIsSecondaryMenuOpen(false);
+                    }}
+                  >
+                    Servers
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/services/kliento/services"
+                    className={`block text-white hover:text-green-200 ${
+                      activeSecondarySection === "overview" ? "text-green-300" : ""
+                    }`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveSecondarySection("overview");
+                      setIsSecondaryMenuOpen(false);
+                    }}
+                  >
+                    Overview
+                  </a>
+                </li>
+              </ul>
+            </div>
+          )}
         </nav>
       )}
     </>
