@@ -4,6 +4,7 @@ import Footer from "../components/Footer.astro";
 import OpenGraph from "../assets/images/opengraph.png";
 import "../styles/global.css";
 import { IS_PRODUCTION, getSiteUrl } from "../data/global";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title: string;
@@ -55,6 +56,7 @@ const ogUrl = new URL(Astro.url.pathname, siteUrl);
         <script is:inline src="https://cdn.usefathom.com/script.js" data-site="UNVOWGIF" defer />
       )
     }
+    <ClientRouter />
   </head>
   <body>
     <TopNav client:load />

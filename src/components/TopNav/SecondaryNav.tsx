@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import klientoLogo from "../../assets/images/kliento-logo.png";
 import ChevronIcon from "../../assets/icons/chevron.svg?react";
 import type { SecondaryNavProps } from "./types";
@@ -6,6 +6,14 @@ import { secondaryNavLinks } from "./constants";
 
 export function SecondaryNav({ activeSection, setActiveSection }: SecondaryNavProps) {
   const [isSecondaryMenuOpen, setIsSecondaryMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const path = window.location.pathname;
+    const matchedLink = secondaryNavLinks.find((link) => path === link.href);
+    if (matchedLink && matchedLink.id) {
+      setActiveSection(matchedLink.id);
+    }
+  }, [setActiveSection]);
 
   return (
     <nav className="border-b border-neutral-800 bg-neutral-800 px-4 sm:px-6 py-3">
@@ -36,10 +44,6 @@ export function SecondaryNav({ activeSection, setActiveSection }: SecondaryNavPr
                     ? "text-green-300 font-medium"
                     : "text-white hover:text-green-200"
                 }
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveSection(link.id || null);
-                }}
               >
                 {link.text}
               </a>
@@ -61,11 +65,7 @@ export function SecondaryNav({ activeSection, setActiveSection }: SecondaryNavPr
                       ? "block text-green-300 font-medium"
                       : "block text-white hover:text-green-200"
                   }
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveSection(link.id || null);
-                    setIsSecondaryMenuOpen(false);
-                  }}
+                  onClick={() => setIsSecondaryMenuOpen(false)}
                 >
                   {link.text}
                 </a>

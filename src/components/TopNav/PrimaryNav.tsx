@@ -28,7 +28,6 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
   }, []);
 
   useEffect(() => {
-    // Set the current path when component mounts
     if (typeof window !== "undefined") {
       setCurrentPath(window.location.pathname);
     }
@@ -45,9 +44,8 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
     setActiveDropdown(activeDropdown === text ? null : text);
   };
 
-  const handleServiceClick = (e: React.MouseEvent, service: string) => {
+  const handleServiceClick = (e: React.MouseEvent<HTMLAnchorElement>, service: string) => {
     if (service === "Kliento") {
-      e.preventDefault();
       onKlientoClick();
       setIsMobileMenuOpen(false);
     }
