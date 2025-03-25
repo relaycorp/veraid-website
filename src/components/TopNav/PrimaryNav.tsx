@@ -76,54 +76,57 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
 
         {/* Desktop Navigation */}
         <ul className="hidden md:flex space-x-10 text-sm">
-          {primaryNavLinks.map((link) => (
-            <li key={link.text} className="relative">
+          {primaryNavLinks.map((link, index) => (
+            <li key={link.text} className="relative flex items-center">
               {link.children ? (
-                <div
-                  className="dropdown-wrapper"
-                  onMouseEnter={() => setActiveDropdown(link.text)}
-                  onMouseLeave={() => setActiveDropdown(null)}
-                >
-                  <div className="flex items-center space-x-1">
-                    <a
-                      href={link.href}
-                      className={
-                        isActive(link.href) ? navLinkClasses.active : navLinkClasses.inactive
-                      }
-                    >
-                      {link.text}
-                    </a>
-                    <button
-                      onClick={(e) => handleDropdownClick(link.text, e)}
-                      className="flex items-center"
-                      aria-label="Toggle dropdown"
-                    >
-                      <ChevronIcon
-                        className={`w-3 h-3 transition-transform ${
-                          activeDropdown === link.text ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                  </div>
-                  {activeDropdown === link.text && (
-                    <div className="absolute top-full left-0 min-w-max bg-neutral-900 border border-neutral-700 rounded py-2 z-50">
-                      {link.children.map((child) => (
-                        <a
-                          key={child.text}
-                          href={child.href}
-                          className={`block px-4 py-2 text-sm whitespace-nowrap ${
-                            isActive(child.href)
-                              ? dropdownItemClasses.active
-                              : dropdownItemClasses.inactive
+                <>
+                  <div
+                    className="dropdown-wrapper"
+                    onMouseEnter={() => setActiveDropdown(link.text)}
+                    onMouseLeave={() => setActiveDropdown(null)}
+                  >
+                    <div className="flex items-center space-x-1">
+                      <a
+                        href={link.href}
+                        className={
+                          isActive(link.href) ? navLinkClasses.active : navLinkClasses.inactive
+                        }
+                      >
+                        {link.text}
+                      </a>
+                      <button
+                        onClick={(e) => handleDropdownClick(link.text, e)}
+                        className="flex items-center"
+                        aria-label="Toggle dropdown"
+                      >
+                        <ChevronIcon
+                          className={`w-3 h-3 transition-transform ${
+                            activeDropdown === link.text ? "rotate-180" : ""
                           }`}
-                          onClick={(e) => handleServiceClick(e, child.text)}
-                        >
-                          {child.text}
-                        </a>
-                      ))}
+                        />
+                      </button>
                     </div>
-                  )}
-                </div>
+                    {activeDropdown === link.text && (
+                      <div className="absolute top-full left-0 min-w-max bg-neutral-900 border border-neutral-700 rounded py-2 z-50">
+                        <div className="h-4 -mt-4 w-full"></div>
+                        {link.children.map((child) => (
+                          <a
+                            key={child.text}
+                            href={child.href}
+                            className={`block px-4 py-2 text-sm whitespace-nowrap ${
+                              isActive(child.href)
+                                ? dropdownItemClasses.active
+                                : dropdownItemClasses.inactive
+                            }`}
+                            onClick={(e) => handleServiceClick(e, child.text)}
+                          >
+                            {child.text}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </>
               ) : (
                 <a
                   href={link.href}
@@ -166,17 +169,19 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                       >
                         {link.text}
                       </a>
-                      <button
-                        onClick={() => handleDropdownClick(link.text)}
-                        className="p-1"
-                        aria-label="Toggle dropdown"
-                      >
-                        <ChevronIcon
-                          className={`w-4 h-4 transition-transform ${
-                            activeDropdown === link.text ? "rotate-180" : ""
-                          }`}
-                        />
-                      </button>
+                      <div className="flex items-center">
+                        <div className="h-6 w-px bg-neutral-600 mr-3"></div>
+                        <button
+                          onClick={() => handleDropdownClick(link.text)}
+                          aria-label="Toggle dropdown"
+                        >
+                          <ChevronIcon
+                            className={`w-4 h-4 transition-transform ${
+                              activeDropdown === link.text ? "rotate-180" : ""
+                            }`}
+                          />
+                        </button>
+                      </div>
                     </div>
                     {activeDropdown === link.text && (
                       <div className="pl-4 space-y-2">
