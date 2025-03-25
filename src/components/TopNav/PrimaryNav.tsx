@@ -70,7 +70,7 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
                   <button
-                    className={`flex items-center space-x-1 ${isActive(link.href) ? "text-green-500 font-medium" : "hover:text-green-200"}`}
+                    className={`flex items-center space-x-1 ${isActive(link.href) ? "text-green-300" : "hover:text-green-200"}`}
                   >
                     <span>{link.text}</span>
                     <ChevronIcon
@@ -87,7 +87,7 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                           href={child.href}
                           className={`block px-4 py-2 text-sm whitespace-nowrap ${
                             isActive(child.href)
-                              ? "text-green-300 bg-neutral-800 font-medium"
+                              ? "text-green-300 bg-neutral-800"
                               : "text-white hover:bg-neutral-800 hover:text-green-200"
                           }`}
                           onClick={(e) => handleServiceClick(e, child.text)}
@@ -101,9 +101,7 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
               ) : (
                 <a
                   href={link.href}
-                  className={
-                    isActive(link.href) ? "text-green-300 font-medium" : "hover:text-green-200"
-                  }
+                  className={isActive(link.href) ? "text-green-300" : "hover:text-green-200"}
                 >
                   {link.text}
                 </a>
@@ -136,9 +134,7 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                     <button
                       onClick={() => handleDropdownClick(link.text)}
                       className={`flex items-center justify-between w-full ${
-                        isActive(link.href)
-                          ? "text-green-200 font-medium"
-                          : "text-white hover:text-green-200"
+                        isActive(link.href) ? "text-green-300" : "text-white hover:text-green-200"
                       }`}
                     >
                       <span>{link.text}</span>
@@ -156,7 +152,7 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                             href={child.href}
                             className={`block ${
                               isActive(child.href)
-                                ? "text-green-200 font-medium"
+                                ? "text-green-300"
                                 : "text-white hover:text-green-200"
                             }`}
                             onClick={(e) => handleServiceClick(e, child.text)}
@@ -171,9 +167,7 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                   <a
                     href={link.href}
                     className={`block ${
-                      isActive(link.href)
-                        ? "text-green-300 font-medium"
-                        : "text-white hover:text-green-200"
+                      isActive(link.href) ? "text-green-300" : "text-white hover:text-green-200"
                     }`}
                   >
                     {link.text}
