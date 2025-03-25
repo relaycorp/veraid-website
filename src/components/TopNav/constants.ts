@@ -15,7 +15,7 @@ export const primaryNavLinks: NavLink[] = [
 ];
 
 export const secondaryNavLinks: NavLink[] = [
-  { href: "/services/kliento", text: "Clients", id: "clients" },
-  { href: "/services/kliento/servers", text: "Servers", id: "servers" },
-  { href: "/services/kliento/services", text: "Overview", id: "overview" },
+  { href: "/kliento/clients", text: "Clients", id: "clients" },
+  { href: "/kliento/servers", text: "Servers", id: "servers" },
+  { href: "/kliento/overview", text: "Overview", id: "overview" },
 ];
