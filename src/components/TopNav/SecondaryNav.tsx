@@ -4,6 +4,11 @@ import ChevronIcon from "../../assets/icons/chevron.svg?react";
 import type { SecondaryNavProps } from "./types";
 import { secondaryNavLinks } from "./constants";
 
+const navLinkClasses = {
+  active: "text-green-300",
+  inactive: "text-white hover:text-green-200",
+};
+
 export function SecondaryNav({ activeSection, setActiveSection }: SecondaryNavProps) {
   const [isSecondaryMenuOpen, setIsSecondaryMenuOpen] = useState(false);
 
@@ -40,9 +45,7 @@ export function SecondaryNav({ activeSection, setActiveSection }: SecondaryNavPr
               <a
                 href={link.href}
                 className={
-                  activeSection === link.id
-                    ? "text-green-300 font-medium"
-                    : "text-white hover:text-green-200"
+                  activeSection === link.id ? navLinkClasses.active : navLinkClasses.inactive
                 }
               >
                 {link.text}
@@ -62,8 +65,8 @@ export function SecondaryNav({ activeSection, setActiveSection }: SecondaryNavPr
                   href={link.href}
                   className={
                     activeSection === link.id
-                      ? "block text-green-300 font-medium"
-                      : "block text-white hover:text-green-200"
+                      ? `block ${navLinkClasses.active}`
+                      : `block ${navLinkClasses.inactive}`
                   }
                   onClick={() => setIsSecondaryMenuOpen(false)}
                 >

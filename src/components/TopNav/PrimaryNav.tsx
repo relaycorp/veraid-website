@@ -6,6 +6,16 @@ import ChevronIcon from "../../assets/icons/chevron.svg?react";
 import type { PrimaryNavProps } from "./types";
 import { primaryNavLinks } from "./constants";
 
+const navLinkClasses = {
+  active: "text-green-300",
+  inactive: "text-white hover:text-green-200",
+};
+
+const dropdownItemClasses = {
+  active: "text-green-300",
+  inactive: "text-white hover:text-green-200 hover:bg-neutral-700 ",
+};
+
 export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -60,7 +70,7 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
         </a>
 
         {/* Desktop Navigation */}
-        <ul className="hidden md:flex space-x-10 text-white text-sm">
+        <ul className="hidden md:flex space-x-10 text-sm">
           {primaryNavLinks.map((link) => (
             <li key={link.text} className="relative">
               {link.children ? (
@@ -70,7 +80,7 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
                   <button
-                    className={`flex items-center space-x-1 ${isActive(link.href) ? "text-green-300" : "hover:text-green-200"}`}
+                    className={`flex items-center space-x-1 ${isActive(link.href) ? navLinkClasses.active : navLinkClasses.inactive}`}
                   >
                     <span>{link.text}</span>
                     <ChevronIcon
@@ -87,8 +97,8 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                           href={child.href}
                           className={`block px-4 py-2 text-sm whitespace-nowrap ${
                             isActive(child.href)
-                              ? "text-green-300 bg-neutral-800"
-                              : "text-white hover:bg-neutral-800 hover:text-green-200"
+                              ? dropdownItemClasses.active
+                              : dropdownItemClasses.inactive
                           }`}
                           onClick={(e) => handleServiceClick(e, child.text)}
                         >
@@ -101,7 +111,7 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
               ) : (
                 <a
                   href={link.href}
-                  className={isActive(link.href) ? "text-green-300" : "hover:text-green-200"}
+                  className={isActive(link.href) ? navLinkClasses.active : navLinkClasses.inactive}
                 >
                   {link.text}
                 </a>
@@ -134,7 +144,7 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                     <button
                       onClick={() => handleDropdownClick(link.text)}
                       className={`flex items-center justify-between w-full ${
-                        isActive(link.href) ? "text-green-300" : "text-white hover:text-green-200"
+                        isActive(link.href) ? navLinkClasses.active : navLinkClasses.inactive
                       }`}
                     >
                       <span>{link.text}</span>
@@ -151,9 +161,7 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                             key={child.text}
                             href={child.href}
                             className={`block ${
-                              isActive(child.href)
-                                ? "text-green-300"
-                                : "text-white hover:text-green-200"
+                              isActive(child.href) ? navLinkClasses.active : navLinkClasses.inactive
                             }`}
                             onClick={(e) => handleServiceClick(e, child.text)}
                           >
@@ -167,7 +175,7 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                   <a
                     href={link.href}
                     className={`block ${
-                      isActive(link.href) ? "text-green-300" : "text-white hover:text-green-200"
+                      isActive(link.href) ? navLinkClasses.active : navLinkClasses.inactive
                     }`}
                   >
                     {link.text}
