@@ -9,12 +9,11 @@ export default function TopNav() {
   const [currentPath, setCurrentPath] = useState<string>("");
 
   useEffect(() => {
-    // Set up a MutationObserver to detect URL changes
     const handleUrlChange = () => {
       const path = window.location.pathname;
       setCurrentPath(path);
 
-      if (path === "/kliento" || path.startsWith("/services/kliento")) {
+      if (path.startsWith("/kliento") || path.startsWith("/services/kliento")) {
         setShowSecondaryNav(true);
         setActiveSecondarySection(getActiveSectionFromPath(path));
       } else {
@@ -22,10 +21,8 @@ export default function TopNav() {
       }
     };
 
-    // Initial check
     handleUrlChange();
 
-    // Set up transition:after event listener for Astro's View Transitions
     document.addEventListener("astro:page-load", handleUrlChange);
 
     return () => {
@@ -43,8 +40,6 @@ export default function TopNav() {
   };
 
   const handleKlientoClick = () => {
-    // The navigation will happen via normal link behavior
-    // View Transitions will handle the smooth transition
     setShowSecondaryNav(true);
     setActiveSecondarySection(null);
   };

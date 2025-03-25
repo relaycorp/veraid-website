@@ -5,10 +5,7 @@ export const primaryNavLinks: NavLink[] = [
   {
     href: "/services",
     text: "Services",
-    children: [
-      { href: "/kliento", text: "Kliento" },
-      { href: "/services", text: "Services" },
-    ],
+    children: [{ href: "/kliento", text: "Kliento" }],
   },
   { href: "/overview", text: "Tech overview" },
   { href: "/about", text: "About" },

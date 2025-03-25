@@ -50,12 +50,17 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
     return currentPath.startsWith(href);
   };
 
-  const handleDropdownClick = (text: string) => {
+  const handleDropdownClick = (text: string, e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     setActiveDropdown(activeDropdown === text ? null : text);
   };
 
   const handleServiceClick = (e: React.MouseEvent<HTMLAnchorElement>, service: string) => {
     if (service === "Kliento") {
+      e.preventDefault();
       onKlientoClick();
       setIsMobileMenuOpen(false);
     }
@@ -79,16 +84,27 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
                   onMouseEnter={() => setActiveDropdown(link.text)}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <button
-                    className={`flex items-center space-x-1 ${isActive(link.href) ? navLinkClasses.active : navLinkClasses.inactive}`}
-                  >
-                    <span>{link.text}</span>
-                    <ChevronIcon
-                      className={`w-3 h-3 transition-transform ${
-                        activeDropdown === link.text ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
+                  <div className="flex items-center space-x-1">
+                    <a
+                      href={link.href}
+                      className={
+                        isActive(link.href) ? navLinkClasses.active : navLinkClasses.inactive
+                      }
+                    >
+                      {link.text}
+                    </a>
+                    <button
+                      onClick={(e) => handleDropdownClick(link.text, e)}
+                      className="flex items-center"
+                      aria-label="Toggle dropdown"
+                    >
+                      <ChevronIcon
+                        className={`w-3 h-3 transition-transform ${
+                          activeDropdown === link.text ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                  </div>
                   {activeDropdown === link.text && (
                     <div className="absolute top-full left-0 min-w-max bg-neutral-900 border border-neutral-700 rounded py-2 z-50">
                       {link.children.map((child) => (
@@ -141,19 +157,27 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
               <li key={link.text}>
                 {link.children ? (
                   <div className="space-y-2">
-                    <button
-                      onClick={() => handleDropdownClick(link.text)}
-                      className={`flex items-center justify-between w-full ${
-                        isActive(link.href) ? navLinkClasses.active : navLinkClasses.inactive
-                      }`}
-                    >
-                      <span>{link.text}</span>
-                      <ChevronIcon
-                        className={`w-4 h-4 transition-transform ${
-                          activeDropdown === link.text ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
+                    <div className="flex items-center justify-between w-full">
+                      <a
+                        href={link.href}
+                        className={
+                          isActive(link.href) ? navLinkClasses.active : navLinkClasses.inactive
+                        }
+                      >
+                        {link.text}
+                      </a>
+                      <button
+                        onClick={() => handleDropdownClick(link.text)}
+                        className="p-1"
+                        aria-label="Toggle dropdown"
+                      >
+                        <ChevronIcon
+                          className={`w-4 h-4 transition-transform ${
+                            activeDropdown === link.text ? "rotate-180" : ""
+                          }`}
+                        />
+                      </button>
+                    </div>
                     {activeDropdown === link.text && (
                       <div className="pl-4 space-y-2">
                         {link.children.map((child) => (
