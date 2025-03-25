@@ -191,7 +191,7 @@ Where:
    - `2`: The key ID is the SHA-384 digest of the key.
    - `3`: The key ID is the SHA-512 digest of the key.
 3. **Key ID** (required): The Base64-encoded (unpadded) representation of the key digest, as specified by the Key ID Type.
-4. **TTL Override** (required): A positive integer representing the number of seconds for the maximum validity period of signatures. This value MUST be between 28,800 seconds (8 hours) and 2,592,000 seconds (30 days).
+4. **TTL Override** (required): A positive integer representing the number of seconds for the maximum validity period of signatures. This value MUST be between 1 second and 7,776,000 seconds (90 days).
 5. **Service OID** (optional): An Object Identifier (in dotted decimal notation) identifying a specific service for which this record is valid. If omitted, the record applies to all services.
 
 Multiple TXT records MAY be published at the same hostname to support different keys, key algorithms, or services. A domain MAY also publish service-specific records alongside a generic record (without a service OID).
@@ -231,12 +231,12 @@ Implementations MUST include all necessary DNSKEY, DS, and RRSIG records require
 TTL (Time-to-Live) values play a crucial role in determining the validity period of VeraId signatures. The protocol establishes the following requirements:
 
 1. Service designers MUST specify a maximum TTL for signatures in their service, which MUST be:
-   - At least 8 hours (28,800 seconds), to allow sufficient time for certificate renewal during outages.
-   - At most 30 days (2,592,000 seconds), to support offline, delay-tolerant networking scenarios.
+   - At least 1 second, though we recommend several minutes to account for clock drift.
+   - At most 90 days (7,776,000 seconds), to support offline, delay-tolerant networking scenarios.
 2. The age of a digital signature MUST be calculated from the time when the DNSSEC answer for the `_veraid.<domain>` TXT record was signed.
 3. The TTL override value in the VeraId TXT record represents the maximum validity period for signatures, counted from the DNSSEC signing time.
-4. Verifiers MAY enforce a TTL shorter than that required by the service, but not shorter than the 8-hour minimum.
-5. Verifiers MAY allow their end users to specify a shorter TTL (but still not shorter than 8 hours) than the one in the TXT record.
+4. Verifiers MAY enforce a TTL shorter than that required by the service, but not shorter than the 1-second minimum.
+5. Verifiers MAY allow their end users to specify a shorter TTL (but still not shorter than 1 second) than the one in the TXT record.
 
 VeraId favours short-lived certificates over revocation mechanisms to simplify the protocol and eliminate dependencies on online revocation checking. Service designers SHOULD specify the shortest TTL that satisfies their specific requirements.
 
@@ -322,7 +322,7 @@ VeraId uses X.509 certificates with specific requirements for organisations and 
 3. **Issuer:**
    - MUST match the Subject of the issuing organisation certificate.
 4. **Validity:**
-   - SHOULD be short-lived, preferably not exceeding 30 days.
+   - SHOULD be short-lived, preferably not exceeding 90 days.
    - MUST NOT be longer than the validity period of the issuing organisation certificate.
 5. **Subject Public Key Info:**
    - Algorithm: rsaEncryption.
@@ -383,7 +383,7 @@ Organisations MUST:
 
 The organisation is the trust anchor for all certificates and signatures within its domain. No external authority can issue valid certificates for the organisation or its members.
 
-Newly registered domains SHOULD wait at least the maximum TTL (30 days) before implementing VeraId to prevent potential attacks using DNSSEC chains from previous domain owners.
+Newly registered domains SHOULD wait at least the maximum TTL (90 days) before implementing VeraId to prevent potential attacks using DNSSEC chains from previous domain owners.
 
 Subdomains MAY implement VeraId separately from their parent domains, provided they have their own DNSSEC configuration. Each subdomain operates as an independent organisation within the VeraId ecosystem.
 
@@ -485,7 +485,7 @@ VeraId favours short-lived certificates over complex revocation mechanisms. The 
    - SHOULD NOT exceed 1 year.
    - MAY be shorter if the organisation implements frequent key rotation.
 2. **Member Certificates:**
-   - SHOULD be short-lived, with validity periods of 30 days or less.
+   - SHOULD be short-lived, with validity periods of 90 days or less.
    - MUST NOT exceed the validity period of the issuing organisation certificate.
    - MAY be as short as a few hours for high-security applications.
    - SHOULD balance security requirements with operational concerns about renewal frequency.
@@ -724,7 +724,7 @@ Services using VeraId MAY define additional validation rules beyond the core pro
 
 1. **TTL Constraints:**
    - Services MUST specify a maximum TTL for signatures.
-   - The TTL MUST be within the range of 8 hours to 30 days.
+   - The TTL MUST be within the range of 1 second to 90 days.
    - Services SHOULD choose the shortest TTL that meets their requirements.
 2. **Content Type Restrictions:**
    - Services MAY restrict the types of content that can be signed.
@@ -833,7 +833,7 @@ These attacks primarily affect human perception rather than cryptographic verifi
 Domain transfers present specific security challenges for the VeraId protocol:
 
 1. **Waiting Period:**
-   - Organisations SHOULD delay implementing VeraId until at least the maximum TTL (30 days) has elapsed since the domain was registered or acquired.
+   - Organisations SHOULD delay implementing VeraId until at least the maximum TTL (90 days) has elapsed since the domain was registered or acquired.
    - This prevents the DNSSEC chain from the previous owner from remaining valid.
 2. **Signature Validity After Transfer:**
    - Signatures created before a domain transfer remain cryptographically valid.
