@@ -3,7 +3,7 @@ import veraIdLogo from "../../assets/images/veraid-logo.png";
 import MenuIcon from "../../assets/icons/menu.svg?react";
 import CloseIcon from "../../assets/icons/close.svg?react";
 import ChevronIcon from "../../assets/icons/chevron.svg?react";
-import type { NavLink, PrimaryNavProps } from "./types";
+import type { PrimaryNavProps } from "./types";
 import { primaryNavLinks } from "./constants";
 
 export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
