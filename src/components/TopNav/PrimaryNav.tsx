@@ -60,7 +60,6 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
 
   const handleServiceClick = (e: React.MouseEvent<HTMLAnchorElement>, service: string) => {
     if (service === "Kliento") {
-      e.preventDefault();
       onKlientoClick();
       setIsMobileMenuOpen(false);
     }

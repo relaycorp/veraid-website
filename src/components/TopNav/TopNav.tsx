@@ -40,12 +40,12 @@ export default function TopNav() {
   };
 
   const handleKlientoClick = () => {
-    setShowSecondaryNav(true);
-    setActiveSecondarySection(null);
-
-    // Navigate to the Kliento index page
-    if (typeof window !== "undefined" && window.location.pathname !== "/kliento") {
-      window.location.href = "/kliento";
+    // Don't set state if we're already on the Kliento page to avoid flicker
+    if (currentPath !== "/kliento") {
+      // We don't need to manually navigate with window.location.href
+      // The PrimaryNav component will use a regular <a> tag with proper href
+      setShowSecondaryNav(true);
+      setActiveSecondarySection(null);
     }
   };
 
