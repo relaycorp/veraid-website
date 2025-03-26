@@ -1,7 +1,9 @@
 ---
 title: "Servers"
 description: "Servers"
-layout: ../../layouts/Page.astro
+layout: ../../layouts/ServicePage.astro
+service: "Kliento"
+activeSection: "servers"
 permalink: /kliento/servers
 ---
 

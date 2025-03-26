@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import klientoLogo from "../../assets/images/kliento-logo.png";
 import ChevronIcon from "../../assets/icons/chevron.svg?react";
-import type { SecondaryNavProps } from "./types";
 import { secondaryNavLinks } from "./constants";
 
 const navLinkClasses = {
@@ -9,23 +8,43 @@ const navLinkClasses = {
   inactive: "text-white hover:text-green-200",
 };
 
-export function SecondaryNav({
-  currentPath,
-  activeSection,
-  setActiveSection,
-  currentService,
-}: SecondaryNavProps) {
+interface SecondaryNavProps {
+  currentPath: string;
+  activeSection: string | null;
+  currentService: string;
+  setActiveSection?: (section: string | null) => void;
+}
+
+export function SecondaryNav({ currentPath, activeSection, currentService }: SecondaryNavProps) {
   const [isSecondaryMenuOpen, setIsSecondaryMenuOpen] = useState(false);
+  const [localActiveSection, setLocalActiveSection] = useState<string | null>(activeSection);
 
   // Filter links to only show the ones relevant to the current service
   const serviceLinks = secondaryNavLinks.filter((link) =>
-    link.href.includes(currentService?.toLowerCase() || ""),
+    link.href.includes(currentService.toLowerCase()),
   );
+
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const path = window.location.pathname;
+      const matchedLink = secondaryNavLinks.find((link) => path === link.href);
+      if (matchedLink && matchedLink.id) {
+        setLocalActiveSection(matchedLink.id);
+      }
+    };
+
+    handleUrlChange();
+    document.addEventListener("astro:page-load", handleUrlChange);
+
+    return () => {
+      document.removeEventListener("astro:page-load", handleUrlChange);
+    };
+  }, []);
 
   return (
     <nav className="border-b border-neutral-800 bg-neutral-800 px-4 sm:px-6 py-3">
       <div className="flex max-w-6xl mx-auto justify-between items-center">
-        <a href={`/${currentService?.toLowerCase()}`}>
+        <a href={`/${currentService.toLowerCase()}`}>
           <img
             src={currentService === "Kliento" ? klientoLogo.src : ""}
             alt={`${currentService} logo`}
@@ -51,7 +70,9 @@ export function SecondaryNav({
               <a
                 href={link.href}
                 className={
-                  activeSection === link.id ? navLinkClasses.active : navLinkClasses.inactive
+                  (activeSection || localActiveSection) === link.id
+                    ? navLinkClasses.active
+                    : navLinkClasses.inactive
                 }
               >
                 {link.text}
@@ -70,7 +91,7 @@ export function SecondaryNav({
                 <a
                   href={link.href}
                   className={
-                    activeSection === link.id
+                    (activeSection || localActiveSection) === link.id
                       ? `block ${navLinkClasses.active}`
                       : `block ${navLinkClasses.inactive}`
                   }

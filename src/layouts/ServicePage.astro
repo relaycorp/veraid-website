@@ -1,25 +1,47 @@
 ---
-import BaseLayout from "./Base.astro";
 import { z } from "astro:content";
+import { PrimaryNav } from "../components/TopNav/PrimaryNav";
+import { SecondaryNav } from "../components/TopNav/SecondaryNav";
+import Skeleton from "./Skeleton.astro";
 
 interface Frontmatter {
   title: string;
   description: string;
+  service: string;
+  activeSection?: string | null;
+  ogImage?: string;
+  ogType?: string;
 }
 
 interface Props {
   frontmatter?: Frontmatter;
   title?: string;
   description?: string;
+  service?: string;
+  activeSection?: string | null;
+  ogImage?: string;
+  ogType?: string;
 }
 
 const schema = z.object({
   title: z.string(),
   description: z.string(),
+  service: z.string(),
+  activeSection: z.string().nullable().optional(),
+  ogImage: z.string().optional(),
+  ogType: z.string().optional(),
 });
 
-const { title, description } = schema.parse(Astro.props.frontmatter ?? Astro.props);
+const {
+  title,
+  description,
+  service,
+  activeSection = null,
+  ogImage,
+  ogType,
+} = schema.parse(Astro.props.frontmatter ?? Astro.props);
 
+// Import the article styles from the Page layout
 const articleClasses = [
   "mx-auto",
   "max-w-5xl",
@@ -55,8 +77,6 @@ const articleClasses = [
   "prose-a:no-underline",
   "prose-a:[&:hover]:text-green-200",
   "prose-a:hover:underline",
-
-  // Inline code
   "[&_:not(pre)>code]:bg-neutral-800",
   "[&_:not(pre)>code]:py-0.5",
   "[&_:not(pre)>code]:px-1",
@@ -76,7 +96,6 @@ const articleClasses = [
   "[&_code>a]:hover:underline",
   "[&_a>code]:text-green-300",
   "[&_a>code]:hover:text-green-200",
-
   "prose-strong:text-white",
   "prose-strong:font-bold",
   "prose-dt:text-white",
@@ -89,8 +108,18 @@ const articleClasses = [
 ];
 ---
 
-<BaseLayout title={title} description={description}>
-  <article class={articleClasses.join(" ")}>
-    <slot />
-  </article>
-</BaseLayout>
+<Skeleton title={title} description={description} ogImage={ogImage} ogType={ogType}>
+  <PrimaryNav client:load />
+  <SecondaryNav
+    client:load
+    currentPath={Astro.url.pathname}
+    activeSection={activeSection}
+    currentService={service}
+  />
+  <main>
+    <article class={articleClasses.join(" ")}>
+      <slot />
+    </article>
+  </main>
+</Skeleton>
+

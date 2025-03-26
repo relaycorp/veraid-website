@@ -1,7 +1,9 @@
 ---
 title: "Overview"
 description: "Overview"
-layout: ../../layouts/Page.astro
+layout: ../../layouts/ServicePage.astro
+service: "Kliento"
+activeSection: "overview"
 permalink: /kliento/Overview
 ---
 

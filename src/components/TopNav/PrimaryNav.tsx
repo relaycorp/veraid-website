@@ -3,7 +3,6 @@ import veraIdLogo from "../../assets/images/veraid-logo.png";
 import MenuIcon from "../../assets/icons/menu.svg?react";
 import CloseIcon from "../../assets/icons/close.svg?react";
 import ChevronIcon from "../../assets/icons/chevron.svg?react";
-import type { PrimaryNavProps } from "./types";
 import { primaryNavLinks } from "./constants";
 
 const navLinkClasses = {
@@ -16,7 +15,7 @@ const dropdownItemClasses = {
   inactive: "text-white hover:text-green-200 hover:bg-neutral-700 ",
 };
 
-export function PrimaryNav({ onServiceClick }: PrimaryNavProps) {
+export function PrimaryNav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [currentPath, setCurrentPath] = useState<string>("");
@@ -41,6 +40,15 @@ export function PrimaryNav({ onServiceClick }: PrimaryNavProps) {
     if (typeof window !== "undefined") {
       setCurrentPath(window.location.pathname);
     }
+
+    const handleUrlChange = () => {
+      setCurrentPath(window.location.pathname);
+    };
+
+    document.addEventListener("astro:page-load", handleUrlChange);
+    return () => {
+      document.removeEventListener("astro:page-load", handleUrlChange);
+    };
   }, []);
 
   const isActive = (href: string): boolean => {
@@ -58,8 +66,7 @@ export function PrimaryNav({ onServiceClick }: PrimaryNavProps) {
     setActiveDropdown(activeDropdown === text ? null : text);
   };
 
-  const handleServiceClick = (e: React.MouseEvent<HTMLAnchorElement>, service: string) => {
-    onServiceClick(service);
+  const handleServiceClick = () => {
     setIsMobileMenuOpen(false);
     setActiveDropdown(null);
   };
@@ -115,7 +122,7 @@ export function PrimaryNav({ onServiceClick }: PrimaryNavProps) {
                                 ? dropdownItemClasses.active
                                 : dropdownItemClasses.inactive
                             }`}
-                            onClick={(e) => handleServiceClick(e, child.text)}
+                            onClick={handleServiceClick}
                           >
                             {child.text}
                           </a>
@@ -189,7 +196,7 @@ export function PrimaryNav({ onServiceClick }: PrimaryNavProps) {
                             className={`block ${
                               isActive(child.href) ? navLinkClasses.active : navLinkClasses.inactive
                             }`}
-                            onClick={(e) => handleServiceClick(e, child.text)}
+                            onClick={handleServiceClick}
                           >
                             {child.text}
                           </a>

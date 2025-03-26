@@ -4,14 +4,3 @@ export interface NavLink {
   children?: NavLink[];
   id?: string;
 }
-
-export interface PrimaryNavProps {
-  onServiceClick: (service: string) => void;
-}
-
-export interface SecondaryNavProps {
-  currentPath: string;
-  activeSection: string | null;
-  setActiveSection: (section: string | null) => void;
-  currentService: string | null;
-}

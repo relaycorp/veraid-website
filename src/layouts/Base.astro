@@ -1,0 +1,20 @@
+---
+import Skeleton from "./Skeleton.astro";
+import { PrimaryNav } from "../components/TopNav/PrimaryNav";
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  ogType?: string;
+}
+
+const { title, description, ogImage, ogType } = Astro.props;
+---
+
+<Skeleton title={title} description={description} ogImage={ogImage} ogType={ogType}>
+  <PrimaryNav client:load />
+  <main>
+    <slot />
+  </main>
+</Skeleton>
