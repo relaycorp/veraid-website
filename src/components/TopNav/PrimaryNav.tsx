@@ -16,7 +16,7 @@ const dropdownItemClasses = {
   inactive: "text-white hover:text-green-200 hover:bg-neutral-700 ",
 };
 
-export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
+export function PrimaryNav({ onServiceClick }: PrimaryNavProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [currentPath, setCurrentPath] = useState<string>("");
@@ -59,10 +59,8 @@ export function PrimaryNav({ onKlientoClick }: PrimaryNavProps) {
   };
 
   const handleServiceClick = (e: React.MouseEvent<HTMLAnchorElement>, service: string) => {
-    if (service === "Kliento") {
-      onKlientoClick();
-      setIsMobileMenuOpen(false);
-    }
+    onServiceClick(service);
+    setIsMobileMenuOpen(false);
     setActiveDropdown(null);
   };
 

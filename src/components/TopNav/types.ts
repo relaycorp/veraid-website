@@ -6,10 +6,12 @@ export interface NavLink {
 }
 
 export interface PrimaryNavProps {
-  onKlientoClick: () => void;
+  onServiceClick: (service: string) => void;
 }
 
 export interface SecondaryNavProps {
+  currentPath: string;
   activeSection: string | null;
   setActiveSection: (section: string | null) => void;
+  currentService: string | null;
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import klientoLogo from "../../assets/images/kliento-logo.png";
 import ChevronIcon from "../../assets/icons/chevron.svg?react";
 import type { SecondaryNavProps } from "./types";
@@ -9,22 +9,28 @@ const navLinkClasses = {
   inactive: "text-white hover:text-green-200",
 };
 
-export function SecondaryNav({ activeSection, setActiveSection }: SecondaryNavProps) {
+export function SecondaryNav({
+  currentPath,
+  activeSection,
+  setActiveSection,
+  currentService,
+}: SecondaryNavProps) {
   const [isSecondaryMenuOpen, setIsSecondaryMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const path = window.location.pathname;
-    const matchedLink = secondaryNavLinks.find((link) => path === link.href);
-    if (matchedLink && matchedLink.id) {
-      setActiveSection(matchedLink.id);
-    }
-  }, [setActiveSection]);
+  // Filter links to only show the ones relevant to the current service
+  const serviceLinks = secondaryNavLinks.filter((link) =>
+    link.href.includes(currentService?.toLowerCase() || ""),
+  );
 
   return (
     <nav className="border-b border-neutral-800 bg-neutral-800 px-4 sm:px-6 py-3">
       <div className="flex max-w-6xl mx-auto justify-between items-center">
-        <a href="/kliento">
-          <img src={klientoLogo.src} alt="Kliento logo" className="h-4 md:h-5 w-auto" />
+        <a href={`/${currentService?.toLowerCase()}`}>
+          <img
+            src={currentService === "Kliento" ? klientoLogo.src : ""}
+            alt={`${currentService} logo`}
+            className="h-4 md:h-5 w-auto"
+          />
         </a>
 
         {/* Secondary Mobile Toggle Button */}
@@ -40,7 +46,7 @@ export function SecondaryNav({ activeSection, setActiveSection }: SecondaryNavPr
 
         {/* Secondary Desktop Menu */}
         <ul className="hidden md:flex space-x-8 text-xs">
-          {secondaryNavLinks.map((link) => (
+          {serviceLinks.map((link) => (
             <li key={link.text}>
               <a
                 href={link.href}
@@ -59,7 +65,7 @@ export function SecondaryNav({ activeSection, setActiveSection }: SecondaryNavPr
       {isSecondaryMenuOpen && (
         <div className="md:hidden w-full mt-3">
           <ul className="space-y-3 py-3">
-            {secondaryNavLinks.map((link) => (
+            {serviceLinks.map((link) => (
               <li key={link.text}>
                 <a
                   href={link.href}
