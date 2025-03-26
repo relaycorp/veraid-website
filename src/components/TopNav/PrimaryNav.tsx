@@ -1,27 +1,15 @@
 import { useState, useRef, useEffect } from "react";
 import veraIdLogo from "../../assets/images/veraid-logo.png";
-import MenuIcon from "../../assets/icons/menu.svg?react";
-import CloseIcon from "../../assets/icons/close.svg?react";
 import ChevronIcon from "../../assets/icons/chevron.svg?react";
-import { primaryNavLinks } from "./constants";
-
-const navLinkClasses = {
-  active: "text-green-300",
-  inactive: "text-white hover:text-green-200",
-};
-
-const dropdownItemClasses = {
-  active: "text-green-300",
-  inactive: "text-white hover:text-green-200 hover:bg-neutral-700 ",
-};
+import { primaryNavLinks, navLinkClasses, dropdownItemClasses } from "./constants";
+import { useNavigation } from "./hooks";
+import { MobileMenuToggle } from "./MobileMenuToggle";
 
 export function PrimaryNav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [currentPath, setCurrentPath] = useState<string>("");
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const toggleIconClass = "w-5 h-5";
+  const { currentPath, isActive } = useNavigation();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -35,28 +23,6 @@ export function PrimaryNav() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setCurrentPath(window.location.pathname);
-    }
-
-    const handleUrlChange = () => {
-      setCurrentPath(window.location.pathname);
-    };
-
-    document.addEventListener("astro:page-load", handleUrlChange);
-    return () => {
-      document.removeEventListener("astro:page-load", handleUrlChange);
-    };
-  }, []);
-
-  const isActive = (href: string): boolean => {
-    if (href === "/") {
-      return currentPath === "/";
-    }
-    return currentPath.startsWith(href);
-  };
 
   const handleDropdownClick = (text: string, e?: React.MouseEvent) => {
     if (e) {
@@ -144,16 +110,10 @@ export function PrimaryNav() {
         </ul>
 
         {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-white"
+        <MobileMenuToggle
+          isOpen={isMobileMenuOpen}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? (
-            <CloseIcon className={toggleIconClass} />
-          ) : (
-            <MenuIcon className={toggleIconClass} />
-          )}
-        </button>
+        />
       </div>
 
       {/* Mobile Menu */}

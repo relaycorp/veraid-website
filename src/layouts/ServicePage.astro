@@ -110,16 +110,10 @@ const articleClasses = [
 
 <Skeleton title={title} description={description} ogImage={ogImage} ogType={ogType}>
   <PrimaryNav client:load />
-  <SecondaryNav
-    client:load
-    currentPath={Astro.url.pathname}
-    activeSection={activeSection}
-    currentService={service}
-  />
+  <SecondaryNav client:load activeSection={activeSection} currentService={service} />
   <main>
     <article class={articleClasses.join(" ")}>
       <slot />
     </article>
   </main>
 </Skeleton>
-
