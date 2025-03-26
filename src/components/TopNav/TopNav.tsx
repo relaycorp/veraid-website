@@ -42,6 +42,11 @@ export default function TopNav() {
   const handleKlientoClick = () => {
     setShowSecondaryNav(true);
     setActiveSecondarySection(null);
+
+    // Navigate to the Kliento index page
+    if (typeof window !== "undefined" && window.location.pathname !== "/kliento") {
+      window.location.href = "/kliento";
+    }
   };
 
   return (
