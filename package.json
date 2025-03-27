@@ -16,12 +16,12 @@
     "fix:prettier": "prettier --write ."
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.1.0",
-    "@astrojs/react": "^4.2.0",
+    "@astrojs/mdx": "^4.2.1",
+    "@astrojs/react": "^4.2.1",
     "@tailwindcss/vite": "^4.0.9",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
-    "astro": "^5.3.1",
+    "astro": "^5.5.3",
     "astro-cloudflare-redirects": "^1.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
