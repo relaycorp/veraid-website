@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import klientoLogo from "../../assets/images/kliento-logo.png";
-import { secondaryNavLinks, navLinkClasses } from "./constants";
+import { secondaryNavLinks } from "./constants";
 import { useNavigation } from "./hooks";
 import { MobileMenuToggle } from "./MobileMenuToggle";
 
@@ -19,6 +19,11 @@ export function SecondaryNav({ currentService, activeSection }: SecondaryNavProp
   const serviceLinks = secondaryNavLinks.filter((link) =>
     link.href.includes(currentService.toLowerCase()),
   );
+
+  const secondaryNavLinkClass = {
+    active: "text-indigo-300",
+    inactive: "text-white hover:text-indigo-400",
+  };
 
   useEffect(() => {
     const handleUrlChange = () => {
@@ -52,23 +57,16 @@ export function SecondaryNav({ currentService, activeSection }: SecondaryNavProp
             className="h-4 md:h-5 w-auto"
           />
         </a>
-
-        {/* Secondary Mobile Toggle Button */}
-        <MobileMenuToggle
-          isOpen={isSecondaryMenuOpen}
-          onClick={() => setIsSecondaryMenuOpen(!isSecondaryMenuOpen)}
-          label="Menu"
-          showChevron={true}
-        />
-
-        {/* Secondary Desktop Menu */}
+        {/* Desktop Menu */}
         <ul className="hidden md:flex space-x-8 text-xs">
           {serviceLinks.map((link) => (
             <li key={link.text}>
               <a
                 href={link.href}
                 className={
-                  isActiveSectionLink(link.id) ? navLinkClasses.active : navLinkClasses.inactive
+                  isActiveSectionLink(link.id)
+                    ? secondaryNavLinkClass.active
+                    : secondaryNavLinkClass.inactive
                 }
               >
                 {link.text}
@@ -77,8 +75,13 @@ export function SecondaryNav({ currentService, activeSection }: SecondaryNavProp
           ))}
         </ul>
       </div>
-
-      {/* Secondary Mobile Menu */}
+      <MobileMenuToggle
+        isOpen={isSecondaryMenuOpen}
+        onClick={() => setIsSecondaryMenuOpen(!isSecondaryMenuOpen)}
+        label="Menu"
+        showChevron={true}
+      />
+      {/* Mobile Menu */}
       {isSecondaryMenuOpen && (
         <div className="md:hidden w-full mt-3">
           <ul className="space-y-3 py-3">
@@ -88,8 +91,8 @@ export function SecondaryNav({ currentService, activeSection }: SecondaryNavProp
                   href={link.href}
                   className={
                     isActiveSectionLink(link.id)
-                      ? `block ${navLinkClasses.active}`
-                      : `block ${navLinkClasses.inactive}`
+                      ? `block ${secondaryNavLinkClass.active}`
+                      : `block ${secondaryNavLinkClass.inactive}`
                   }
                   onClick={() => setIsSecondaryMenuOpen(false)}
                 >

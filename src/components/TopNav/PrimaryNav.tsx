@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import veraIdLogo from "../../assets/images/veraid-logo.png";
 import ChevronIcon from "../../assets/icons/chevron.svg?react";
-import { primaryNavLinks, navLinkClasses, dropdownItemClasses } from "./constants";
+import { primaryNavLinks } from "./constants";
 import { useNavigation } from "./hooks";
 import { MobileMenuToggle } from "./MobileMenuToggle";
 
@@ -37,6 +37,11 @@ export function PrimaryNav() {
     setActiveDropdown(null);
   };
 
+  const navLinkClass = {
+    active: "text-green-300",
+    inactive: "text-white hover:text-green-200",
+  };
+
   return (
     <nav className="px-4 sm:px-6 py-4 bg-neutral-900 relative z-50">
       <div className="flex max-w-6xl mx-auto justify-between items-center">
@@ -59,7 +64,7 @@ export function PrimaryNav() {
                       <a
                         href={link.href}
                         className={
-                          isActive(link.href) ? navLinkClasses.active : navLinkClasses.inactive
+                          isActive(link.href) ? navLinkClass.active : navLinkClass.inactive
                         }
                       >
                         {link.text}
@@ -76,6 +81,7 @@ export function PrimaryNav() {
                         />
                       </button>
                     </div>
+                    {/* Dropdown submenu*/}
                     {activeDropdown === link.text && (
                       <div className="absolute top-full left-0 min-w-max bg-neutral-900 border border-neutral-700 rounded py-2 z-50">
                         <div className="h-4 -mt-4 w-full"></div>
@@ -84,9 +90,7 @@ export function PrimaryNav() {
                             key={child.text}
                             href={child.href}
                             className={`block px-4 py-2 text-sm whitespace-nowrap ${
-                              isActive(child.href)
-                                ? dropdownItemClasses.active
-                                : dropdownItemClasses.inactive
+                              isActive(child.href) ? navLinkClass.active : navLinkClass.inactive
                             }`}
                             onClick={handleServiceClick}
                           >
@@ -100,7 +104,7 @@ export function PrimaryNav() {
               ) : (
                 <a
                   href={link.href}
-                  className={isActive(link.href) ? navLinkClasses.active : navLinkClasses.inactive}
+                  className={isActive(link.href) ? navLinkClass.active : navLinkClass.inactive}
                 >
                   {link.text}
                 </a>
@@ -109,7 +113,6 @@ export function PrimaryNav() {
           ))}
         </ul>
 
-        {/* Mobile Menu Button */}
         <MobileMenuToggle
           isOpen={isMobileMenuOpen}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -128,7 +131,7 @@ export function PrimaryNav() {
                       <a
                         href={link.href}
                         className={
-                          isActive(link.href) ? navLinkClasses.active : navLinkClasses.inactive
+                          isActive(link.href) ? navLinkClass.active : navLinkClass.inactive
                         }
                       >
                         {link.text}
@@ -154,7 +157,7 @@ export function PrimaryNav() {
                             key={child.text}
                             href={child.href}
                             className={`block ${
-                              isActive(child.href) ? navLinkClasses.active : navLinkClasses.inactive
+                              isActive(child.href) ? navLinkClass.active : navLinkClass.inactive
                             }`}
                             onClick={handleServiceClick}
                           >
@@ -168,7 +171,7 @@ export function PrimaryNav() {
                   <a
                     href={link.href}
                     className={`block ${
-                      isActive(link.href) ? navLinkClasses.active : navLinkClasses.inactive
+                      isActive(link.href) ? navLinkClass.active : navLinkClass.inactive
                     }`}
                   >
                     {link.text}

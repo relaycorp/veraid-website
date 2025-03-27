@@ -16,13 +16,3 @@ export const secondaryNavLinks: NavLink[] = [
   { href: "/kliento/servers", text: "Servers", id: "servers" },
   { href: "/kliento/overview", text: "Overview", id: "overview" },
 ];
-
-export const navLinkClasses = {
-  active: "text-green-300",
-  inactive: "text-white hover:text-green-200",
-};
-
-export const dropdownItemClasses = {
-  active: "text-green-300",
-  inactive: "text-white hover:text-green-200 hover:bg-neutral-700",
-};
