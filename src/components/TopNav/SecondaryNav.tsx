@@ -48,7 +48,7 @@ export function SecondaryNav({ currentService, activeSection }: SecondaryNavProp
   };
 
   return (
-    <nav className="border-b border-neutral-800 bg-neutral-800 px-4 sm:px-6 py-3">
+    <nav className="border-b border-neutral-800 bg-neutral-800 px-4 sm:px-6 py-3 text-sm">
       <div className="flex max-w-6xl mx-auto justify-between items-center">
         <a href={`/${currentService.toLowerCase()}`}>
           <img
@@ -74,13 +74,15 @@ export function SecondaryNav({ currentService, activeSection }: SecondaryNavProp
             </li>
           ))}
         </ul>
+        <div className="md:hidden">
+          <MobileMenuToggle
+            isOpen={isSecondaryMenuOpen}
+            onClick={() => setIsSecondaryMenuOpen(!isSecondaryMenuOpen)}
+            label="Menu"
+            showChevron={true}
+          />
+        </div>
       </div>
-      <MobileMenuToggle
-        isOpen={isSecondaryMenuOpen}
-        onClick={() => setIsSecondaryMenuOpen(!isSecondaryMenuOpen)}
-        label="Menu"
-        showChevron={true}
-      />
       {/* Mobile Menu */}
       {isSecondaryMenuOpen && (
         <div className="md:hidden w-full mt-3">

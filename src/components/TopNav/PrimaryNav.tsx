@@ -43,7 +43,7 @@ export function PrimaryNav() {
   };
 
   return (
-    <nav className="px-4 sm:px-6 py-4 bg-neutral-900 relative z-50">
+    <nav className="px-4 sm:px-6 py-4 bg-neutral-900 relative z-50 text-sm">
       <div className="flex max-w-6xl mx-auto justify-between items-center">
         <a href="/">
           <img src={veraIdLogo.src} alt="VeraId logo" className="h-5 md:h-6 w-auto" />
