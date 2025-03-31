@@ -14,7 +14,7 @@ export function SecondaryNav({ currentService, activeSection }: SecondaryNavProp
   const [localActiveSection, setLocalActiveSection] = useState<string | null>(
     activeSection || null,
   );
-  const { currentPath } = useNavigation();
+  const {} = useNavigation();
 
   const serviceLinks = secondaryNavLinks.filter((link) =>
     link.href.includes(currentService.toLowerCase()),

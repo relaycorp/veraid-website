@@ -9,7 +9,7 @@ export function PrimaryNav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { currentPath, isActive } = useNavigation();
+  const { isActive } = useNavigation();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -51,7 +51,7 @@ export function PrimaryNav() {
 
         {/* Desktop Navigation */}
         <ul className="hidden md:flex space-x-10 text-sm">
-          {primaryNavLinks.map((link, index) => (
+          {primaryNavLinks.map((link) => (
             <li key={link.text} className="relative flex items-center">
               {link.children ? (
                 <>
