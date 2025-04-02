@@ -7,19 +7,11 @@ interface SecondaryNavProps {
   serviceName: string;
   serviceLinks: NavLink[];
   logoSrc: string;
-  activeSection?: string | null;
 }
 
-export function SecondaryNav({
-  serviceName,
-  serviceLinks,
-  logoSrc,
-  activeSection,
-}: SecondaryNavProps) {
+export function SecondaryNav({ serviceName, serviceLinks, logoSrc }: SecondaryNavProps) {
   const [isSecondaryMenuOpen, setIsSecondaryMenuOpen] = useState(false);
-  const [localActiveSection, setLocalActiveSection] = useState<string | null>(
-    activeSection || null,
-  );
+  const [localActiveSection, setLocalActiveSection] = useState<string | null>(null);
   const {} = useNavigation();
 
   const secondaryNavLinkClass = {
