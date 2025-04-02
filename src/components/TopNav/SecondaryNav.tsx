@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { NavLink } from "./config";
 import { useNavigation } from "./hooks";
 import { MobileMenuToggle } from "./MobileMenuToggle";
@@ -10,34 +10,11 @@ interface SecondaryNavProps {
 
 export function SecondaryNav({ nav, logoSrc }: SecondaryNavProps) {
   const [isSecondaryMenuOpen, setIsSecondaryMenuOpen] = useState(false);
-  const [localActiveSection, setLocalActiveSection] = useState<string | null>(null);
-  const {} = useNavigation();
+  const { isActive } = useNavigation();
 
   const secondaryNavLinkClass = {
     active: "text-indigo-300",
     inactive: "text-white hover:text-indigo-400",
-  };
-
-  useEffect(() => {
-    const handleUrlChange = () => {
-      const path = window.location.pathname;
-      const matchedLink = nav.children?.find((link: NavLink) => path === link.href);
-      if (matchedLink && matchedLink.id) {
-        setLocalActiveSection(matchedLink.id);
-      }
-    };
-
-    handleUrlChange();
-    document.addEventListener("astro:page-load", handleUrlChange);
-
-    return () => {
-      document.removeEventListener("astro:page-load", handleUrlChange);
-    };
-  }, [nav.children]);
-
-  const isActiveSectionLink = (linkId: string | undefined) => {
-    if (!linkId) return false;
-    return localActiveSection === linkId;
   };
 
   return (
@@ -53,7 +30,7 @@ export function SecondaryNav({ nav, logoSrc }: SecondaryNavProps) {
               <a
                 href={link.href}
                 className={
-                  isActiveSectionLink(link.id)
+                  isActive(link.href)
                     ? secondaryNavLinkClass.active
                     : secondaryNavLinkClass.inactive
                 }
@@ -81,7 +58,7 @@ export function SecondaryNav({ nav, logoSrc }: SecondaryNavProps) {
                 <a
                   href={link.href}
                   className={
-                    isActiveSectionLink(link.id)
+                    isActive(link.href)
                       ? `block ${secondaryNavLinkClass.active}`
                       : `block ${secondaryNavLinkClass.inactive}`
                   }

@@ -26,7 +26,6 @@ const schema = z.object({
   title: z.string(),
   description: z.string(),
   service: z.string().optional(),
-  activeSection: z.string().nullable().optional(),
   ogImage: z.string().optional(),
   ogType: z.string().optional(),
 });
@@ -35,7 +34,6 @@ const {
   title,
   description,
   service = "Kliento",
-  activeSection = null,
   ogImage,
   ogType,
 } = schema.parse(Astro.props.frontmatter ?? Astro.props);
