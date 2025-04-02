@@ -3,7 +3,6 @@ title: "Clients"
 description: "Clients"
 layout: ../../layouts/KlientoPage.astro
 service: "Kliento"
-activeSection: "clients"
 permalink: /kliento/clients
 ---
 

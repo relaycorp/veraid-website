@@ -44,7 +44,7 @@ export function SecondaryNav({ currentService, activeSection }: SecondaryNavProp
 
   const isActiveSectionLink = (linkId: string | undefined) => {
     if (!linkId) return false;
-    return (activeSection || localActiveSection) === linkId;
+    return localActiveSection === linkId;
   };
 
   return (
