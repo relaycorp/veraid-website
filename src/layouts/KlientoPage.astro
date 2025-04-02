@@ -40,29 +40,28 @@ const {
   ogType,
 } = schema.parse(Astro.props.frontmatter ?? Astro.props);
 
-// Find secondary links for Kliento from primaryNavLinks
-const findServiceLinks = (serviceName: string) => {
+// Find service navigation for Kliento from primaryNavLinks
+const findServiceNavigation = (serviceName: string) => {
   const parentItem = primaryNavLinks.find((item) =>
     item.children?.some((child) => child.text.toLowerCase() === serviceName.toLowerCase()),
   );
 
   if (parentItem?.children) {
-    const serviceItem = parentItem.children.find(
-      (child) => child.text.toLowerCase() === serviceName.toLowerCase(),
+    return (
+      parentItem.children.find((child) => child.text.toLowerCase() === serviceName.toLowerCase()) ||
+      null
     );
-    return serviceItem?.children || [];
   }
-  return [];
+  return null;
 };
 
-const serviceLinks = findServiceLinks(service);
+const serviceNav = findServiceNavigation(service);
 ---
 
 <Page title={title} description={description} ogImage={ogImage} ogType={ogType}>
   <SecondaryNav
     client:load
-    serviceName={service}
-    serviceLinks={serviceLinks}
+    nav={serviceNav || { href: `/${service.toLowerCase()}`, text: service, children: [] }}
     logoSrc={service === "Kliento" ? klientoLogo.src : ""}
     slot="kliento-header"
   />
