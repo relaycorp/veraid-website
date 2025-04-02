@@ -2,6 +2,8 @@
 import { z } from "astro:content";
 import { SecondaryNav } from "../components/TopNav/SecondaryNav";
 import Page from "./Page.astro";
+import klientoLogo from "../assets/images/kliento-logo.png";
+import { primaryNavLinks } from "../components/TopNav/config";
 
 interface Frontmatter {
   title: string;
@@ -39,13 +41,32 @@ const {
   ogImage,
   ogType,
 } = schema.parse(Astro.props.frontmatter ?? Astro.props);
+
+// Find secondary links for Kliento from primaryNavLinks
+const findServiceLinks = (serviceName: string) => {
+  const parentItem = primaryNavLinks.find((item) =>
+    item.children?.some((child) => child.text.toLowerCase() === serviceName.toLowerCase()),
+  );
+
+  if (parentItem?.children) {
+    const serviceItem = parentItem.children.find(
+      (child) => child.text.toLowerCase() === serviceName.toLowerCase(),
+    );
+    return serviceItem?.children || [];
+  }
+  return [];
+};
+
+const serviceLinks = findServiceLinks(service);
 ---
 
 <Page title={title} description={description} ogImage={ogImage} ogType={ogType}>
   <SecondaryNav
     client:load
     activeSection={activeSection}
-    currentService={service}
+    serviceName={service}
+    serviceLinks={serviceLinks}
+    logoSrc={service === "Kliento" ? klientoLogo.src : ""}
     slot="kliento-header"
   />
   <slot />
