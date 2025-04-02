@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import klientoLogo from "../../assets/images/kliento-logo.png";
-import { secondaryNavLinks } from "./config";
+import { primaryNavLinks } from "./config";
+import type { NavLink } from "./config";
 import { useNavigation } from "./hooks";
 import { MobileMenuToggle } from "./MobileMenuToggle";
 
@@ -16,9 +17,26 @@ export function SecondaryNav({ currentService, activeSection }: SecondaryNavProp
   );
   const {} = useNavigation();
 
-  const serviceLinks = secondaryNavLinks.filter((link) =>
-    link.href.includes(currentService.toLowerCase()),
-  );
+  const findSecondaryLinks = (serviceName: string): NavLink[] => {
+    // Find the parent service item in primaryNavLinks
+    const parentItem = primaryNavLinks.find((item) =>
+      item.children?.some((child) => child.text.toLowerCase() === serviceName.toLowerCase()),
+    );
+
+    // If parent exists, find the specific service
+    if (parentItem?.children) {
+      const serviceItem = parentItem.children.find(
+        (child) => child.text.toLowerCase() === serviceName.toLowerCase(),
+      );
+
+      // Return the service's children or empty array
+      return serviceItem?.children || [];
+    }
+
+    return [];
+  };
+
+  const serviceLinks = findSecondaryLinks(currentService);
 
   const secondaryNavLinkClass = {
     active: "text-indigo-300",
@@ -28,7 +46,8 @@ export function SecondaryNav({ currentService, activeSection }: SecondaryNavProp
   useEffect(() => {
     const handleUrlChange = () => {
       const path = window.location.pathname;
-      const matchedLink = secondaryNavLinks.find((link) => path === link.href);
+      const links = findSecondaryLinks(currentService);
+      const matchedLink = links.find((link: NavLink) => path === link.href);
       if (matchedLink && matchedLink.id) {
         setLocalActiveSection(matchedLink.id);
       }
@@ -40,7 +59,7 @@ export function SecondaryNav({ currentService, activeSection }: SecondaryNavProp
     return () => {
       document.removeEventListener("astro:page-load", handleUrlChange);
     };
-  }, []);
+  }, [currentService]);
 
   const isActiveSectionLink = (linkId: string | undefined) => {
     if (!linkId) return false;
