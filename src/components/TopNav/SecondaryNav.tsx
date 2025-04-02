@@ -1,16 +1,23 @@
 import { useState } from "react";
 import type { NavLink } from "./config";
-import { useNavigation } from "./hooks";
+import { useNavigation, findServiceByPath } from "./hooks";
 import { MobileMenuToggle } from "./MobileMenuToggle";
 
 interface SecondaryNavProps {
-  nav: NavLink;
+  nav?: NavLink;
+  servicePath?: string;
   logoSrc: string;
 }
 
-export function SecondaryNav({ nav, logoSrc }: SecondaryNavProps) {
+export function SecondaryNav({ nav, servicePath, logoSrc }: SecondaryNavProps) {
   const [isSecondaryMenuOpen, setIsSecondaryMenuOpen] = useState(false);
   const { isActive } = useNavigation();
+
+  const navigation = nav || (servicePath ? findServiceByPath(servicePath) : null);
+
+  if (!navigation) {
+    return null;
+  }
 
   const secondaryNavLinkClass = {
     active: "text-indigo-300",
@@ -20,12 +27,12 @@ export function SecondaryNav({ nav, logoSrc }: SecondaryNavProps) {
   return (
     <nav className="border-b border-neutral-800 bg-neutral-800 px-4 sm:px-6 py-3 text-sm">
       <div className="flex max-w-6xl mx-auto justify-between items-center">
-        <a href={nav.href}>
-          <img src={logoSrc} alt={`${nav.text} logo`} className="h-4 md:h-5 w-auto" />
+        <a href={navigation.href}>
+          <img src={logoSrc} alt={`${navigation.text} logo`} className="h-4 md:h-5 w-auto" />
         </a>
         {/* Desktop Menu */}
         <ul className="hidden md:flex space-x-8 text-xs">
-          {nav.children?.map((link) => (
+          {navigation.children?.map((link) => (
             <li key={link.text}>
               <a
                 href={link.href}
@@ -53,7 +60,7 @@ export function SecondaryNav({ nav, logoSrc }: SecondaryNavProps) {
       {isSecondaryMenuOpen && (
         <div className="md:hidden w-full mt-3">
           <ul className="space-y-3 py-3">
-            {nav.children?.map((link) => (
+            {navigation.children?.map((link) => (
               <li key={link.text}>
                 <a
                   href={link.href}

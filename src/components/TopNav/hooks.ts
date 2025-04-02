@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { primaryNavLinks, type NavLink } from "./config";
 
 export function useNavigation() {
   const [currentPath, setCurrentPath] = useState<string>("");
@@ -26,4 +27,19 @@ export function useNavigation() {
   };
 
   return { currentPath, isActive };
+}
+export function findServiceByPath(servicePath: string): NavLink | null {
+  const normalizedPath = servicePath.startsWith("/") ? servicePath : `/${servicePath}`;
+
+  const servicesItem = primaryNavLinks.find((item) => item.href === "/services");
+
+  if (servicesItem?.children) {
+    return (
+      servicesItem.children.find(
+        (child) => child.href.toLowerCase() === normalizedPath.toLowerCase(),
+      ) || null
+    );
+  }
+
+  return null;
 }

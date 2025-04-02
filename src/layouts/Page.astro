@@ -5,28 +5,20 @@ import { z } from "astro:content";
 interface Frontmatter {
   title: string;
   description: string;
-  ogImage?: string;
-  ogType?: string;
 }
 
 interface Props {
   frontmatter?: Frontmatter;
   title?: string;
   description?: string;
-  ogImage?: string;
-  ogType?: string;
 }
 
 const schema = z.object({
   title: z.string(),
   description: z.string(),
-  ogImage: z.string().optional(),
-  ogType: z.string().optional(),
 });
 
-const { title, description, ogImage, ogType } = schema.parse(
-  Astro.props.frontmatter ?? Astro.props,
-);
+const { title, description } = schema.parse(Astro.props.frontmatter ?? Astro.props);
 
 const articleClasses = [
   "mx-auto",
@@ -97,7 +89,7 @@ const articleClasses = [
 ];
 ---
 
-<Skeleton title={title} description={description} ogImage={ogImage} ogType={ogType}>
+<Skeleton title={title} description={description}>
   <slot name="kliento-header" />
   <article class={articleClasses.join(" ")}>
     <slot />

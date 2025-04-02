@@ -1,67 +1,10 @@
 ---
-import { z } from "astro:content";
 import { SecondaryNav } from "../components/TopNav/SecondaryNav";
 import Page from "./Page.astro";
 import klientoLogo from "../assets/images/kliento-logo.png";
-import { primaryNavLinks } from "../components/TopNav/config";
-
-interface Frontmatter {
-  title: string;
-  description: string;
-  service?: string;
-  ogImage?: string;
-  ogType?: string;
-}
-
-interface Props {
-  frontmatter?: Frontmatter;
-  title?: string;
-  description?: string;
-  service?: string;
-  ogImage?: string;
-  ogType?: string;
-}
-
-const schema = z.object({
-  title: z.string(),
-  description: z.string(),
-  service: z.string().optional(),
-  ogImage: z.string().optional(),
-  ogType: z.string().optional(),
-});
-
-const {
-  title,
-  description,
-  service = "Kliento",
-  ogImage,
-  ogType,
-} = schema.parse(Astro.props.frontmatter ?? Astro.props);
-
-// Find service navigation for Kliento from primaryNavLinks
-const findServiceNavigation = (serviceName: string) => {
-  const parentItem = primaryNavLinks.find((item) =>
-    item.children?.some((child) => child.text.toLowerCase() === serviceName.toLowerCase()),
-  );
-
-  if (parentItem?.children) {
-    return (
-      parentItem.children.find((child) => child.text.toLowerCase() === serviceName.toLowerCase()) ||
-      null
-    );
-  }
-  return null;
-};
-
-const serviceNav = findServiceNavigation(service);
 ---
 
-<Page title={title} description={description} ogImage={ogImage} ogType={ogType}>
-  <SecondaryNav
-    client:load
-    nav={serviceNav || { href: `/${service.toLowerCase()}`, text: service, children: [] }}
-    logoSrc={service === "Kliento" ? klientoLogo.src : ""}
-    slot="kliento-header"
-  />
+<Page {...Astro.props}>
+  <SecondaryNav client:load servicePath="kliento" logoSrc={klientoLogo.src} slot="kliento-header" />
   <slot />
 </Page>
