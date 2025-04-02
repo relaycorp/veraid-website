@@ -4,6 +4,7 @@ import OpenGraph from "../assets/images/opengraph.png";
 import "../styles/global.css";
 import { IS_PRODUCTION, getSiteUrl } from "../data/global";
 import { ClientRouter } from "astro:transitions";
+import { PrimaryNav } from "../components/TopNav/PrimaryNav";
 
 interface Props {
   title: string;
@@ -58,7 +59,10 @@ const ogUrl = new URL(Astro.url.pathname, siteUrl);
     <ClientRouter />
   </head>
   <body>
-    <slot />
+    <PrimaryNav client:load />
+    <main>
+      <slot />
+    </main>
     <Footer />
   </body>
 </html>

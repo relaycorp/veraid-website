@@ -1,0 +1,52 @@
+---
+import { z } from "astro:content";
+import { SecondaryNav } from "../components/TopNav/SecondaryNav";
+import Page from "./Page.astro";
+
+interface Frontmatter {
+  title: string;
+  description: string;
+  service?: string;
+  activeSection?: string | null;
+  ogImage?: string;
+  ogType?: string;
+}
+
+interface Props {
+  frontmatter?: Frontmatter;
+  title?: string;
+  description?: string;
+  service?: string;
+  activeSection?: string | null;
+  ogImage?: string;
+  ogType?: string;
+}
+
+const schema = z.object({
+  title: z.string(),
+  description: z.string(),
+  service: z.string().optional(),
+  activeSection: z.string().nullable().optional(),
+  ogImage: z.string().optional(),
+  ogType: z.string().optional(),
+});
+
+const {
+  title,
+  description,
+  service = "Kliento",
+  activeSection = null,
+  ogImage,
+  ogType,
+} = schema.parse(Astro.props.frontmatter ?? Astro.props);
+---
+
+<Page title={title} description={description} ogImage={ogImage} ogType={ogType}>
+  <SecondaryNav
+    client:load
+    activeSection={activeSection}
+    currentService={service}
+    slot="kliento-header"
+  />
+  <slot />
+</Page>
