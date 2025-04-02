@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import klientoLogo from "../../assets/images/kliento-logo.png";
-import { secondaryNavLinks } from "./constants";
+import { secondaryNavLinks } from "./config";
 import { useNavigation } from "./hooks";
 import { MobileMenuToggle } from "./MobileMenuToggle";
 

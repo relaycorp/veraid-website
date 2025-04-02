@@ -1,4 +1,9 @@
-import type { NavLink } from "./types";
+export interface NavLink {
+  href: string;
+  text: string;
+  children?: NavLink[];
+  id?: string;
+}
 
 export const primaryNavLinks: NavLink[] = [
   { href: "/users", text: "Users" },

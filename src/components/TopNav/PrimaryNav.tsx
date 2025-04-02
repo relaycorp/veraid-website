@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import veraIdLogo from "../../assets/images/veraid-logo.png";
 import ChevronIcon from "../../assets/icons/chevron.svg?react";
-import { primaryNavLinks } from "./constants";
+import { primaryNavLinks } from "./config";
 import { useNavigation } from "./hooks";
 import { MobileMenuToggle } from "./MobileMenuToggle";
 
