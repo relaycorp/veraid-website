@@ -8,6 +8,8 @@ layout: ../layouts/Page.astro
 
 By Gus Narea, [Relaycorp](https://relaycorp.tech). February 2025.
 
+**Deprecation notice:** The VeraId specification will be deprecated in favour of the [Internet-Draft DomainAuth Version 1](https://datatracker.ietf.org/doc/draft-narea-domainauth/). As of this writing, DomainAuth is almost identical to VeraId, [except for some minor differences](https://datatracker.ietf.org/doc/html/draft-narea-domainauth-00#name-veraid). Our vision is to make VeraId the reference implementation of DomainAuth.
+
 ## 1. Introduction
 
 VeraId is a decentralised authentication protocol that securely attributes content to domain names, providing a robust mechanism for proving ownership and authorship without requiring continuous Internet connectivity. By combining the decentralised nature of DNS with established cryptographic standards, VeraId enables secure content verification in both online and offline environments.
