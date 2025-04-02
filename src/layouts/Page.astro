@@ -19,7 +19,7 @@ const schema = z.object({
   description: z.string(),
 });
 
-const { title, description } = schema.parse(Astro.props.frontmatter ?? Astro.props);
+const { title, description } = schema.parse(Astro.props.frontmatter);
 const { showBrandInTitle } = Astro.props;
 
 const articleClasses = [
