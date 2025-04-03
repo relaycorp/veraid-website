@@ -7,7 +7,7 @@ import { Image } from "astro:assets";
 ---
 
 <Skeleton title="Kliento" description="Kliento" showBrandInTitle={false}>
-  <SecondaryNav client:load servicePath="kliento" logoSrc={klientoLogo.src} />
+  <SecondaryNav client:load servicePath="/kliento" logoSrc={klientoLogo.src} />
   <section class="py-16 px-4 sm:px-6">
     <div class="mx-auto max-w-5xl">
       <h1

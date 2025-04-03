@@ -26,20 +26,14 @@ export const primaryNavLinks: NavLink[] = [
 ];
 
 export function findServiceByPath(servicePath: string): NavLink {
-  const normalizedPath = servicePath.startsWith("/") ? servicePath : `/${servicePath}`;
-
   const servicesItem = primaryNavLinks.find((item) => item.href === "/services");
 
-  if (!servicesItem) {
-    throw new Error("Services navigation item not found in primary navigation");
-  }
-
-  if (!servicesItem.children || servicesItem.children.length === 0) {
-    throw new Error("No services defined in navigation config");
+  if (!servicesItem?.children?.length) {
+    throw new Error("Services navigation not properly configured");
   }
 
   const service = servicesItem.children.find(
-    (child) => child.href.toLowerCase() === normalizedPath.toLowerCase(),
+    (child) => child.href.toLowerCase() === servicePath.toLowerCase(),
   );
 
   if (!service) {
