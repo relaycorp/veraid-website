@@ -75,7 +75,7 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs, showProviderTabs = true 
 
   return (
     <div className="rounded-md bg-gradient-to-r from-indigo-500 from-10% via-indigo-400 via-30% to-emerald-500 to-90% p-[2px]">
-      <div className="rounded-md overflow-hidden bg-neutral-950 h-full">
+      <div className="rounded-md overflow-hidden bg-black h-full">
         {showProviderTabs && (
           <div className="flex border-b border-neutral-800">
             {tabs.map((tab) => (
@@ -107,16 +107,16 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs, showProviderTabs = true 
           ))}
         </div>
 
-        <div className="p-4 relative bg-neutral-900">
+        <div className="p-4 relative bg-neutral-950">
           <button
             onClick={copyToClipboard}
-            className="absolute right-5 top-5 text-neutral-400 hover:text-white transition-colors z-10 bg-neutral-800 rounded p-1.5 min-w-6 flex flex-col items-center"
+            className="absolute right-5 top-5 text-neutral-400 hover:text-white transition-colors z-10 bg-neutral-800 border border-neutral-700 rounded p-1.5 min-w-5 flex flex-col items-center"
             title="Copy to clipboard"
           >
             {copied ? (
               <>
                 <CheckMarkIcon className={BASE_ICON_CLASS} />
-                <span className="mt-1 text-xs">Copied!</span>
+                <span className="mt-1 text-xxs">Copied!</span>
               </>
             ) : (
               <CopyIcon className={BASE_ICON_CLASS} />

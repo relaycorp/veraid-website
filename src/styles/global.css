@@ -4,3 +4,6 @@
 html {
   overflow-y: scroll;
 }
+@theme {
+  --text-xxs: 10px;
+}
