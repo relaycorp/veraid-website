@@ -1,0 +1,20 @@
+---
+interface Props {
+  bgColor?: string;
+  padding?: string;
+}
+
+const { bgColor = "bg-neutral-900", padding = "pb-8" } = Astro.props;
+---
+
+<section class={`${padding} ${bgColor} px-4 pt-8 sm:px-6 sm:pt-16`}>
+  <div class="mx-auto max-w-5xl">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
+      <slot name="left" />
+
+      <div class="text-left">
+        <slot name="right" />
+      </div>
+    </div>
+  </div>
+</section>

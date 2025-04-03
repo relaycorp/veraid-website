@@ -3,9 +3,11 @@ import { SecondaryNav } from "../../components/TopNav/SecondaryNav";
 import Skeleton from "../../layouts/Skeleton.astro";
 import klientoLogo from "../../assets/images/kliento-logo.png";
 import KlientoHero from "../../components/KlientoHero.astro";
+import Usage from "../../components/KlientoHomepage/Usage.astro";
 ---
 
 <Skeleton title="Kliento" description="Kliento" showBrandInTitle={false}>
   <SecondaryNav client:load servicePath="/kliento" logoSrc={klientoLogo.src} />
   <KlientoHero />
+  <Usage />
 </Skeleton>
