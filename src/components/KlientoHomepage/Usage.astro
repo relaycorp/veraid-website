@@ -7,7 +7,7 @@ const HEADING_CLASS = "text-2xl md:text-4xl text-white font-bold mb-4";
 const PARAGRAPH_CLASS = "text-sm md:text-lg mb-8";
 ---
 
-<TwoColumnSection padding="pb-0">
+<TwoColumnSection padding="pb-0" reverseOnMobile={true}>
   <div slot="left">
     <TabbedCodeSnippet
       client:load
@@ -73,7 +73,7 @@ response = client.get_data(
   </div>
 </TwoColumnSection>
 
-<TwoColumnSection padding="pb-16">
+<TwoColumnSection padding="pb-16" reverseOnMobile={false}>
   <div slot="left">
     <h2 class={HEADING_CLASS}>Verify credentials</h2>
     <p class={PARAGRAPH_CLASS}>
@@ -140,5 +140,5 @@ response = client.get_data(
       ]}
       showProviderTabs={true}
     />
-  </div></TwoColumnSection
->
+  </div>
+</TwoColumnSection>
