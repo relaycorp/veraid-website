@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import GithubIcon from "../assets/icons/github.svg?react";
@@ -36,6 +36,7 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs, showProviderTabs = true 
     tabs[0]?.codeBlocks[0]?.language || "",
   );
   const [copied, setCopied] = useState(false);
+  const [fontSize, setFontSize] = useState<string>("14px");
 
   const activeTab = tabs.find((tab) => tab.label === activeProvider);
   const languages = activeTab?.codeBlocks.map((block) => block.language) || [];
@@ -48,6 +49,21 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs, showProviderTabs = true 
       setActiveLanguage(activeTab.codeBlocks[0]?.language || "");
     }
   }, [activeProvider, activeTab, activeLanguage]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setFontSize(window.innerWidth < 640 ? "12px" : "14px");
+    };
+
+    // Set initial size
+    handleResize();
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Clean up
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const copyToClipboard = async () => {
     try {
@@ -93,7 +109,7 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs, showProviderTabs = true 
           ))}
         </div>
 
-        <div className="p-4 relative pr-16 bg-neutral-900">
+        <div className="p-4 relative bg-neutral-900">
           <button
             onClick={copyToClipboard}
             className="absolute right-5 top-5 text-neutral-400 hover:text-white transition-colors z-10 bg-neutral-800 rounded p-1.5 min-w-[60px] flex flex-col items-center"
@@ -116,7 +132,7 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs, showProviderTabs = true 
               margin: 0,
               padding: 0,
               background: "transparent",
-              fontSize: "14px",
+              fontSize: fontSize,
               lineHeight: "1.5",
             }}
           >
