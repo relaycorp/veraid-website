@@ -1,23 +1,19 @@
 import { useState } from "react";
 import type { NavLink } from "./config";
-import { useNavigation, findServiceByPath } from "./hooks";
+import { findServiceByPath } from "./config";
+import { useNavigation } from "./hooks";
 import { MobileMenuToggle } from "./MobileMenuToggle";
 
 interface SecondaryNavProps {
-  nav?: NavLink;
-  servicePath?: string;
+  servicePath: string;
   logoSrc: string;
 }
 
-export function SecondaryNav({ nav, servicePath, logoSrc }: SecondaryNavProps) {
+export function SecondaryNav({ servicePath, logoSrc }: SecondaryNavProps) {
   const [isSecondaryMenuOpen, setIsSecondaryMenuOpen] = useState(false);
   const { isActive } = useNavigation();
 
-  const navigation = nav || (servicePath ? findServiceByPath(servicePath) : null);
-
-  if (!navigation) {
-    return null;
-  }
+  const navigation = findServiceByPath(servicePath);
 
   const secondaryNavLinkClass = {
     active: "text-indigo-300",
