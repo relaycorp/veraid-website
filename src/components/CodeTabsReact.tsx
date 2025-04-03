@@ -50,18 +50,16 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs, showProviderTabs = true 
     }
   }, [activeProvider, activeTab, activeLanguage]);
 
+  // The resize handler makes the syntax highlighter's font size responsive
   useEffect(() => {
     const handleResize = () => {
       setFontSize(window.innerWidth < 640 ? "12px" : "14px");
     };
 
-    // Set initial size
     handleResize();
 
-    // Add event listener
     window.addEventListener("resize", handleResize);
 
-    // Clean up
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
