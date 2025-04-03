@@ -25,20 +25,12 @@ export const primaryNavLinks: NavLink[] = [
   { href: "/about", text: "About" },
 ];
 
-export function findServiceByPath(servicePath: string): NavLink {
-  const servicesItem = primaryNavLinks.find((item) => item.href === "/services");
-
-  if (!servicesItem?.children?.length) {
-    throw new Error("Services navigation not properly configured");
-  }
-
-  const service = servicesItem.children.find(
-    (child) => child.href.toLowerCase() === servicePath.toLowerCase(),
-  );
-
+export function findNavItemByPath(servicePath: string): NavLink {
+  const service = primaryNavLinks
+    .flatMap((item) => (item.children ? [item, ...item.children] : [item]))
+    .find((item) => item.href.toLowerCase() === servicePath.toLowerCase());
   if (!service) {
-    throw new Error(`Service not found for path: ${servicePath}`);
+    throw new Error(`Navigation item not found for path: ${servicePath}`);
   }
-
   return service;
 }
