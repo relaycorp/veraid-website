@@ -112,7 +112,7 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs, showProviderTabs = true 
         <div className="p-4 relative bg-neutral-900">
           <button
             onClick={copyToClipboard}
-            className="absolute right-5 top-5 text-neutral-400 hover:text-white transition-colors z-10 bg-neutral-800 rounded p-1.5 min-w-[60px] flex flex-col items-center"
+            className="absolute right-5 top-5 text-neutral-400 hover:text-white transition-colors z-10 bg-neutral-800 rounded p-1.5 min-w-6 flex flex-col items-center"
             title="Copy to clipboard"
           >
             {copied ? (
