@@ -2,6 +2,9 @@
 import TabbedCodeSnippet from "../CodeTabsReact.tsx";
 import TwoColumnSection from "../TwoColumn.astro";
 import CtaButton from "../CtaButton.astro";
+
+const HEADING_CLASS = "text-4xl text-white font-bold mb-4";
+const PARAGRAPH_CLASS = "text-lg mb-8";
 ---
 
 <TwoColumnSection padding="pb-0">
@@ -61,8 +64,8 @@ response = client.get_data(
   </div>
 
   <div slot="right">
-    <h1 class="text-4xl text-white font-bold mb-4">Get a Kliento credential</h1>
-    <p class="text-lg mb-8">
+    <h2 class={HEADING_CLASS}>Get a Kliento credential</h2>
+    <p class={PARAGRAPH_CLASS}>
       Kliento enables secure connections to external servers from AWS environments without the need
       for traditional API keys.
     </p>
@@ -72,8 +75,8 @@ response = client.get_data(
 
 <TwoColumnSection padding="pb-16">
   <div slot="left">
-    <h1 class="text-4xl text-white font-bold mb-4">Verify credentials</h1>
-    <p class="text-lg mb-8">
+    <h2 class={HEADING_CLASS}>Verify credentials</h2>
+    <p class={PARAGRAPH_CLASS}>
       Kliento enables secure connections to external servers from AWS environments these without the
       need for traditional API keys.
     </p>

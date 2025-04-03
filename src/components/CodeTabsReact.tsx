@@ -22,8 +22,8 @@ export interface CodeTabsProps {
   showProviderTabs?: boolean;
 }
 
-const PROVIDER_ICON_CLASS = "w-4 h-4 mr-1.5";
-const COPY_TICK_ICON_CLASS = "w-4 h-4";
+const BASE_ICON_CLASS = "w-4 h-4";
+const PROVIDER_ICON_CLASS = `${BASE_ICON_CLASS} mr-1.5`;
 
 const getTabClasses = (isActive: boolean): string =>
   `px-4 py-2 text-xs transition-colors ${
@@ -101,11 +101,11 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs, showProviderTabs = true 
           >
             {copied ? (
               <>
-                <CheckMarkIcon className={COPY_TICK_ICON_CLASS} />
+                <CheckMarkIcon className={BASE_ICON_CLASS} />
                 <span className="mt-1 text-xs">Copied!</span>
               </>
             ) : (
-              <CopyIcon className={COPY_TICK_ICON_CLASS} />
+              <CopyIcon className={BASE_ICON_CLASS} />
             )}
           </button>
 
