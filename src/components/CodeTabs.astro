@@ -1,15 +1,14 @@
 ---
-import TabbedCodeSnippet, { type TabGroup } from "./CodeTabsReact.tsx";
+import TabbedCodeSnippet, { type CodeTab } from "./CodeTabsReact.tsx";
 
 interface Props {
-  tabs: TabGroup[];
-  showProviderTabs?: boolean;
+  tabs: CodeTab[];
   class?: string;
 }
 
-const { tabs, showProviderTabs = true, class: className } = Astro.props;
+const { tabs, class: className } = Astro.props;
 ---
 
 <div class={className}>
-  <TabbedCodeSnippet tabs={tabs} showProviderTabs={showProviderTabs} client:load />
+  <TabbedCodeSnippet tabs={tabs} client:load />
 </div>

@@ -1,54 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import GithubIcon from "../assets/icons/github.svg?react";
-import AzureIcon from "../assets/icons/azure.svg?react";
-import GCPIcon from "../assets/icons/gcp.svg?react";
 import CopyIcon from "../assets/icons/copy.svg?react";
 import CheckMarkIcon from "../assets/icons/checkmark.svg?react";
 
-export interface CodeBlock {
+export interface CodeTab {
+  label: string;
   language: string;
   code: string;
 }
 
-export interface TabGroup {
-  label: string;
-  codeBlocks: CodeBlock[];
-}
-
 export interface CodeTabsProps {
-  tabs: TabGroup[];
-  showProviderTabs?: boolean;
+  tabs: CodeTab[];
 }
 
 const BASE_ICON_CLASS = "w-4 h-4";
-const PROVIDER_ICON_CLASS = `${BASE_ICON_CLASS} mr-1.5`;
 
 const getTabClasses = (isActive: boolean): string =>
   `px-4 py-2 text-xs transition-colors ${
     isActive ? "text-white border-b-2 border-white" : "text-neutral-400 hover:text-neutral-200"
   }`;
 
-const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs, showProviderTabs = true }) => {
-  const [activeProvider, setActiveProvider] = useState<string>(tabs[0]?.label || "");
-  const [activeLanguage, setActiveLanguage] = useState<string>(
-    tabs[0]?.codeBlocks[0]?.language || "",
-  );
+const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs }) => {
+  const [activeTabIndex, setActiveTabIndex] = useState<number>(0);
   const [copied, setCopied] = useState(false);
   const [fontSize, setFontSize] = useState<string>("14px");
 
-  const activeTab = tabs.find((tab) => tab.label === activeProvider);
-  const languages = activeTab?.codeBlocks.map((block) => block.language) || [];
-
-  const codeBlock = activeTab?.codeBlocks.find((block) => block.language === activeLanguage);
-  const code = codeBlock?.code || "";
-
-  React.useEffect(() => {
-    if (activeTab && !activeTab.codeBlocks.some((block) => block.language === activeLanguage)) {
-      setActiveLanguage(activeTab.codeBlocks[0]?.language || "");
-    }
-  }, [activeProvider, activeTab, activeLanguage]);
+  const activeTab = tabs[activeTabIndex];
+  const code = activeTab?.code || "";
 
   // The resize handler makes the syntax highlighter's font size responsive
   useEffect(() => {
@@ -76,33 +55,14 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs, showProviderTabs = true 
   return (
     <div className="rounded-md bg-gradient-to-r from-indigo-500 from-10% via-indigo-400 via-30% to-emerald-500 to-90% p-[2px]">
       <div className="rounded-md overflow-hidden bg-black h-full">
-        {showProviderTabs && (
-          <div className="flex border-b border-neutral-800">
-            {tabs.map((tab) => (
-              <button
-                key={tab.label}
-                className={getTabClasses(activeProvider === tab.label)}
-                onClick={() => setActiveProvider(tab.label)}
-              >
-                <div className="flex items-center">
-                  {tab.label === "GitHub" && <GithubIcon className={PROVIDER_ICON_CLASS} />}
-                  {tab.label === "Azure" && <AzureIcon className={PROVIDER_ICON_CLASS} />}
-                  {tab.label === "GCP" && <GCPIcon className={PROVIDER_ICON_CLASS} />}
-                  {tab.label}
-                </div>
-              </button>
-            ))}
-          </div>
-        )}
-
         <div className="flex border-b border-neutral-800">
-          {languages.map((lang) => (
+          {tabs.map((tab, index) => (
             <button
-              key={lang}
-              className={getTabClasses(activeLanguage === lang)}
-              onClick={() => setActiveLanguage(lang)}
+              key={tab.label}
+              className={getTabClasses(activeTabIndex === index)}
+              onClick={() => setActiveTabIndex(index)}
             >
-              {lang}
+              {tab.label}
             </button>
           ))}
         </div>
@@ -124,7 +84,7 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs, showProviderTabs = true 
           </button>
 
           <SyntaxHighlighter
-            language={activeLanguage.toLowerCase()}
+            language={(activeTab?.language || "").toLowerCase()}
             style={vscDarkPlus}
             customStyle={{
               margin: 0,

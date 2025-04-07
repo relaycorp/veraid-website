@@ -1,144 +1,96 @@
 ---
 import TabbedCodeSnippet from "../CodeTabsReact.tsx";
-import TwoColumnSection from "../TwoColumn.astro";
 import CtaButton from "../CtaButton.astro";
 
 const HEADING_CLASS = "text-2xl md:text-4xl text-white font-bold mb-4";
 const PARAGRAPH_CLASS = "text-sm md:text-lg mb-8";
 ---
 
-<TwoColumnSection padding="pb-0" reverseOnMobile={true}>
-  <div slot="left">
+<section class="bg-neutral-900 py-16">
+  <div class="max-w-5xl mx-auto items-center justify-center text-center px-6 space-y-8">
+    <h2 class="text-2xl md:text-5xl text-white font-bold">Client integration</h2>
     <TabbedCodeSnippet
       client:load
       tabs={[
         {
-          label: "Languages",
-          codeBlocks: [
-            {
-              language: "JS",
-              code: `const client = new Client({
-  endpoint: "https://api.example.com",
-  credentials: process.env.API_KEY
-});
+          label: "GitHub Action",
+          language: "yaml",
+          code: `jobs:
+  authentication:
+    runs-on: ubuntu-latest
 
-const response = await client.getData({
-  id: "user-123",
-  include: ["profile", "settings"]
-});`,
-            },
+    steps:
+      - name: Get Kliento token bundle
+        id: token-bundle
+        uses: CheVeraId/authority-credentials-action@v1
+        with:
+          exchange-endpoint: https://veraid-authority.example/credentials/123
+      - name: Use token bundle
+        run: curl -H "Authorization: Kliento \${TOKEN_BUNDLE}" https://api.example.com
+        environment:
+          TOKEN_BUNDLE: \${{ steps.token-bundle.outputs.credential }}`,
+        },
 
-            {
-              language: "Kotlin",
-              code: `val client = Client.Builder()
-    .setEndpoint("https://api.example.com")
-    .setCredentials(System.getenv("API_KEY"))
-    .build()
+        {
+          label: "JavaScript",
+          language: "javascript",
+          code: `import { initExchangerFromEnv } from '@veraid/authority-credentials';
 
-val response = client.getData(
-    GetDataRequest.Builder()
-        .setId("user-123")
-        .setInclude(listOf("profile", "settings"))
-        .build()
-)`,
-            },
+// Replace with the actual URL for exchanging credentials
+const EXCHANGE_ENDPOINT = new URL('https://veraid-authority.example/credentials/123');
 
-            {
-              language: "Python",
-              code: `client = Client(
-    endpoint="https://api.example.com",
-    credentials=os.environ.get("API_KEY")
-)
+// Replace 'GITHUB' with the exchanger you want
+const exchanger = initExchangerFromEnv('GITHUB');
 
-response = client.get_data(
-    id="user-123",
-    include=["profile", "settings"]
-  )`,
-            },
-          ],
+// Make requests that use the Kliento token bundle
+export async function authFetch(request: Request) {
+  const { credential: tokenBundle } = await exchanger.exchange(EXCHANGE_ENDPOINT);
+  const headers = { 'Authorization': \`Kliento \${tokenBundle.toString('base64')}\` }
+  return fetch(request, { headers })
+}`,
+        },
+        {
+          label: "Others",
+          language: "python",
+          code: `Other languages coming soon`,
         },
       ]}
-      showProviderTabs={false}
     />
-    <slot />
+    <div class="mt-8">
+      <CtaButton href="/" text="Integrate your client" variant="primaryKliento" />
+    </div>
   </div>
-
-  <div slot="right">
-    <h2 class={HEADING_CLASS}>Get a Kliento credential</h2>
-    <p class={PARAGRAPH_CLASS}>
-      Kliento enables secure connections to external servers from AWS environments without the need
-      for traditional API keys.
-    </p>
-    <CtaButton href="/" text="Get Started" variant="primaryKliento" />
-  </div>
-</TwoColumnSection>
-
-<TwoColumnSection padding="pb-16" reverseOnMobile={false}>
-  <div slot="left">
-    <h2 class={HEADING_CLASS}>Verify credentials</h2>
-    <p class={PARAGRAPH_CLASS}>
-      Kliento enables secure connections to external servers from AWS environments these without the
-      need for traditional API keys.
-    </p>
-    <CtaButton href="/" text="Get Started" variant="primaryKliento" />
-  </div>
-  <div slot="right">
+</section>
+<section class="bg-black py-16">
+  <div class="max-w-5xl mx-auto items-center justify-center text-center px-6 space-y-8">
+    <h2 class="text-2xl md:text-5xl text-white font-bold">Server-side verification</h2>
+    <p class="text-sm md:text-lg mb-8">Verify credentials in your server-side code.</p>
     <TabbedCodeSnippet
       client:load
       tabs={[
         {
-          label: "GitHub",
-          codeBlocks: [
-            {
-              language: "JS",
-              code: `const client = new Client({
-  endpoint: "https://api.example.com",
-  credentials: process.env.API_KEY
-});
+          label: "JavaScript",
+          language: "JavaScript",
+          code: `import { TokenBundle } from '@veraid/kliento';
 
-const response = await client.getData({
-  id: "user-123",
-  include: ["profile", "settings"]
-});`,
-            },
-            {
-              language: "Kotlin",
-              code: `val client = Client.Builder()
-    .setEndpoint("https://api.example.com")
-    .setCredentials(System.getenv("API_KEY"))
-    .build()
+// Replace with a unique identifier for your server
+const AUDIENCE = 'https://api.example.com';
 
-val response = client.getData(
-    GetDataRequest.Builder()
-        .setId("user-123")
-        .setInclude(listOf("profile", "settings"))
-        .build()
-)`,
-            },
-            {
-              language: "Python",
-              code: `client = Client(
-    endpoint="https://api.example.com",
-    credentials=os.environ.get("API_KEY")
-)
-
-response = client.get_data(
-    id="user-123",
-    include=["profile", "settings"]
-  )`,
-            },
-          ],
+// Verify \`Authorization: Kliento <token>\` request header
+async function verifyTokenBundle(authHeaderValue: string) {
+    const tokenBundle = TokenBundle.deserialiseFromAuthHeader(authHeaderValue);
+    return await tokenBundle.verify(AUDIENCE);
+}`,
         },
         {
-          label: "GCP",
-          codeBlocks: [{ language: "JS", code: "const kliento = require('kliento');" }],
-        },
-        {
-          label: "Azure",
-          codeBlocks: [{ language: "JS", code: "const kliento = require('kliento');" }],
+          label: "Others",
+          language: "python",
+          code: `Other languages coming soon`,
         },
       ]}
-      showProviderTabs={true}
     />
+    <div class="mt-8">
+      <CtaButton href="/" text="Verify credentials" variant="primaryKliento" />
+    </div>
   </div>
-</TwoColumnSection>
+</section>
