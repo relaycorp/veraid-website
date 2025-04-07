@@ -5,6 +5,8 @@ import { primaryNavLinks } from "./config";
 import { useNavigation } from "./hooks";
 import { MobileMenuToggle } from "./MobileMenuToggle";
 
+const ENABLE_DROPDOWNS = false;
+
 export function PrimaryNav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -25,6 +27,8 @@ export function PrimaryNav() {
   }, []);
 
   const handleDropdownClick = (text: string, e?: React.MouseEvent) => {
+    if (!ENABLE_DROPDOWNS) return;
+
     if (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -53,12 +57,12 @@ export function PrimaryNav() {
         <ul className="hidden md:flex space-x-10 text-sm">
           {primaryNavLinks.map((link) => (
             <li key={link.text} className="relative flex items-center">
-              {link.children ? (
+              {link.children && ENABLE_DROPDOWNS ? (
                 <>
                   <div
                     className="dropdown-wrapper"
-                    onMouseEnter={() => setActiveDropdown(link.text)}
-                    onMouseLeave={() => setActiveDropdown(null)}
+                    onMouseEnter={() => ENABLE_DROPDOWNS && setActiveDropdown(link.text)}
+                    onMouseLeave={() => ENABLE_DROPDOWNS && setActiveDropdown(null)}
                   >
                     <div className="flex items-center space-x-1">
                       <a
@@ -69,20 +73,22 @@ export function PrimaryNav() {
                       >
                         {link.text}
                       </a>
-                      <button
-                        onClick={(e) => handleDropdownClick(link.text, e)}
-                        className="flex items-center"
-                        aria-label="Toggle dropdown"
-                      >
-                        <ChevronIcon
-                          className={`w-3 h-3 transition-transform ${
-                            activeDropdown === link.text ? "rotate-180" : ""
-                          }`}
-                        />
-                      </button>
+                      {ENABLE_DROPDOWNS && (
+                        <button
+                          onClick={(e) => handleDropdownClick(link.text, e)}
+                          className="flex items-center"
+                          aria-label="Toggle dropdown"
+                        >
+                          <ChevronIcon
+                            className={`w-3 h-3 transition-transform ${
+                              activeDropdown === link.text ? "rotate-180" : ""
+                            }`}
+                          />
+                        </button>
+                      )}
                     </div>
                     {/* Dropdown submenu*/}
-                    {activeDropdown === link.text && (
+                    {ENABLE_DROPDOWNS && activeDropdown === link.text && (
                       <div className="absolute top-full left-0 min-w-max bg-neutral-900 border border-neutral-700 rounded py-2 z-50">
                         <div className="h-4 -mt-4 w-full"></div>
                         {link.children.map((child) => (
@@ -125,7 +131,7 @@ export function PrimaryNav() {
           <ul className="px-6 py-4 space-y-4">
             {primaryNavLinks.map((link) => (
               <li key={link.text}>
-                {link.children ? (
+                {link.children && ENABLE_DROPDOWNS ? (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between w-full">
                       <a
