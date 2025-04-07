@@ -9,8 +9,7 @@ interface Frontmatter {
 
 interface Props {
   frontmatter?: Frontmatter;
-  title?: string;
-  description?: string;
+  showBrandInTitle?: boolean;
 }
 
 const schema = z.object({
@@ -18,13 +17,14 @@ const schema = z.object({
   description: z.string(),
 });
 
-const { title, description } = schema.parse(Astro.props.frontmatter ?? Astro.props);
+const { title, description } = schema.parse(Astro.props.frontmatter);
+const { showBrandInTitle } = Astro.props;
 
 const articleClasses = [
   "mx-auto",
   "max-w-5xl",
-  "pt-8",
-  "sm:pt-16",
+  "pt-4",
+  "sm:pt-8",
   "pb-12",
   "sm:pb-16",
   "px-4",
@@ -89,7 +89,8 @@ const articleClasses = [
 ];
 ---
 
-<Skeleton title={title} description={description}>
+<Skeleton title={title} description={description} showBrandInTitle={showBrandInTitle}>
+  <slot name="kliento-header" />
   <article class={articleClasses.join(" ")}>
     <slot />
   </article>

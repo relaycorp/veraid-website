@@ -1,18 +1,26 @@
 ---
-import TopNav from "../components/TopNav.astro";
 import Footer from "../components/Footer.astro";
 import OpenGraph from "../assets/images/opengraph.png";
 import "../styles/global.css";
 import { IS_PRODUCTION, getSiteUrl } from "../data/global";
+import { ClientRouter } from "astro:transitions";
+import { PrimaryNav } from "../components/TopNav/PrimaryNav";
 
 interface Props {
   title: string;
   description: string;
   ogImage?: string;
   ogType?: string;
+  showBrandInTitle?: boolean;
 }
 
-const { title, description, ogImage = OpenGraph.src, ogType = "website" } = Astro.props;
+const {
+  title,
+  description,
+  ogImage = OpenGraph.src,
+  ogType = "website",
+  showBrandInTitle = true,
+} = Astro.props;
 
 const siteUrl = getSiteUrl(Astro.url);
 const ogImageUrl = new URL(ogImage, siteUrl);
@@ -48,17 +56,20 @@ const ogUrl = new URL(Astro.url.pathname, siteUrl);
       rel="stylesheet"
     />
 
-    <title>{`${title} | VeraId`}</title>
+    <title>{showBrandInTitle ? `${title} | VeraId` : title}</title>
 
     {
       IS_PRODUCTION && (
         <script is:inline src="https://cdn.usefathom.com/script.js" data-site="UNVOWGIF" defer />
       )
     }
+    <ClientRouter />
   </head>
   <body>
-    <TopNav />
-    <slot />
+    <PrimaryNav client:load />
+    <main>
+      <slot />
+    </main>
     <Footer />
   </body>
 </html>
@@ -81,11 +92,10 @@ const ogUrl = new URL(Astro.url.pathname, siteUrl);
   html,
   body {
     background-color: #000000;
-    overflow-x: hidden;
     width: 100%;
     color: #d4d4d4;
     font-family: "JetBrainsMono";
-    font-size: 20px;
+    font-size: 1.25rem;
   }
   h1,
   h2,

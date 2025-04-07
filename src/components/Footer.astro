@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import VeraIdLogo from "../assets/images/veraid-logo-dark.png";
+import VeraIdLogo from "../assets/images/veraid-logo.png";
 import XIcon from "../assets/icons/x.svg?raw";
 import GithubIcon from "../assets/icons/github.svg?raw";
 import RedditIcon from "../assets/icons/reddit.svg?raw";
@@ -28,7 +28,7 @@ const currentYear = new Date().getFullYear();
     <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-8 sm:gap-24">
       <div class="space-y-4">
         <a href="/" class="block">
-          <Image src={VeraIdLogo} alt="VeraId Logo" class="h-8 w-auto" />
+          <Image src={VeraIdLogo} alt="VeraId Logo" class="h-6 w-auto" />
         </a>
         <p class="text-sm">User- and developer-friendly authentication based on DNS.</p>
         <div

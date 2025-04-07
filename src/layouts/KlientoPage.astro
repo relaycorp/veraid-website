@@ -1,0 +1,15 @@
+---
+import { SecondaryNav } from "../components/TopNav/SecondaryNav";
+import Page from "./Page.astro";
+import klientoLogo from "../assets/images/kliento-logo.png";
+---
+
+<Page {...Astro.props} showBrandInTitle={false}>
+  <SecondaryNav
+    client:load
+    servicePath="/kliento"
+    logoSrc={klientoLogo.src}
+    slot="kliento-header"
+  />
+  <slot />
+</Page>
