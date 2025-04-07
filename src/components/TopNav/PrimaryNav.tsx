@@ -5,7 +5,7 @@ import { primaryNavLinks } from "./config";
 import { useNavigation } from "./hooks";
 import { MobileMenuToggle } from "./MobileMenuToggle";
 
-const ENABLE_DROPDOWNS = false;
+const ENABLE_DROPDOWNS = true;
 
 export function PrimaryNav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
