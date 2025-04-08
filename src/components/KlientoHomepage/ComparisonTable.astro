@@ -2,8 +2,9 @@
 interface Feature {
   name: string;
   kliento: boolean;
-  jwts: boolean;
   apiKeys: boolean;
+  jwts: boolean;
+  spifee: boolean;
 }
 
 interface Props {
@@ -14,6 +15,8 @@ const { features } = Astro.props;
 
 const headerCellClass = "py-4 px-4 text-center bg-neutral-700";
 const rowCellClass = "py-4 px-4 text-center";
+const checkmarkClass = "text-green-500";
+const crossClass = "text-red-500";
 ---
 
 <div class="overflow-x-auto">
@@ -34,30 +37,30 @@ const rowCellClass = "py-4 px-4 text-center";
             <td class="py-4 px-4 text-sm">{feature.name}</td>
             <td class={rowCellClass + " bg-neutral-900 border-b border-neutral-600"}>
               {feature.kliento ? (
-                <span class="text-green-500">✓</span>
+                <span class={checkmarkClass}>✓</span>
               ) : (
-                <span class="text-red-500">✗</span>
+                <span class={crossClass}>✗</span>
               )}
             </td>
-            <td class="py-4 px-4 text-center">
+            <td class={rowCellClass}>
+              {feature.apiKeys ? (
+                <span class={checkmarkClass}>✓</span>
+              ) : (
+                <span class={crossClass}>✗</span>
+              )}
+            </td>
+            <td class={rowCellClass}>
               {feature.jwts ? (
-                <span class="text-green-500">✓</span>
+                <span class={checkmarkClass}>✓</span>
               ) : (
-                <span class="text-red-500">✗</span>
+                <span class={crossClass}>✗</span>
               )}
             </td>
-            <td class="py-4 px-4 text-center">
-              {feature.apiKeys ? (
-                <span class="text-green-500">✓</span>
+            <td class={rowCellClass}>
+              {feature.spifee ? (
+                <span class={checkmarkClass}>✓</span>
               ) : (
-                <span class="text-red-500">✗</span>
-              )}
-            </td>
-            <td class="py-4 px-4 text-center">
-              {feature.apiKeys ? (
-                <span class="text-green-500">✓</span>
-              ) : (
-                <span class="text-red-500">✗</span>
+                <span class={crossClass}>✗</span>
               )}
             </td>
           </tr>
