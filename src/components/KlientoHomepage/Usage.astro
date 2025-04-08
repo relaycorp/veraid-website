@@ -17,6 +17,42 @@ const features = [
 ];
 ---
 
+<section class="bg-black py-16">
+  <div class="max-w-5xl mx-auto items-center justify-center text-center px-6 space-y-8">
+    <h2 class="text-2xl md:text-5xl text-white font-bold">Server-side verification</h2>
+    <p class="text-sm md:text-lg mb-8">
+      Servers verify tokens by making a call to a local function provided by a Kliento SDK, or
+      offload the verification to a stateless, cloud-agnostic open source server.
+    </p>
+    <TabbedCodeSnippet
+      client:load
+      tabs={[
+        {
+          label: "JavaScript",
+          language: "JavaScript",
+          code: `import { TokenBundle } from '@veraid/kliento';
+
+// Replace with a unique identifier for your server
+const AUDIENCE = 'https://api.example.com';
+
+// Verify \`Authorization: Kliento <token>\` request header
+async function verifyTokenBundle(authHeaderValue: string) {
+    const tokenBundle = TokenBundle.deserialiseFromAuthHeader(authHeaderValue);
+    return await tokenBundle.verify(AUDIENCE);
+}`,
+        },
+        {
+          label: "Others",
+          language: "python",
+          code: `Other languages coming soon`,
+        },
+      ]}
+    />
+    <div class="mt-8">
+      <CtaButton href="/" text="Integrate Kliento in your server" variant="primaryKliento" />
+    </div>
+  </div>
+</section>
 <section class="bg-neutral-900 py-16">
   <div class="max-w-5xl mx-auto items-center justify-center text-center px-6 space-y-8">
     <h2 class="text-2xl md:text-5xl text-white font-bold">Client integration</h2>
@@ -77,43 +113,8 @@ export async function authFetch(request: Request) {
     </div>
   </div>
 </section>
+
 <section class="bg-black py-16">
-  <div class="max-w-5xl mx-auto items-center justify-center text-center px-6 space-y-8">
-    <h2 class="text-2xl md:text-5xl text-white font-bold">Server-side verification</h2>
-    <p class="text-sm md:text-lg mb-8">
-      Servers verify tokens by making a call to a local function provided by a Kliento SDK, or
-      offload the verification to a stateless, cloud-agnostic open source server.
-    </p>
-    <TabbedCodeSnippet
-      client:load
-      tabs={[
-        {
-          label: "JavaScript",
-          language: "JavaScript",
-          code: `import { TokenBundle } from '@veraid/kliento';
-
-// Replace with a unique identifier for your server
-const AUDIENCE = 'https://api.example.com';
-
-// Verify \`Authorization: Kliento <token>\` request header
-async function verifyTokenBundle(authHeaderValue: string) {
-    const tokenBundle = TokenBundle.deserialiseFromAuthHeader(authHeaderValue);
-    return await tokenBundle.verify(AUDIENCE);
-}`,
-        },
-        {
-          label: "Others",
-          language: "python",
-          code: `Other languages coming soon`,
-        },
-      ]}
-    />
-    <div class="mt-8">
-      <CtaButton href="/" text="Verify credentials" variant="primaryKliento" />
-    </div>
-  </div>
-</section>
-<section class="bg-neutral-900 py-16">
   <div class="max-w-5xl mx-auto items-center justify-center px-6 space-y-12">
     <h2 class="text-2xl md:text-5xl text-white font-bold text-center">
       Kliento compared to others
