@@ -1,6 +1,7 @@
 ---
 import TabbedCodeSnippet from "../CodeTabsReact.tsx";
 import CtaButton from "../CtaButton.astro";
+import KlientoCarousel from "./Carousel/Carousel.tsx";
 ---
 
 <section class="bg-neutral-900 py-16">
@@ -99,3 +100,4 @@ export async function authFetch(request: Request) {
     </div>
   </div>
 </section>
+<KlientoCarousel client:load />
