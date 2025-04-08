@@ -5,11 +5,13 @@ import klientoLogo from "../../assets/images/kliento-logo.png";
 import KlientoHero from "../../components/KlientoHero.astro";
 import Usage from "../../components/KlientoHomepage/Usage.astro";
 import CtaBanner from "../../components/CtaBanner.astro";
+import Credentials from "../../components/KlientoHomepage/Credentials.astro";
 ---
 
 <Skeleton title="Kliento" description="Kliento" showBrandInTitle={false}>
   <SecondaryNav client:load servicePath="/kliento" logoSrc={klientoLogo.src} />
   <KlientoHero />
+  <Credentials />
   <Usage />
   <CtaBanner />
 </Skeleton>
