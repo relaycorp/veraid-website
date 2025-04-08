@@ -11,17 +11,20 @@ interface Props {
 }
 
 const { features } = Astro.props;
+
+const headerCellClass = "py-4 px-4 text-center bg-neutral-700";
+const rowCellClass = "py-4 px-4 text-center";
 ---
 
 <div class="overflow-x-auto">
   <table class="w-full border-collapse bg-neutral-800 text-white rounded-lg">
     <thead class="bg-neutral-700 text-base font-normal">
       <tr class="border-b border-neutral-600">
-        <th class="py-4 px-4 text-left">Features</th>
-        <th class="py-4 px-4 text-center">Kliento</th>
-        <th class="py-4 px-4 text-center">Opaque API keys</th>
-        <th class="py-4 px-4 text-center">JWTs</th>
-        <th class="py-4 px-4 text-center">SPIFEE</th>
+        <th class={headerCellClass + " text-left"}>Features</th>
+        <th class={headerCellClass + " bg-red-500"}>Kliento</th>
+        <th class={headerCellClass}>Opaque API keys</th>
+        <th class={headerCellClass}>JWTs</th>
+        <th class={headerCellClass}>SPIFEE</th>
       </tr>
     </thead>
     <tbody>
@@ -29,7 +32,7 @@ const { features } = Astro.props;
         features.map((feature) => (
           <tr class="border-b border-neutral-700 ">
             <td class="py-4 px-4 text-sm">{feature.name}</td>
-            <td class="py-4 px-4 text-center">
+            <td class={rowCellClass + " bg-neutral-900 border-b border-neutral-600"}>
               {feature.kliento ? (
                 <span class="text-green-500">✓</span>
               ) : (
