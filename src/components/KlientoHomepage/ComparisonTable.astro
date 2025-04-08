@@ -1,0 +1,65 @@
+---
+interface Feature {
+  name: string;
+  kliento: boolean;
+  jwts: boolean;
+  apiKeys: boolean;
+}
+
+interface Props {
+  features: Feature[];
+}
+
+const { features } = Astro.props;
+---
+
+<div class="overflow-x-auto">
+  <table class="w-full border-collapse bg-neutral-800 text-white rounded-lg">
+    <thead class="bg-neutral-700 text-base font-normal">
+      <tr class="border-b border-neutral-600">
+        <th class="py-4 px-4 text-left">Features</th>
+        <th class="py-4 px-4 text-center">Kliento</th>
+        <th class="py-4 px-4 text-center">Opaque API keys</th>
+        <th class="py-4 px-4 text-center">JWTs</th>
+        <th class="py-4 px-4 text-center">SPIFEE</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        features.map((feature) => (
+          <tr class="border-b border-neutral-700 ">
+            <td class="py-4 px-4 text-sm">{feature.name}</td>
+            <td class="py-4 px-4 text-center">
+              {feature.kliento ? (
+                <span class="text-green-500">✓</span>
+              ) : (
+                <span class="text-red-500">✗</span>
+              )}
+            </td>
+            <td class="py-4 px-4 text-center">
+              {feature.jwts ? (
+                <span class="text-green-500">✓</span>
+              ) : (
+                <span class="text-red-500">✗</span>
+              )}
+            </td>
+            <td class="py-4 px-4 text-center">
+              {feature.apiKeys ? (
+                <span class="text-green-500">✓</span>
+              ) : (
+                <span class="text-red-500">✗</span>
+              )}
+            </td>
+            <td class="py-4 px-4 text-center">
+              {feature.apiKeys ? (
+                <span class="text-green-500">✓</span>
+              ) : (
+                <span class="text-red-500">✗</span>
+              )}
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
