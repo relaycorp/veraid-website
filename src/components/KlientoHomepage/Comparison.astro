@@ -3,16 +3,24 @@ import ComparisonTable from "./ComparisonTable.astro";
 import CtaButton from "../CtaButton.astro";
 
 const features = [
-  { name: "No long-lived secrets", kliento: true, apiKeys: false, jwts: false, spifee: false },
-  { name: "No public key distribution", kliento: true, apiKeys: true, jwts: false, spifee: false },
+  { name: "No long-lived secrets", kliento: true, apiKeys: false, jwts: false, spiffe: false },
+  { name: "No public key distribution", kliento: true, apiKeys: true, jwts: false, spiffe: false },
   {
     name: "Open, vendor-neutral protocol",
     kliento: true,
     apiKeys: false,
     jwts: true,
-    spifee: true,
+    spiffe: true,
   },
-  { name: "Open source implementations", kliento: true, apiKeys: true, jwts: true, spifee: true },
+  { name: "Open source implementations", kliento: true, apiKeys: true, jwts: true, spiffe: true },
+];
+
+const columnHeaders = [
+  { name: "Features" },
+  { name: "Kliento" },
+  { name: "JWTs" },
+  { name: "Opaque API keys" },
+  { name: "SPIFFE" },
 ];
 ---
 
@@ -21,7 +29,9 @@ const features = [
     <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] text-center">
       Kliento compared to others
     </h2>
-    <ComparisonTable features={features} />
+    <div class="overflow-x-auto w-full">
+      <ComparisonTable features={features} columnHeaders={columnHeaders} />
+    </div>
     <div class="flex justify-center">
       <CtaButton
         href="/"
