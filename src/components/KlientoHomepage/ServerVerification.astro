@@ -1,0 +1,42 @@
+---
+import TabbedCodeSnippet from "../CodeTabsReact.tsx";
+import CtaButton from "../CtaButton.astro";
+---
+
+<section class="bg-neutral-900 py-8 lg:py-16">
+  <div class="max-w-5xl mx-auto items-center justify-center text-center px-4 lg:px-6">
+    <h2 class="text-3xl lg:text-6xl mb-4 lg:mb-8">Server-side verification</h2>
+    <p class="text-sm lg:text-lg mb-8">
+      Servers verify tokens by making a call to a local function provided by a Kliento SDK, or
+      offload the verification to a stateless, cloud-agnostic open source server.
+    </p>
+    <TabbedCodeSnippet
+      client:load
+      tabs={[
+        {
+          label: "JavaScript",
+          language: "JavaScript",
+          code: `import { TokenBundle } from '@veraid/kliento';
+  
+  // Replace with a unique identifier for your server
+  const AUDIENCE = 'https://api.example.com';
+  
+  // Verify \`Authorization: Kliento <token>\` request header
+  async function verifyTokenBundle(authHeaderValue: string) {
+      const tokenBundle = TokenBundle.deserialiseFromAuthHeader(authHeaderValue);
+      return await tokenBundle.verify(AUDIENCE);
+  }`,
+          icon: "github",
+        },
+        {
+          label: "Others",
+          language: "python",
+          code: `Other languages coming soon`,
+        },
+      ]}
+    />
+    <div class="mt-8">
+      <CtaButton href="/" text="Integrate Kliento in your server" variant="primaryKliento" />
+    </div>
+  </div>
+</section>

@@ -3,11 +3,12 @@ import { SecondaryNav } from "../../components/TopNav/SecondaryNav";
 import Skeleton from "../../layouts/Skeleton.astro";
 import klientoLogo from "../../assets/images/kliento-logo.png";
 import Hero from "../../components/KlientoHomepage/Hero.astro";
-import Usage from "../../components/KlientoHomepage/Usage.astro";
 import CtaBanner from "../../components/CtaBanner.astro";
 import Credentials from "../../components/KlientoHomepage/Credentials.astro";
 import ServicesAccount from "../../components/KlientoHomepage/ServicesAccount.astro";
 import Comparison from "../../components/KlientoHomepage/Comparison.astro";
+import ServerVerification from "../../components/KlientoHomepage/ServerVerification.astro";
+import ClientIntegration from "../../components/KlientoHomepage/ClientIntegration.astro";
 ---
 
 <Skeleton title="Kliento" description="Kliento" showBrandInTitle={false}>
@@ -15,7 +16,8 @@ import Comparison from "../../components/KlientoHomepage/Comparison.astro";
   <Hero />
   <ServicesAccount />
   <Credentials />
-  <Usage />
+  <ServerVerification />
+  <ClientIntegration />
   <Comparison />
   <CtaBanner />
 </Skeleton>
