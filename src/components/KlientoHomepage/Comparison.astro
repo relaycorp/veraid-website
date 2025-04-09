@@ -3,7 +3,7 @@ import ComparisonTable from "./ComparisonTable.astro";
 import CtaButton from "../CtaButton.astro";
 
 const features = [
-  { name: "No long-lived secrets", kliento: true, apiKeys: false, jwts: false, spiffe: false },
+  { name: "No long-lived secrets", kliento: true, apiKeys: false, jwts: true, spiffe: true },
   { name: "No public key distribution", kliento: true, apiKeys: true, jwts: false, spiffe: false },
   {
     name: "Open, vendor-neutral protocol",
@@ -18,8 +18,8 @@ const features = [
 const columnHeaders = [
   { name: "Features" },
   { name: "Kliento" },
-  { name: "JWTs" },
   { name: "Opaque API keys" },
+  { name: "JWTs" },
   { name: "SPIFFE" },
 ];
 ---
