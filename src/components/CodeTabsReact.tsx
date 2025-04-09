@@ -4,9 +4,7 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import CopyIcon from "../assets/icons/copy.svg?react";
 import CheckMarkIcon from "../assets/icons/checkmark.svg?react";
 import GithubIcon from "../assets/icons/github.svg?react";
-import AzureIcon from "../assets/icons/azure.svg?react";
-import GCPIcon from "../assets/icons/gcp.svg?react";
-
+import JavascriptIcon from "../assets/icons/javascript.svg?react";
 export interface CodeTab {
   label: string;
   language: string;
@@ -18,12 +16,12 @@ export interface CodeTabsProps {
   tabs: CodeTab[];
 }
 
-const BASE_ICON_CLASS = "w-4 h-4";
+const COPY_CHECKMARK_ICON_CLASS = "w-4 h-4";
+const TAB_ICON_CLASS = "w-6 h-6";
 
 const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
   github: GithubIcon,
-  azure: AzureIcon,
-  gcp: GCPIcon,
+  javascript: JavascriptIcon,
 };
 
 const renderIcon = (icon?: string | React.ReactElement) => {
@@ -31,7 +29,7 @@ const renderIcon = (icon?: string | React.ReactElement) => {
 
   if (typeof icon === "string") {
     const TabIcon = iconMap[icon.toLowerCase()];
-    return TabIcon ? <TabIcon className={`${BASE_ICON_CLASS} mr-2`} /> : null;
+    return TabIcon ? <TabIcon className={`${TAB_ICON_CLASS} mr-2`} /> : null;
   }
 
   return icon;
@@ -97,11 +95,11 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs }) => {
           >
             {copied ? (
               <>
-                <CheckMarkIcon className={BASE_ICON_CLASS} />
+                <CheckMarkIcon className={COPY_CHECKMARK_ICON_CLASS} />
                 <span className="mt-1 text-xxs">Copied!</span>
               </>
             ) : (
-              <CopyIcon className={BASE_ICON_CLASS} />
+              <CopyIcon className={COPY_CHECKMARK_ICON_CLASS} />
             )}
           </button>
 

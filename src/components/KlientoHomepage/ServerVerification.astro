@@ -14,6 +14,7 @@ import CtaButton from "../CtaButton.astro";
       client:load
       tabs={[
         {
+          icon: "javascript",
           label: "JavaScript",
           language: "JavaScript",
           code: `import { TokenBundle } from '@veraid/kliento';
@@ -26,7 +27,6 @@ import CtaButton from "../CtaButton.astro";
       const tokenBundle = TokenBundle.deserialiseFromAuthHeader(authHeaderValue);
       return await tokenBundle.verify(AUDIENCE);
   }`,
-          icon: "github",
         },
         {
           label: "Others",
