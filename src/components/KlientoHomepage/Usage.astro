@@ -4,10 +4,10 @@ import CtaButton from "../CtaButton.astro";
 import KlientoCarousel from "./Carousel/Carousel.tsx";
 ---
 
-<section class="bg-neutral-900 py-16">
-  <div class="max-w-5xl mx-auto items-center justify-center text-center px-6 space-y-8">
-    <h2 class="text-2xl md:text-5xl text-white font-bold">Server-side verification</h2>
-    <p class="text-sm md:text-lg mb-8">
+<section class="bg-neutral-900 py-8 lg:py-16">
+  <div class="max-w-5xl mx-auto items-center justify-center text-center px-4 lg:px-6">
+    <h2 class="text-3xl lg:text-6xl text-white font-bold mb-4 lg:mb-8">Server-side verification</h2>
+    <p class="text-sm lg:text-lg mb-8">
       Servers verify tokens by making a call to a local function provided by a Kliento SDK, or
       offload the verification to a stateless, cloud-agnostic open source server.
     </p>
@@ -41,10 +41,10 @@ async function verifyTokenBundle(authHeaderValue: string) {
     </div>
   </div>
 </section>
-<section class="bg-neutral-900 py-16">
-  <div class="max-w-5xl mx-auto items-center justify-center text-center px-4 lg:px-6 space-y-8">
-    <h2 class="text-2xl md:text-5xl text-white font-bold">Client integration</h2>
-    <p class="text-sm md:text-lg mb-8 max-w-4xl mx-auto">
+<section class="py-8 lg:py-16">
+  <div class="max-w-5xl mx-auto items-center justify-center text-center px-4 lg:px-6">
+    <h2 class="text-3xl lg:text-6xl text-white font-bold mb-4 lg:mb-8">Client integration</h2>
+    <p class="text-sm lg:text-lg mb-6 lg:mb-8 max-w-4xl mx-auto">
       Leverage your existing workflow identity to obtain Kliento token bundles from <a
         href="https://veraid.org"
         class="text-indigo-400!">VeraId Authority</a
