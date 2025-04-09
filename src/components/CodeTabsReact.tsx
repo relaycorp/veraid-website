@@ -76,7 +76,7 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs }) => {
   return (
     <div className="rounded-md bg-gradient-to-r from-indigo-500 from-10% via-indigo-400 via-30% to-emerald-500 to-90% p-[2px]">
       <div className="rounded-md overflow-hidden bg-black h-full">
-        <div className="flex border-b border-neutral-800">
+        <div className="flex overflow-x-auto whitespace-nowrap flex-nowrap border-b border-neutral-800">
           {tabs.map((tab, index) => (
             <button
               key={tab.label}
