@@ -13,29 +13,31 @@ interface Props {
 
 const { features } = Astro.props;
 
-const headerCellClass = "py-4 px-4 text-center bg-neutral-700";
-const rowCellClass = "py-4 px-4 text-center";
+const headerCellClass = "py-2 lg:py-3 px-4 text-center bg-neutral-700";
+const rowCellClass = "py-2 lg:py-3 px-4 text-center";
 const checkmarkClass = "text-green-500";
 const crossClass = "text-red-500";
 ---
 
-<div class="overflow-x-auto">
-  <table class="w-full border-collapse bg-neutral-800 text-white rounded-lg">
-    <thead class="bg-neutral-700 text-base font-normal">
-      <tr class="border-b border-neutral-600">
+<div class="overflow-hidden rounded-lg">
+  <table
+    class="w-full border-collapse bg-neutral-900 text-white border-neutral-700 border-l-1 border-r-1"
+  >
+    <thead class="text-base font-normal">
+      <tr class="border-b border-neutral-700">
         <th class={headerCellClass + " text-left"}>Features</th>
-        <th class={headerCellClass + " bg-red-500"}>Kliento</th>
-        <th class={headerCellClass}>Opaque API keys</th>
+        <th class={headerCellClass + " bg-neutral-800"}>Kliento</th>
         <th class={headerCellClass}>JWTs</th>
+        <th class={headerCellClass}>Opaque API keys</th>
         <th class={headerCellClass}>SPIFEE</th>
       </tr>
     </thead>
     <tbody>
       {
         features.map((feature) => (
-          <tr class="border-b border-neutral-700 ">
+          <tr class="border-b border-neutral-700">
             <td class="py-4 px-4 text-sm">{feature.name}</td>
-            <td class={rowCellClass + " bg-neutral-900 border-b border-neutral-600"}>
+            <td class={rowCellClass + " bg-neutral-800"}>
               {feature.kliento ? (
                 <span class={checkmarkClass}>✓</span>
               ) : (
@@ -43,14 +45,14 @@ const crossClass = "text-red-500";
               )}
             </td>
             <td class={rowCellClass}>
-              {feature.apiKeys ? (
+              {feature.jwts ? (
                 <span class={checkmarkClass}>✓</span>
               ) : (
                 <span class={crossClass}>✗</span>
               )}
             </td>
             <td class={rowCellClass}>
-              {feature.jwts ? (
+              {feature.apiKeys ? (
                 <span class={checkmarkClass}>✓</span>
               ) : (
                 <span class={crossClass}>✗</span>
