@@ -3,11 +3,15 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import CopyIcon from "../assets/icons/copy.svg?react";
 import CheckMarkIcon from "../assets/icons/checkmark.svg?react";
+import GithubIcon from "../assets/icons/github.svg?react";
+import AzureIcon from "../assets/icons/azure.svg?react";
+import GCPIcon from "../assets/icons/gcp.svg?react";
 
 export interface CodeTab {
   label: string;
   language: string;
   code: string;
+  icon?: string | React.ReactElement;
 }
 
 export interface CodeTabsProps {
@@ -16,15 +20,32 @@ export interface CodeTabsProps {
 
 const BASE_ICON_CLASS = "w-4 h-4";
 
+const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+  github: GithubIcon,
+  azure: AzureIcon,
+  gcp: GCPIcon,
+};
+
+const renderIcon = (icon?: string | React.ReactElement) => {
+  if (!icon) return null;
+
+  if (typeof icon === "string") {
+    const TabIcon = iconMap[icon.toLowerCase()];
+    return TabIcon ? <TabIcon className={`${BASE_ICON_CLASS} mr-2`} /> : null;
+  }
+
+  return icon;
+};
+
 const getTabClasses = (isActive: boolean): string =>
-  `px-4 py-2 text-xs transition-colors ${
+  `px-4 py-2 text-xs lg:text-sm transition-colors flex items-center ${
     isActive ? "text-white border-b-2 border-white" : "text-neutral-400 hover:text-neutral-200"
   }`;
 
 const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs }) => {
   const [activeTabIndex, setActiveTabIndex] = useState<number>(0);
   const [copied, setCopied] = useState(false);
-  const [fontSize, setFontSize] = useState<string>("14px");
+  const [fontSize, setFontSize] = useState<string>("1rem");
 
   const activeTab = tabs[activeTabIndex];
   const code = activeTab?.code || "";
@@ -32,7 +53,7 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs }) => {
   // The resize handler makes the syntax highlighter's font size responsive
   useEffect(() => {
     const handleResize = () => {
-      setFontSize(window.innerWidth < 640 ? "12px" : "14px");
+      setFontSize(window.innerWidth < 640 ? "0.75rem" : "1rem");
     };
 
     handleResize();
@@ -62,6 +83,7 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs }) => {
               className={getTabClasses(activeTabIndex === index)}
               onClick={() => setActiveTabIndex(index)}
             >
+              {renderIcon(tab.icon)}
               {tab.label}
             </button>
           ))}
@@ -93,6 +115,7 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs }) => {
               fontSize: fontSize,
               lineHeight: "1.5",
             }}
+            codeTagProps={{ style: { fontSize: "inherit" } }}
           >
             {code}
           </SyntaxHighlighter>

@@ -27,6 +27,7 @@ async function verifyTokenBundle(authHeaderValue: string) {
     const tokenBundle = TokenBundle.deserialiseFromAuthHeader(authHeaderValue);
     return await tokenBundle.verify(AUDIENCE);
 }`,
+          icon: "github",
         },
         {
           label: "Others",
@@ -69,6 +70,7 @@ export async function authFetch(request: Request) {
   const headers = { 'Authorization': \`Kliento \${tokenBundle.toString('base64')}\` }
   return fetch(request, { headers })
 }`,
+          icon: "github",
         },
         {
           label: "GitHub Action",
@@ -87,6 +89,7 @@ export async function authFetch(request: Request) {
         run: curl -H "Authorization: Kliento \${TOKEN_BUNDLE}" https://api.example.com
         environment:
           TOKEN_BUNDLE: \${{ steps.token-bundle.outputs.credential }}`,
+          icon: "github",
         },
         {
           label: "Others",
