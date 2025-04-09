@@ -1,0 +1,68 @@
+---
+const identifiers = [
+  "wordpress@company.com",
+  "mongodb@company.com",
+  "app@customer.com",
+  "customer.com",
+  "staging@customer.app",
+];
+---
+
+<div
+  class="w-full h-[64px] overflow-hidden border-2 rounded-md border-neutral-700 bg-neutral-800 text-lg relative carousel-container"
+>
+  <div class="absolute top-0 left-0 w-full text-wrapper">
+    {
+      identifiers.map((identifier) => (
+        <div class="h-[64px] flex items-center justify-center px-4">{identifier}</div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .text-wrapper {
+    animation: slideUp 8s ease-in-out infinite;
+  }
+
+  @keyframes slideUp {
+    0% {
+      transform: translateY(0);
+    }
+    15% {
+      transform: translateY(0);
+    }
+
+    20% {
+      transform: translateY(-64px);
+    }
+    35% {
+      transform: translateY(-64px);
+    }
+
+    40% {
+      transform: translateY(-128px);
+    }
+    55% {
+      transform: translateY(-128px);
+    }
+
+    60% {
+      transform: translateY(-192px);
+    }
+    75% {
+      transform: translateY(-192px);
+    }
+
+    80% {
+      transform: translateY(-256px);
+    }
+    95% {
+      transform: translateY(-256px);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+</style>

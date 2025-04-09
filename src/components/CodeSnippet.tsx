@@ -87,6 +87,8 @@ const CodeTabsReact: React.FC<CodeTabsProps> = ({ tabs }) => {
           ))}
         </div>
 
+        <p>Paragraph</p>
+
         <div className="p-4 relative bg-neutral-950">
           <button
             onClick={copyToClipboard}
