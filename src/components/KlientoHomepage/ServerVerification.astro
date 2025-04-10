@@ -1,5 +1,6 @@
 ---
 import CtaButton from "../CtaButton.astro";
+import TabContainerServerVerification from "./TabContainer/TabContainerServerVerification.tsx";
 ---
 
 <section class="bg-neutral-900 py-8 lg:py-16">
@@ -9,6 +10,8 @@ import CtaButton from "../CtaButton.astro";
       Servers verify tokens by making a call to a local function provided by a Kliento SDK, or
       offload the verification to a stateless, cloud-agnostic open source server.
     </p>
+
+    <TabContainerServerVerification client:load />
 
     <div class="mt-8">
       <CtaButton href="/" text="Integrate Kliento in your server" variant="primaryKliento" />

@@ -1,7 +1,7 @@
 ---
 import CtaButton from "../CtaButton.astro";
 import WorkloadIdentityCarousel from "./Carousel/Carousel.tsx";
-import TabContainerDemo from "./TabContainer/TabContainerDemo.tsx";
+import TabContainerClientIntegration from "./TabContainer/TabContainerClientIntegration.tsx";
 ---
 
 <section class="py-8 lg:py-16">
@@ -14,7 +14,7 @@ import TabContainerDemo from "./TabContainer/TabContainerDemo.tsx";
       >.
     </p>
 
-    <TabContainerDemo client:load />
+    <TabContainerClientIntegration client:load />
     <div class="mt-8">
       <CtaButton href="/" text="Integrate your client" variant="primaryKliento" />
     </div>

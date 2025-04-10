@@ -8,7 +8,7 @@ import GitHubIcon from "../../../assets/icons/github.svg?react";
 const PARAGRAPH = "px-4 text-base leading-normal pb-4";
 const CONTENT_CONTAINER = "text-left pt-4";
 
-const TabContainerDemo: React.FC = () => {
+const TabContainerClientIntegration: React.FC = () => {
   const tabs: Tab[] = [
     {
       label: "JavaScript",
@@ -90,4 +90,4 @@ export async function authFetch(request: Request) {
   return <TabContainer tabs={tabs} />;
 };
 
-export default TabContainerDemo;
+export default TabContainerClientIntegration;
