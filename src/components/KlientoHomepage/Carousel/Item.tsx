@@ -31,7 +31,7 @@ const CarouselItem: React.FC<CarouselItemProps> = ({ workloadIdentity, veraidIde
   return (
     <div className="flex flex-col items-center font-jetBrainsMono">
       <div className="bg-neutral-900 rounded p-3">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center">
           {/* Left box */}
           <div className="bg-neutral-800 rounded px-3 py-2 flex items-center border border-neutral-700">
             {iconSvg && (
@@ -44,7 +44,10 @@ const CarouselItem: React.FC<CarouselItemProps> = ({ workloadIdentity, veraidIde
           </div>
 
           {/* Arrow */}
-          <div className="h-5 w-5 text-white" dangerouslySetInnerHTML={{ __html: ArrowIcon }} />
+          <div
+            className="h-5 w-5 text-neutral-300"
+            dangerouslySetInnerHTML={{ __html: ArrowIcon }}
+          />
 
           {/* Right box*/}
           <div className="bg-neutral-800 rounded px-3 py-2.5 flex items-center border border-neutral-700">
