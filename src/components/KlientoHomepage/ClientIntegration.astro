@@ -1,5 +1,4 @@
 ---
-import TabbedCodeSnippet from "../CodeSnippet.tsx";
 import CtaButton from "../CtaButton.astro";
 import WorkloadIdentityCarousel from "./Carousel/Carousel.tsx";
 ---
@@ -13,54 +12,7 @@ import WorkloadIdentityCarousel from "./Carousel/Carousel.tsx";
         class="text-indigo-400!">VeraId Authority</a
       >.
     </p>
-    <TabbedCodeSnippet
-      client:load
-      tabs={[
-        {
-          label: "JavaScript",
-          icon: "javascript",
-          language: "javascript",
-          code: `import { initExchangerFromEnv } from '@veraid/authority-credentials';
 
-// Replace with the actual URL for exchanging credentials
-const EXCHANGE_ENDPOINT = new URL('https://veraid-authority.example/credentials/123');
-
-// Replace 'GITHUB' with the exchanger you want
-const exchanger = initExchangerFromEnv('GITHUB');
-
-// Make requests that use the Kliento token bundle
-export async function authFetch(request: Request) {
-  const { credential: tokenBundle } = await exchanger.exchange(EXCHANGE_ENDPOINT);
-  const headers = { 'Authorization': \`Kliento \${tokenBundle.toString('base64')}\` }
-  return fetch(request, { headers })
-}`,
-        },
-        {
-          label: "GitHub Action",
-          icon: "github",
-          language: "yaml",
-          code: `jobs:
-  authentication:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Get Kliento token bundle
-        id: token-bundle
-        uses: CheVeraId/authority-credentials-action@v1
-        with:
-          exchange-endpoint: https://veraid-authority.example/credentials/123
-      - name: Use token bundle
-        run: curl -H "Authorization: Kliento \${TOKEN_BUNDLE}" https://api.example.com
-        environment:
-          TOKEN_BUNDLE: \${{ steps.token-bundle.outputs.credential }}`,
-        },
-        {
-          label: "Others",
-          language: "python",
-          code: `Other languages coming soon`,
-        },
-      ]}
-    />
     <div class="mt-8">
       <CtaButton href="/" text="Integrate your client" variant="primaryKliento" />
     </div>

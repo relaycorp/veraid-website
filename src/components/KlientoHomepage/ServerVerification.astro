@@ -1,5 +1,4 @@
 ---
-import TabbedCodeSnippet from "../CodeSnippet.tsx";
 import CtaButton from "../CtaButton.astro";
 ---
 
@@ -10,31 +9,7 @@ import CtaButton from "../CtaButton.astro";
       Servers verify tokens by making a call to a local function provided by a Kliento SDK, or
       offload the verification to a stateless, cloud-agnostic open source server.
     </p>
-    <TabbedCodeSnippet
-      client:load
-      tabs={[
-        {
-          icon: "javascript",
-          label: "JavaScript",
-          language: "JavaScript",
-          code: `import { TokenBundle } from '@veraid/kliento';
-  
-  // Replace with a unique identifier for your server
-  const AUDIENCE = 'https://api.example.com';
-  
-  // Verify \`Authorization: Kliento <token>\` request header
-  async function verifyTokenBundle(authHeaderValue: string) {
-      const tokenBundle = TokenBundle.deserialiseFromAuthHeader(authHeaderValue);
-      return await tokenBundle.verify(AUDIENCE);
-  }`,
-        },
-        {
-          label: "Others",
-          language: "python",
-          code: `Other languages coming soon`,
-        },
-      ]}
-    />
+
     <div class="mt-8">
       <CtaButton href="/" text="Integrate Kliento in your server" variant="primaryKliento" />
     </div>
