@@ -5,7 +5,7 @@ import CodeBlock from "./CodeBlock";
 import JavaScriptIcon from "../../../assets/icons/JavaScript.svg?react";
 
 const PARAGRAPH = "px-4 text-xs lg:text-base leading-normal pb-4";
-const CONTENT_CONTAINER = "text-left pt-4";
+const CONTENT_CONTAINER = "text-left pt-4 bg-black";
 
 const TabContainerServerVerification: React.FC = () => {
   const tabs: Tab[] = [
@@ -13,12 +13,14 @@ const TabContainerServerVerification: React.FC = () => {
       label: "JavaScript",
       icon: <JavaScriptIcon />,
       content: (
-        <div className={CONTENT_CONTAINER}>
-          <p className={PARAGRAPH}>
-            A JavaScript HTTP server could use the <code>TokenBundle</code> class from the{" "}
-            <code>@veraid/kliento</code> library to verify a Kliento token bundle specified in the{" "}
-            <code>Authorization</code> request header.
-          </p>
+        <>
+          <div className={CONTENT_CONTAINER}>
+            <p className={PARAGRAPH}>
+              A JavaScript HTTP server could use the <code>TokenBundle</code> class from the{" "}
+              <code>@veraid/kliento</code> library to verify a Kliento token bundle specified in the{" "}
+              <code>Authorization</code> request header.
+            </p>
+          </div>
           <CodeBlock
             language="javascript"
             code={`// Server side code
@@ -33,7 +35,7 @@ async function verifyTokenBundle(authHeaderValue: string) {
     return await tokenBundle.verify(AUDIENCE);
 }`}
           />
-        </div>
+        </>
       ),
     },
 

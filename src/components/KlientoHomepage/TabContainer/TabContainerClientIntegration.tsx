@@ -6,7 +6,7 @@ import JavaScriptIcon from "../../../assets/icons/JavaScript.svg?react";
 import GitHubIcon from "../../../assets/icons/github.svg?react";
 
 const PARAGRAPH = "px-4 text-xs lg:text-base leading-normal pb-4";
-const CONTENT_CONTAINER = "text-left pt-4";
+const CONTENT_CONTAINER = "text-left pt-4 bg-black";
 
 const TabContainerClientIntegration: React.FC = () => {
   const tabs: Tab[] = [
@@ -38,18 +38,20 @@ export async function authFetch(request: Request) {
       label: "GitHub Action",
       icon: <GitHubIcon />,
       content: (
-        <div className={CONTENT_CONTAINER}>
-          <p className={PARAGRAPH}>
-            Use the action CheVeraId/authority-credentials-action to get a Kliento token bundle from
-            a GitHub workflow:
-            <a
-              href="https://github.com/CheVeraId/authority-credentials-action"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              CheVeraId/authority-credentials-action
-            </a>
-          </p>
+        <>
+          <div className={CONTENT_CONTAINER}>
+            <p className={PARAGRAPH}>
+              Use the action CheVeraId/authority-credentials-action to get a Kliento token bundle
+              from a GitHub workflow:
+              <a
+                href="https://github.com/CheVeraId/authority-credentials-action"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                CheVeraId/authority-credentials-action
+              </a>
+            </p>
+          </div>
           <CodeBlock
             language="yaml"
             code={`jobs:
@@ -67,22 +69,24 @@ export async function authFetch(request: Request) {
         environment:
           TOKEN_BUNDLE: \${{ steps.token-bundle.outputs.credential }}`}
           />
-        </div>
+        </>
       ),
     },
     {
       label: "Others",
       content: (
-        <div className={CONTENT_CONTAINER}>
-          <p className={PARAGRAPH}>
-            This is an example of a tab with regular HTML content. You can put any content here,
-            including paragraphs, links, images, and more.
-          </p>
-          <p className={PARAGRAPH}>
-            This is an example of a tab with regular HTML content. You can put any content here,
-            including paragraphs, links, images, and more.
-          </p>
-        </div>
+        <>
+          <div className={CONTENT_CONTAINER}>
+            <p className={PARAGRAPH}>
+              This is an example of a tab with regular HTML content. You can put any content here,
+              including paragraphs, links, images, and more.
+            </p>
+            <p className={PARAGRAPH}>
+              This is an example of a tab with regular HTML content. You can put any content here,
+              including paragraphs, links, images, and more.
+            </p>
+          </div>
+        </>
       ),
     },
   ];
