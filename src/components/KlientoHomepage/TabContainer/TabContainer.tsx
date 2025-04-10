@@ -49,7 +49,7 @@ const TabContainer: React.FC<TabContainerProps> = ({ tabs, className = "" }) => 
           ))}
         </div>
 
-        <div className="relative bg-neutral-950">{activeTab.content}</div>
+        <div className="relative bg-[#121212]">{activeTab.content}</div>
       </div>
     </div>
   );
