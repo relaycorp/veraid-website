@@ -4,7 +4,7 @@ import Skeleton from "../../layouts/Skeleton.astro";
 import klientoLogo from "../../assets/images/kliento-logo.png";
 import Hero from "../../components/KlientoHomepage/Hero.astro";
 import CtaBanner from "../../components/CtaBanner.astro";
-import Credentials from "../../components/KlientoHomepage/Credentials.astro";
+import TokenBundle from "../../components/KlientoHomepage/TokenBundle.astro";
 import ServicesAccount from "../../components/KlientoHomepage/ServicesAccount.astro";
 import Comparison from "../../components/KlientoHomepage/Comparison.astro";
 import ServerVerification from "../../components/KlientoHomepage/ServerVerification.astro";
@@ -15,7 +15,7 @@ import ClientIntegration from "../../components/KlientoHomepage/ClientIntegratio
   <SecondaryNav client:load servicePath="/kliento" logoSrc={klientoLogo.src} />
   <Hero />
   <ServicesAccount />
-  <Credentials />
+  <TokenBundle />
   <ServerVerification />
   <ClientIntegration />
   <Comparison />
