@@ -1,28 +1,33 @@
 ---
 import { Image } from "astro:assets";
 import dottedPattern from "../../assets/images/dotted-pattern.svg";
+import { AnimatedSection } from "../AnimatedSection";
 ---
 
 <section class="relative py-8 sm:py-16 bg-black">
-  <div class="max-w-7xl mx-auto">
-    <div class="absolute inset-0 w-full h-full">
-      <Image
-        src={dottedPattern}
-        alt="decorative dotted pattern"
-        class="w-full h-full object-cover opacity-80"
-      />
-    </div>
-    <div class="relative px-4 sm:px-6 space-y-4 lg:space-y-8">
-      <h1 class="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[5.5rem] text-center leading-tight">
-        <span
-          class="bg-gradient-to-r from-indigo-600 via-indigo-400 to-indigo-200 text-transparent bg-clip-text"
-          >Workload authentication</span
+  <AnimatedSection animation="scale-up" client:load duration="slow">
+    <div class="max-w-7xl mx-auto">
+      <div class="absolute inset-0 w-full h-full">
+        <Image
+          src={dottedPattern}
+          alt="decorative dotted pattern"
+          class="w-full h-full object-cover opacity-80"
+        />
+      </div>
+      <div class="relative px-4 sm:px-6 space-y-4 lg:space-y-8">
+        <h1
+          class="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[5.5rem] text-center leading-tight"
         >
-        <br />made simple
-      </h1>
-      <p class="text-center text-base md:text-xl lg:text-2xl">
-        Without secrets to protect or tokens to verify remotely
-      </p>
+          <span
+            class="bg-gradient-to-r from-indigo-600 via-indigo-400 to-indigo-200 text-transparent bg-clip-text"
+            >Workload authentication</span
+          >
+          <br />made simple
+        </h1>
+        <p class="text-center text-base md:text-xl lg:text-2xl">
+          Without secrets to protect or tokens to verify remotely
+        </p>
+      </div>
     </div>
-  </div>
+  </AnimatedSection>
 </section>
