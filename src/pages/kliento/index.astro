@@ -2,23 +2,24 @@
 import { SecondaryNav } from "../../components/TopNav/SecondaryNav";
 import Skeleton from "../../layouts/Skeleton.astro";
 import klientoLogo from "../../assets/images/kliento-logo.png";
-import CtaButton from "../../components/CtaButton.astro";
-import { Image } from "astro:assets";
+import Hero from "../../components/KlientoHomepage/Hero.astro";
+import CtaBanner from "../../components/CtaBanner.astro";
+import TokenBundle from "../../components/KlientoHomepage/TokenBundle.astro";
+import ServicesAccount from "../../components/KlientoHomepage/ServicesAccount.astro";
+import Comparison from "../../components/KlientoHomepage/Comparison.astro";
+import ServerVerification from "../../components/KlientoHomepage/ServerVerification.astro";
+import ClientIntegration from "../../components/KlientoHomepage/ClientIntegration.astro";
 ---
 
 <Skeleton title="Kliento" description="Kliento" showBrandInTitle={false}>
   <SecondaryNav client:load servicePath="/kliento" logoSrc={klientoLogo.src} />
-  <section class="py-16 px-4 sm:px-6">
-    <div class="mx-auto max-w-5xl">
-      <h1
-        class="mb-4 text-4xl sm:text-5xl md:text-6xl font-bold text-center leading-tight bg-gradient-to-r from-[#01FD93] via-[#87FFCC] to-[#D9FFEF] text-transparent bg-clip-text"
-      >
-        Connect to external servers from AWS without API keys
-      </h1>
-      <p class="text-center text-neutral-300 text-lg md:text-xl mb-8 max-w-3xl mx-auto">
-        Authenticate AWS Lambda functions and containers to external services without exposing
-        sensitive credentials.
-      </p>
-    </div>
-  </section>
+  <Hero />
+
+  <ServicesAccount />
+
+  <TokenBundle />
+  <ServerVerification />
+  <ClientIntegration />
+  <Comparison />
+  <CtaBanner />
 </Skeleton>

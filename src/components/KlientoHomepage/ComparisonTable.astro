@@ -1,0 +1,83 @@
+---
+import checkmarkSvg from "../../assets/icons/checkmark.svg?raw";
+import crossSvg from "../../assets/icons/close.svg?raw";
+
+interface Feature {
+  name: string;
+  kliento: boolean;
+  apiKeys: boolean;
+  jwts: boolean;
+  spiffe: boolean;
+}
+
+interface ColumnHeader {
+  name: string;
+}
+
+interface Props {
+  features: Feature[];
+  columnHeaders: ColumnHeader[];
+}
+
+const { features, columnHeaders } = Astro.props;
+
+const headerCellClass = "py-1 lg:py-3 px-4 text-center bg-neutral-700";
+const rowCellClass = "py-2 lg:py-3 px-4 text-center";
+const tickAndCrossClass = "w-5 h-5 inline-block";
+const tickClass = "text-green-500";
+const crossClass = "text-red-500";
+---
+
+<div>
+  <table
+    class="w-full border-collapse bg-neutral-900 text-white border-neutral-700 border-l-1 border-r-1"
+  >
+    <thead class="text-base font-normal">
+      <tr class="border-b border-neutral-700">
+        <th class={headerCellClass + " text-left"}>{columnHeaders[0].name}</th>
+        <th class={headerCellClass + " bg-neutral-800"}>{columnHeaders[1].name}</th>
+        <th class={headerCellClass}>{columnHeaders[2].name}</th>
+        <th class={headerCellClass}>{columnHeaders[3].name}</th>
+        <th class={headerCellClass}>{columnHeaders[4].name}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        features.map((feature) => (
+          <tr class="border-b border-neutral-700">
+            <td class="py-4 px-4 text-sm">{feature.name}</td>
+            <td class={rowCellClass + " bg-neutral-800"}>
+              {feature.kliento ? (
+                <span class={tickAndCrossClass + " " + tickClass} set:html={checkmarkSvg} />
+              ) : (
+                <span class={tickAndCrossClass + " " + crossClass} set:html={crossSvg} />
+              )}
+            </td>
+            <td class={rowCellClass}>
+              {feature.apiKeys ? (
+                <span class={tickAndCrossClass + " " + tickClass} set:html={checkmarkSvg} />
+              ) : (
+                <span class={tickAndCrossClass + " " + crossClass} set:html={crossSvg} />
+              )}
+            </td>
+            <td class={rowCellClass}>
+              {feature.jwts ? (
+                <span class={tickAndCrossClass + " " + tickClass} set:html={checkmarkSvg} />
+              ) : (
+                <span class={tickAndCrossClass + " " + crossClass} set:html={crossSvg} />
+              )}
+            </td>
+
+            <td class={rowCellClass}>
+              {feature.spiffe ? (
+                <span class={tickAndCrossClass + " " + tickClass} set:html={checkmarkSvg} />
+              ) : (
+                <span class={tickAndCrossClass + " " + crossClass} set:html={crossSvg} />
+              )}
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
