@@ -16,15 +16,17 @@ const TabContainerServerVerification: React.FC = () => {
         <>
           <div className={CONTENT_CONTAINER}>
             <p className={PARAGRAPH}>
-              A JavaScript HTTP server could use the <code>TokenBundle</code> class from the{" "}
-              <code>@veraid/kliento</code> library to verify a Kliento token bundle specified in the{" "}
-              <code>Authorization</code> request header.
+              JavaScript servers use{" "}
+              <a href="https://www.npmjs.com/package/@veraid/kliento" class="text-indigo-400!">
+                <code>@veraid/kliento</code>
+              </a>{" "}
+              to verify Kliento token bundles. For example, here is how an HTTP server would verify
+              a Kliento token bundles:
             </p>
           </div>
           <CodeBlock
             language="javascript"
-            code={`// Server side code
-import { TokenBundle } from '@veraid/kliento';
+            code={`import { TokenBundle } from '@veraid/kliento';
 
 // Replace with a unique identifier for your server
 const AUDIENCE = 'https://api.example.com';

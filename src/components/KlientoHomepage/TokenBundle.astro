@@ -20,18 +20,13 @@ import CtaButton from "../CtaButton.astro";
           >
         </h2>
         <p>
-          Kliento is powered by VeraId, a DNSSEC-powered authentication protocol that attributes
-          digital signatures to domain names.
+          Kliento is powered by <a href="/" class="text-indigo-400!">VeraId</a>, a DNSSEC-based
+          protocol that attributes digital signatures to domain names.
         </p>
         <p>
-          Such signatures contain the entire trust chain, so they can be verified locally without
-          making remote API calls or configuring trust anchors.
+          Kliento <i>token bundles</i> are <b>short-lived</b> VeraId signatures, which contain the entire
+          trust chain, so <b>no public keys need to be configured or retrieved</b>.
         </p>
-        <p>
-          Kliento <i>token bundles</i> are <b>short-lived</b> VeraId signatures, so they too can be verified
-          entirely offline.
-        </p>
-        <CtaButton href="/kliento/signup" text="Read technical overview" variant="primaryKliento" />
       </div>
     </div>
   </div>
