@@ -33,7 +33,7 @@ const TabContainer: React.FC<TabContainerProps> = ({ tabs, className = "" }) => 
 
   return (
     <div
-      className={`rounded-md max-w-4xl mx-auto bg-gradient-to-r from-indigo-500 from-10% via-indigo-400 via-30% to-emerald-500 to-90% p-[2px] ${className}`}
+      className={`rounded-md lg:max-w-[80%] w-full mx-auto bg-gradient-to-r from-indigo-500 from-10% via-indigo-400 via-30% to-emerald-500 to-90% p-[2px] ${className}`}
     >
       <div className="rounded-md overflow-hidden bg-black h-full">
         <div className="flex overflow-x-auto whitespace-nowrap flex-nowrap border-b border-neutral-800">
