@@ -61,23 +61,20 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
         </button>
       )}
 
-      <div className="overflow-x-auto">
-        <SyntaxHighlighter
-          language={language.toLowerCase()}
-          style={vscDarkPlus}
-          customStyle={{
-            margin: 0,
-            padding: 0,
-            background: "transparent",
-            fontSize: fontSize,
-            lineHeight: "1.5",
-            maxWidth: "100%",
-          }}
-          codeTagProps={{ style: { fontSize: "inherit" } }}
-        >
-          {code}
-        </SyntaxHighlighter>
-      </div>
+      <SyntaxHighlighter
+        language={language.toLowerCase()}
+        style={vscDarkPlus}
+        customStyle={{
+          margin: 0,
+          padding: 0,
+          background: "transparent",
+          fontSize: fontSize,
+          lineHeight: "1.5",
+        }}
+        codeTagProps={{ style: { fontSize: "inherit" } }}
+      >
+        {code}
+      </SyntaxHighlighter>
     </div>
   );
 };
