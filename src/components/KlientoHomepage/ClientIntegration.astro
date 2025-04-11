@@ -2,25 +2,22 @@
 import CtaButton from "../CtaButton.astro";
 import WorkloadIdentityCarousel from "./Carousel/Carousel.tsx";
 import TabContainerClientIntegration from "./TabContainer/TabContainerClientIntegration.tsx";
-import { AnimatedSection } from "../AnimatedSection";
 ---
 
 <section class="py-8 lg:py-16">
-  <AnimatedSection animation="slide-up" client:load duration="slow">
-    <div class="max-w-5xl mx-auto items-center justify-center text-center px-4 lg:px-6">
-      <h2 class="text-3xl lg:text-6xl mb-4 lg:mb-8">Client integration</h2>
-      <p class="text-sm lg:text-lg mb-6 lg:mb-8 max-w-4xl mx-auto">
-        Leverage your existing workflow identity to obtain Kliento token bundles from <a
-          href="https://veraid.org"
-          class="text-indigo-400!">VeraId Authority</a
-        >.
-      </p>
+  <div class="max-w-5xl mx-auto items-center justify-center text-center px-4 lg:px-6">
+    <h2 class="text-3xl lg:text-6xl mb-4 lg:mb-8">Client integration</h2>
+    <p class="text-sm lg:text-lg mb-6 lg:mb-8 max-w-4xl mx-auto">
+      Leverage your existing workflow identity to obtain Kliento token bundles from <a
+        href="https://veraid.org"
+        class="text-indigo-400!">VeraId Authority</a
+      >.
+    </p>
 
-      <TabContainerClientIntegration client:load />
-      <div class="mt-8">
-        <CtaButton href="/" text="Integrate your client" variant="primaryKliento" />
-      </div>
+    <TabContainerClientIntegration client:load />
+    <div class="mt-8">
+      <CtaButton href="/" text="Integrate your client" variant="primaryKliento" />
     </div>
-    <WorkloadIdentityCarousel client:load />
-  </AnimatedSection>
+  </div>
+  <WorkloadIdentityCarousel client:load />
 </section>
