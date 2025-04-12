@@ -79,7 +79,8 @@ const articleClasses = [
   "lg:[&_pre]:max-w-[80%]",
   "[&_pre]:max-h-[60vh]",
   "lg:[&_pre]:overflow-auto",
-  "[&_pre]:bg-neutral-800",
+  "[&_pre]:!bg-neutral-800",
+  "[&_pre]:relative",
 
   "prose-strong:text-white",
   "prose-strong:font-bold",
@@ -99,3 +100,8 @@ const articleClasses = [
     <slot />
   </article>
 </Skeleton>
+
+<script>
+  import { addCopyButtonsToPre } from "../scripts/addCopyButtonsToPre";
+  addCopyButtonsToPre();
+</script>
