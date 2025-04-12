@@ -16,7 +16,7 @@ export function addCopyButtonsToPre() {
 
       // Create container for React component
       const buttonContainer = document.createElement("div");
-      buttonContainer.className = "copy-button-container absolute right-4 top-4";
+      buttonContainer.className = "copy-button-container absolute right-2 top-2";
       pre.appendChild(buttonContainer);
 
       const codeElement = pre.querySelector("code");
