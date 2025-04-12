@@ -16,12 +16,11 @@ const TabContainerServerVerification: React.FC = () => {
         <>
           <div className={CONTENT_CONTAINER}>
             <p className={PARAGRAPH}>
-              JavaScript servers use{" "}
-              <a href="https://www.npmjs.com/package/@veraid/kliento" class="text-indigo-400!">
+              JavaScript servers can use{" "}
+              <a href="https://www.npmjs.com/package/@veraid/kliento" className="text-indigo-400!">
                 <code>@veraid/kliento</code>
-              </a>{" "}
-              to verify Kliento token bundles. For example, here is how an HTTP server would verify
-              a Kliento token bundles:
+              </a>
+              . For example, an HTTP server would verify token bundles as follows:
             </p>
           </div>
           <CodeBlock
@@ -31,7 +30,7 @@ const TabContainerServerVerification: React.FC = () => {
 // Replace with a unique identifier for your server
 const AUDIENCE = 'https://api.example.com';
 
-// Verify \`Authorization: Kliento <token>\` request header
+// Verify "Authorization: Kliento <token-bundle>" request header
 async function verifyTokenBundle(authHeaderValue: string) {
     const tokenBundle = TokenBundle.deserialiseFromAuthHeader(authHeaderValue);
     return await tokenBundle.verify(AUDIENCE);
@@ -44,16 +43,37 @@ async function verifyTokenBundle(authHeaderValue: string) {
     {
       label: "Others",
       content: (
-        <div className={CONTENT_CONTAINER}>
-          <p className={PARAGRAPH}>
-            This is an example of a tab with regular HTML content. You can put any content here,
-            including paragraphs, links, images, and more.
-          </p>
-          <p className={PARAGRAPH}>
-            This is an example of a tab with regular HTML content. You can put any content here,
-            including paragraphs, links, images, and more.
-          </p>
-        </div>
+        <>
+          <div className={CONTENT_CONTAINER}>
+            <p className={PARAGRAPH}>
+              If your server language is unsupported or you wish to offload verification to another
+              process, you can deploy{" "}
+              <a
+                href="https://github.com/CheVeraId/kliento-verifier-js"
+                className="text-indigo-400!"
+              >
+                Kliento Verifier
+              </a>{" "}
+              to a{" "}
+              <a
+                href="https://github.com/CheVeraId/kliento-verifier-docker/pkgs/container/kliento-verifier"
+                className="text-indigo-400!"
+              >
+                Docker container
+              </a>
+              , AWS Lambda, Cloudflare Workers, etc. You'll then be able to verify token bundles as
+              follows:
+            </p>
+          </div>
+          <CodeBlock
+            language="http"
+            code={`POST /?audience=https%3A%2F%2Fapi.example.com HTTP/1.1
+Host: kliento-verifier.local
+
+<token-bundle>
+`}
+          />
+        </>
       ),
     },
   ];
