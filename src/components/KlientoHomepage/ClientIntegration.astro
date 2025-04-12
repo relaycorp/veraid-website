@@ -7,17 +7,33 @@ import TabContainerClientIntegration from "./TabContainer/TabContainerClientInte
 <section class="py-8 lg:py-16">
   <div class="max-w-5xl mx-auto items-center justify-center text-center px-4 lg:px-6">
     <h2 class="text-3xl lg:text-6xl mb-4 lg:mb-8">Client integration</h2>
-    <p class="text-sm lg:text-lg mb-6 lg:mb-8 max-w-4xl mx-auto">
-      Leverage your existing workflow identity to obtain Kliento token bundles from <a
-        href="https://veraid.org"
+    <p class="text-sm lg:text-lg max-w-4xl mx-auto">
+      The easiest way to integrate Kliento is to obtain pre-configured token bundles from <a
+        href="https://docs.relaycorp.tech/veraid-authority/"
         class="text-indigo-400!">VeraId Authority</a
-      >.
+      >
+      by leveraging your existing workflow identity (e.g. GCP service account, GitHub workflow).
     </p>
 
     <TabContainerClientIntegration client:load />
-    <div class="mt-8">
-      <CtaButton href="/" text="Integrate your client" variant="primaryKliento" />
+
+    <p class="text-sm lg:text-lg max-w-4xl mx-auto">
+      Token bundles are valid for up to one hour and can be used multiple times.
+    </p>
+
+    <p class="text-sm lg:text-lg max-w-4xl mx-auto my-6">
+      As an alternative to using your workflow identity and VeraId Authority to obtain token
+      bundles, you can generate such bundles locally with your own private keys.
+    </p>
+
+    <div>
+      <CtaButton
+        href="/kliento/clients"
+        text="Integrate Kliento in your client"
+        variant="primaryKliento"
+      />
     </div>
   </div>
+
   <WorkloadIdentityCarousel client:load />
 </section>

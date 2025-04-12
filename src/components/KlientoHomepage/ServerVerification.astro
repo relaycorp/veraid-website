@@ -7,17 +7,16 @@ import TabContainerServerVerification from "./TabContainer/TabContainerServerVer
   <div class="max-w-5xl mx-auto items-center justify-center text-center px-4 lg:px-6">
     <h2 class="text-3xl lg:text-6xl mb-4 lg:mb-8">Server-side verification</h2>
     <p class="text-sm lg:text-lg">
-      Servers verify token bundles locally, without accessing remote servers or pre-configuring
-      trusted public keys.
+      Servers verify token bundles locally, without accessing remote servers or configuring trusted
+      public keys.
     </p>
 
     <TabContainerServerVerification client:load />
 
     <p class="text-sm lg:text-lg">
-      Upon successful verification, the server obtains the <code>subjectId</code> of the client (e.g.
-      <code>staging@customer.app</code>) and any <code>claims</code> present (e.g. <code
-        >permission</code
-      >).
+      Upon successful verification, your server obtains the <code>subjectId</code> of the client (e.g.
+      <code>staging@customer.app</code>) and any <code>claims</code> present. You decide what claims
+      are supported and how they're used.
     </p>
 
     <div class="mt-8">

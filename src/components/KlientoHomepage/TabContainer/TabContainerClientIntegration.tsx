@@ -14,12 +14,27 @@ const TabContainerClientIntegration: React.FC = () => {
       label: "JavaScript",
       icon: <JavaScriptIcon />,
       content: (
-        <CodeBlock
-          language="javascript"
-          code={`import { initExchangerFromEnv } from '@veraid/authority-credentials';
+        <>
+          <div className={CONTENT_CONTAINER}>
+            <p className={PARAGRAPH}>
+              JS clients can use{" "}
+              <a
+                href="https://github.com/CheVeraId/authority-credentials-js"
+                className="text-indigo-400!"
+              >
+                <code>@veraid/authority-credentials</code>
+              </a>{" "}
+              to automate the provisioning of token bundles. For example, the{" "}
+              <code>authFetch()</code> function below shows how to use this library to make
+              authenticated requests.
+            </p>
+          </div>
+          <CodeBlock
+            language="javascript"
+            code={`import { initExchangerFromEnv } from '@veraid/authority-credentials';
 
 // Replace with the actual URL for exchanging credentials
-const EXCHANGE_ENDPOINT = new URL('https://veraid-authority.example/credentials/123');
+const EXCHANGE_ENDPOINT = new URL('https://veraid-authority.example/creds/123');
 
 // Replace 'GITHUB' with the exchanger you want
 const exchanger = initExchangerFromEnv('GITHUB');
@@ -30,7 +45,8 @@ export async function authFetch(request: Request) {
   const headers = { 'Authorization': \`Kliento \${tokenBundle.toString('base64')}\` }
   return fetch(request, { headers })
 }`}
-        />
+          />
+        </>
       ),
     },
 
@@ -41,15 +57,15 @@ export async function authFetch(request: Request) {
         <>
           <div className={CONTENT_CONTAINER}>
             <p className={PARAGRAPH}>
-              Use the action CheVeraId/authority-credentials-action to get a Kliento token bundle
-              from a GitHub workflow:
+              Use{" "}
               <a
-                href="https://github.com/CheVeraId/authority-credentials-action"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="https://github.com/marketplace/actions/exchange-github-jwts-for-veraid-credentials"
+                className="text-indigo-400!"
               >
-                CheVeraId/authority-credentials-action
-              </a>
+                <code>CheVeraId/authority-credentials-action</code>
+              </a>{" "}
+              to get a Kliento token bundle. For example, this is how you can use it to make an
+              authenticated request:
             </p>
           </div>
           <CodeBlock
@@ -57,13 +73,14 @@ export async function authFetch(request: Request) {
             code={`jobs:
   authentication:
     runs-on: ubuntu-latest
-
+    permissions:
+      id-token: write
     steps:
       - name: Get Kliento token bundle
         id: token-bundle
         uses: CheVeraId/authority-credentials-action@v1
         with:
-          exchange-endpoint: https://veraid-authority.example/credentials/123
+          exchange-endpoint: https://veraid-authority.example/creds/123
       - name: Use token bundle
         run: curl -H "Authorization: Kliento \${TOKEN_BUNDLE}" https://api.example.com
         environment:
