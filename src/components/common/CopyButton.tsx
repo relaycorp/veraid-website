@@ -12,7 +12,7 @@ interface CopyButtonProps {
 const CopyButton: React.FC<CopyButtonProps> = ({
   textToCopy,
   className = "",
-  iconSize = "w-4 h-4",
+  iconSize = "w-3.5 h-3.5",
   showCopiedText = true,
 }) => {
   const [copied, setCopied] = useState(false);
@@ -30,7 +30,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({
   return (
     <button
       onClick={copyToClipboard}
-      className={`text-neutral-400 hover:text-white transition-colors z-10 bg-neutral-800 border border-neutral-700 rounded p-1.5 flex items-center ${className}`}
+      className={`text-neutral-400 hover:text-white transition-colors z-10 bg-neutral-700 rounded p-1 flex items-center ${className}`}
       title="Copy to clipboard"
     >
       {copied ? (

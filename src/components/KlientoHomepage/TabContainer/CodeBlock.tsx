@@ -30,7 +30,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
 
   return (
     <div className={`p-4 relative max-h-[80vh] overflow-y-auto w-full ${className}`}>
-      {showCopyButton && <CopyButton textToCopy={code} className="absolute right-5 top-5" />}
+      {showCopyButton && <CopyButton textToCopy={code} className="absolute right-4 top-4" />}
 
       <SyntaxHighlighter
         language={language.toLowerCase()}

@@ -67,7 +67,7 @@ const ogUrl = new URL(Astro.url.pathname, siteUrl);
   </head>
   <body>
     <PrimaryNav client:load />
-    <main>
+    <main class="overflow-x-hidden">
       <slot />
     </main>
     <Footer />
