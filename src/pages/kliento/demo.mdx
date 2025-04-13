@@ -1,0 +1,163 @@
+---
+title: "Kliento Demo"
+description: "Try Kliento on your local machine"
+layout: ../../layouts/KlientoPage.astro
+permalink: /kliento/demo
+---
+
+# Kliento Demo
+
+Docker Compose file:
+
+```yaml
+services:
+  veraid-authority:
+    image: ghcr.io/relaycorp/veraid-authority:2.4.2
+    command: api
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      AUTHORITY_VERSION: "1.0.0dev1"
+      AUTHORITY_SUPERADMIN: admin@veraid.example
+      MONGODB_URI: mongodb://mongodb/?authSource=admin
+      MONGODB_USER: root
+      MONGODB_PASSWORD: password123
+      MONGODB_DB: endpoint
+      OAUTH2_JWKS_URL: http://mock-authz-server:8080/default/jwks
+      OAUTH2_TOKEN_AUDIENCE: default
+      OAUTH2_TOKEN_ISSUER_REGEX: "^http://[^/]+/default$$"
+      KMS_ADAPTER: AWS
+      AWS_ACCESS_KEY_ID: access_key_id
+      AWS_SECRET_ACCESS_KEY: secret_access_key
+      AWS_KMS_ENDPOINT: http://mock-aws-kms:8080
+      AWS_KMS_REGION: eu-west-2
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      mock-authz-server:
+        condition: service_started
+      mock-aws-kms:
+        condition: service_healthy
+
+  mock-authz-server:
+    image: ghcr.io/navikt/mock-oauth2-server:0.5.8
+    ports:
+      - "127.0.0.1:8081:8080"
+    environment:
+      JSON_CONFIG: |
+        {
+          "tokenCallbacks": [
+            {
+              "issuerId": "default",
+              "tokenExpiry": 3600,
+              "requestMappings": [
+                {
+                  "requestParam": "scope",
+                  "match": "super-admin",
+                  "claims": {"email": "admin@veraid.example"}
+                },
+                {
+                  "requestParam": "scope",
+                  "match": "user",
+                  "claims": {"email": "member@example.com"}
+                }
+              ]
+            }
+          ]
+        }
+
+  mock-aws-kms:
+    image: nsmithuk/local-kms:3.11.4
+    volumes:
+      - ./kms-seed.yaml:/init/seed.yaml
+    healthcheck:
+      test: ["CMD", "sh", "-c", "netstat -an | grep -q ':8080.*LISTEN' || nc -z localhost 8080"]
+      interval: 5s
+      retries: 3
+
+  mongodb:
+    image: mongo:6.0.4
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password123
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+```
+
+`kms-seed.yaml`:
+
+```yaml
+Keys:
+  Asymmetric:
+    Rsa:
+      - Metadata:
+          KeyId: 800d5768-3fd7-4edd-a4b8-4c81c3e4c147
+          KeyUsage: SIGN_VERIFY
+          Description: Real key for organisation lib-testing.veraid.net
+        PrivateKeyPem: |
+          -----BEGIN PRIVATE KEY-----
+          MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDDnpY+5uDnj87qQz2Odd3Ji2uL
+          8lQ3iHr0Nvc/DozD2/JFqYl5qfghIdMdQaj9kmurBBdSI6KttnThV7g2CLyLwFTA85rSCg7x+4Xw
+          KBefNmTNarUUksA+C14JMZzvjKh9qLfNe2MB0zCNdfFSHHVwC6U18CK9Uw2EKu058hbzEPI4gdh4
+          74zo3hLpPt8JWYb57+OfY7FTHKkWvbtfZUsVfhgTl668I/vruGNBZruYlh6UuV45EGSGjMvqTj30
+          BCNEuG4JKXnksYx908Be/sPP9AKexrQkie88pgOXow2vGjzjP22LlP20+cF1K1eYzHc5P/z6hWzI
+          7TwhPT/EqhQlAgMBAAECggEAeE7mdJUmKQQm66ijCSSwXK3kXNOSu/yyMdRER4G5TRPOcs2MAUlp
+          k2bsIggp2JneofUIKrpD6LZYN+btIj5JR2HoPisUQq1w954Lh+IAdSjM4hEIgTioBwCSuvDKZgGJ
+          9o53TGbgQ1URfU7WNfvOtjRTTVL86pdTrr9/2q1rM91YvzSZJkt23uTSnqrOaMgHPCP8e6IUDvam
+          /nHAqfxBX8vM8OggIWmm7v78PjKAGjL4c56TmQEJeJ5z1qXxfrqcACD6L5OkvxVgYVH6tzlAAsGb
+          Ghswtbbf8h2bLj1NDgPJ+TtzKBcglFJfwtUdS8B8L2qiNAo/GDERqLu0Zl4XGQKBgQD+FZJgpMiz
+          SybP3Kw/ziUHzZznKf927YvhhYpLAeDLiSjeg9dA5NiTTRf7Phqh282CvFq0zWpHFNVeDn+ztpr2
+          gy+m/hZp6HKP6qMKvu+zMU/c8kDyDGR3DlceXnU8/kYdQIz3L0kEziV5DvXEyNSlu7MXyKBg2UZJ
+          0/hIVdYB4wKBgQDFGCrm/4crDTXjAZ0lUywp4qPZL2u5iF3kbwnOAx5SH1+SrheJ10iCnkI7fqMP
+          6ejyLrrQJDEEcn3rqQ92lZfaYt3b6RUxyG4xl5VKSptvnIJyjaCbVQ8dWXMnWvCklANkDyUQk2MZ
+          kGsnWf8NWdvL2dtJbbjfJ+lyXDmDm63QVwKBgQDW4GdqU/Fnr6ajI3yIeU3Xy4tl856YdUxW7RiH
+          Vo9Fkjl99QGVX/PInuopD9x2Be1HIwOS5CV896F6aciVs1haIZerIjbSWkKIc2ZvMAqHAK0JrdY+
+          3TwZc4c5p6h+bIvfMTgF03dtGOmX947hXPZ5MsPC2WjIfvdyeFEA25ahAQKBgELcJ/GkzV21ZYpU
+          idKXnGu5DowmogyWTgOoB1Nzi12gdvNzS1jfRyHIPf+gvgAwAW3mnEjvfhFcJYtEFpLLvG/BCjIH
+          p8DzlS4Nlf9Vv9Tk6vuhP9Jx0GbMaVv4ZZnu/Bd9a71rwjpx22fGB9ennABTLyiBqC1LhM3eq0QS
+          E6yRAoGBAJHBmAM6oUF1AoSMOHyCmvOZQVbD8gB4oMJM30QIt4KznwK+9QDRoP5ljRvUkpjvpfke
+          TGZT0wqk920enf6gJQdX63+lhK87FMtJLskRlyO9TsE12VKC1P5HR+AezSOnvyhw99F7GVx/w1NH
+          8c/4p8ICuv7ujuunhKrvUR51vJbY
+          -----END PRIVATE KEY-----
+```
+
+Get access token for super-admin:
+
+```bash
+export SUPER_ADMIN_TOKEN=$(curl --request POST \
+  --url http://localhost:8081/default/token \
+  --header 'Content-Type: application/x-www-form-urlencoded' \
+  --data-urlencode grant_type=client_credentials \
+  --data-urlencode client_id=admin@veraid.example \
+  --data-urlencode client_secret=s3cr3t \
+  --data-urlencode scope=super-admin \
+  --silent | jq -r .access_token)
+```
+
+Create a new organisation:
+
+```bash
+curl --request POST \
+  --url  http://localhost:8080/orgs \
+  --header "Authorization: Bearer $SUPER_ADMIN_TOKEN" \
+  --header 'Content-Type: application/json' \
+  --data '{"name": "chores.fans"}' \
+  --silent | jq .txtRecordRdata
+```
+
+Create a new member (e.g. `alice`):
+
+```bash
+export MEMBER_SIGNATURE_SPECS_ENDPOINT=$(curl --request POST \
+  --url  http://localhost:8080/orgs/chores.fans/members \
+  --header "Authorization: Bearer $SUPER_ADMIN_TOKEN" \
+  --header 'Content-Type: application/json' \
+  --data '{"name": "alice", "role": "REGULAR"}' \
+  --silent | jq -r .signatureSpecs)
+```
+
+Create
