@@ -51,7 +51,7 @@ export async function authFetch(request: Request) {
     },
 
     {
-      label: "GitHub Action",
+      label: "GitHub",
       icon: <GitHubIcon />,
       content: (
         <>
@@ -95,13 +95,22 @@ export async function authFetch(request: Request) {
         <>
           <div className={CONTENT_CONTAINER}>
             <p className={PARAGRAPH}>
-              This is an example of a tab with regular HTML content. You can put any content here,
-              including paragraphs, links, images, and more.
+              VeraId Authority uses OpenID Connect Discovery to authenticate{" "}
+              <a
+                href="https://docs.relaycorp.tech/veraid-authority/credentials"
+                className="text-indigo-400!"
+              >
+                clients requesting credentials
+              </a>
+              , so you can integrate Amazon Cognito, Azure, GCP, Kubernetes, and many more. You
+              simply have to send your workload identity's JWT to obtain a token bundle:
             </p>
-            <p className={PARAGRAPH}>
-              This is an example of a tab with regular HTML content. You can put any content here,
-              including paragraphs, links, images, and more.
-            </p>
+            <CodeBlock
+              language="http"
+              code={`GET /creds/123 HTTP/1.1
+HOST: veraid-authority.example
+Authorization: Bearer <JWT>`}
+            />
           </div>
         </>
       ),
