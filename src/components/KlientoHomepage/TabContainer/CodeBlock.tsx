@@ -36,7 +36,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
         </div>
       )}
 
-      <div className="max-h-[50vh] overflow-auto">
+      <div className="max-h-[55vh] overflow-auto">
         <SyntaxHighlighter
           language={language.toLowerCase()}
           style={vscDarkPlus}
