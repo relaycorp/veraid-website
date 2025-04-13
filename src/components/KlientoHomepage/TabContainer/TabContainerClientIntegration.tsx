@@ -105,13 +105,13 @@ export async function authFetch(request: Request) {
               , so you can integrate Amazon Cognito, Azure, GCP, Kubernetes, and many more. You
               simply have to send your workload identity's JWT to obtain a token bundle:
             </p>
-            <CodeBlock
-              language="http"
-              code={`GET /creds/123 HTTP/1.1
+          </div>
+          <CodeBlock
+            language="http"
+            code={`GET /creds/123 HTTP/1.1
 HOST: veraid-authority.example
 Authorization: Bearer <JWT>`}
-            />
-          </div>
+          />
         </>
       ),
     },
