@@ -24,6 +24,8 @@ If you get stuck at any point, please post a question on the [r/VeraId](https://
 
 Please note that the commands in this tutorial have been tested on Linux and macOS. If you're using Windows, you'll need to adjust the commands accordingly (e.g. use `curl.exe` instead of `curl`).
 
+Lastly, we'll be creating new files, which you may want to do in a new temporary directory.
+
 ## 1. Enable DNSSEC on your domain
 
 You can skip this step if you're using a domain name that is already DNSSEC-enabled.
@@ -32,7 +34,59 @@ If your DNS hosting provider is the same as your registrar, the process may be a
 
 You can use [DNSSEC Analyzer](https://dnssec-analyzer.verisignlabs.com/) to verify that your domain is correctly configured. Since it may take a few minutes for the DNS changes to propagate, you may want to continue with the rest of the guide and check back later.
 
-## 2. Deploy VeraId Authority
+## 2. Implement the server
+
+We'll implement a trivial Hono server that verifies Kliento token bundles and outputs the identifier of the client, as well as the claims in the token.
+
+Save the following code in a file called `server.js`:
+
+```js
+import { serve } from "@hono/node-server";
+import { TokenBundle } from "@veraid/kliento";
+import { Hono } from "hono";
+
+const app = new Hono().get("/", async (context) => {
+  const audience = context.req.url;
+
+  const authHeader = context.req.header("Authorization");
+  const tokenBundle = TokenBundle.deserialiseFromAuthHeader(authHeader);
+  const result = await tokenBundle.verify(audience);
+  return context.json(result);
+});
+
+serve({ fetch: app.fetch, port: 3000 });
+```
+
+The server above exposes a `GET /` endpoint that accepts a `Authorization` header with a Kliento token bundle, and requires the `audience` to be set to the URL of the request.
+
+Next, create the `package.json` file with the following content:
+
+```json
+{
+  "name": "kliento-server",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@hono/node-server": "^1.14.1",
+    "@veraid/kliento-verifier": "^1.0.3"
+  }
+}
+```
+
+We're going to deploy it in a Docker container, so create the `Dockerfile` file with the following content:
+
+```dockerfile
+FROM node:22.14.0-slim
+WORKDIR /opt/kliento-server
+COPY . ./
+RUN npm ci
+CMD ["node", "server.js"]
+EXPOSE 3000
+```
+
+We'll deploy this server in the next step when we also deploy VeraId Authority.
+
+## 3. Deploy VeraId Authority
 
 You're going to use Docker Compose to deploy a local instance of VeraId Authority, along with its backing services (e.g. MongoDB), and a mock OAuth2 server, to emulate a third-party identity provider like GCP (`https://accounts.google.com`).
 
@@ -40,12 +94,17 @@ You're going to use Docker Compose to deploy a local instance of VeraId Authorit
 
 In an eventual production deployment, you may actually prefer to use our upcoming VeraId Authority-as-a-Service offering or deploy a serverless infrastructure with an official Terraform module (e.g. [`relaycorp/veraid-authority/google`](https://github.com/relaycorp/terraform-google-veraid-authority) for GCP).
 
-In a new directory, create a `compose.yml` file with the following content:
+Create a `compose.yml` file with the following content to deploy VeraId Authority and its backing services, using this opportunity to also deploy the server we implemented in the previous step:
 
 ```yaml
 services:
+  kliento-server:
+    build: .
+    ports:
+      - "127.0.0.1:8082:3000"
+
   veraid-authority:
-    image: ghcr.io/relaycorp/veraid-authority:2.4.3
+    image: ghcr.io/relaycorp/veraid-authority:2.5.0
     command: api
     ports:
       - "127.0.0.1:8080:8080"
@@ -112,12 +171,17 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password123
+    volumes:
+      - mongodb-data:/data/db
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
       interval: 10s
       timeout: 10s
       retries: 5
       start_period: 40s
+
+volumes:
+  mongodb-data:
 ```
 
 Then start the services:
@@ -132,8 +196,9 @@ At this point, you will have deployed the following services locally:
 - `mock-authz-server`: A mock OAuth2 server, accessible at `http://localhost:8081`.
 - `mock-aws-kms`: A server that emulates AWS KMS. You can use any Key Management Service supported by [`@relaycorp/webcrypto-kms`](https://www.npmjs.com/package/@relaycorp/webcrypto-kms).
 - `mongodb`: A MongoDB server.
+- `kliento-server`: The trivial Hono server we implemented previously, accessible at `http://localhost:8082`. Note that although we're deploying this server in the same Docker Compose project as the other services, it does not depend on any of them.
 
-## 3. Log in as super-admin
+## 4. Log in as super-admin
 
 We configured VeraId Authority to use `admin@veraid.example` as the super-admin, so we need to obtain a JWT from our mock OAuth2 server to assume that role on the VeraId Authority API by running the following command:
 
@@ -145,6 +210,7 @@ export SUPER_ADMIN_TOKEN=$(curl --request POST \
   --data-urlencode client_id=admin@veraid.example \
   --data-urlencode client_secret=s3cr3t \
   --data-urlencode scope=super-admin \
+  --silent \
   | jq -r .access_token)
 ```
 
@@ -152,7 +218,7 @@ Double-check that you obtained a JWT by printing the token with `echo $SUPER_ADM
 
 We'll act as super-admin when interacting with the VeraId Authority API for the rest of the document, but in production you'll want to observe the principle of least privilege and [use a different role](https://docs.relaycorp.tech/veraid-authority/api#authentication-and-authorisation).
 
-## 4. Configure your domain name
+## 5. Configure your domain name
 
 Now it's time to create an _organisation_ for your domain name. In VeraId, domain names participating in the protocol are called "organisations".
 
@@ -170,10 +236,11 @@ curl --request POST \
   --header "Authorization: Bearer $SUPER_ADMIN_TOKEN" \
   --header 'Content-Type: application/json' \
   --data "{\"name\": \"$ORG_NAME\"}" \
+  --silent \
   | jq -r .txtRecordRdata
 ```
 
-The command above would output the value of the TXT record you should now create under the `_veraid` subdomain of your domain name (`_veraid.$ORG_NAME`). The TXT record value will look like this:
+You should now create a TXT record under the `_veraid` subdomain of your domain name (`_veraid.$ORG_NAME`), setting its value to the output of the command above. The TXT record value will look like this:
 
 ```
 1 XRSDmxhlZhYx+Y8dUy0LWd+Oinp6l6GZsk9gnZpd8S0= 3600
@@ -181,7 +248,7 @@ The command above would output the value of the TXT record you should now create
 
 In this example, `1` denotes the key algorithm (RSA), `XRSDmxhlZhYx+Y8dUy0LWd+Oinp6l6GZsk9gnZpd8S0=` is the base64-encoded public key, and `3600` is the _VeraId TTL override_ (in seconds). You may adjust the TTL depending on your needs.
 
-## 5. Configure the VeraId member
+## 6. Configure the VeraId member
 
 VeraId signatures are attributed to _members_ of the organisation, and there are two types of members: _bots_, which act on behalf of the organisation (e.g. `example.com`), and _users_, which act on their own behalf (e.g. `alice@example.com`). The only difference is that users have names and bots don't.
 
@@ -193,19 +260,20 @@ export MEMBER_SIGNATURE_SPECS_ENDPOINT=$(curl --request POST \
   --header "Authorization: Bearer $SUPER_ADMIN_TOKEN" \
   --header 'Content-Type: application/json' \
   --data '{"name": "alice", "role": "REGULAR"}' \
+  --silent \
   | jq -r .signatureSpecs)
 ```
 
 The command above would output the endpoint of the member's signature specs (e.g. `/orgs/$ORG_NAME/members/{memberId}/signature-specs`), which you'll use in the next step.
 
-## 6. Configure the signature spec
+## 7. Configure the signature spec
 
 Clients need to obtain a Kliento token bundle, which is a form of _VeraId signature bundle_ where the payload is a JSON object with the attributes `audience` (a string identifying the server where the token bundle will be valid) and `claims` (an optional object of key/value pairs). It's up to the server to define which claims are supported and how they're used.
 
 To get VeraId Authority to issue signature bundles for the desired payload, you'll have to create a _signature spec_ for the member created in the previous step. Before creating the signature spec, let's define the payload and base64-encode it:
 
 ```bash
-export KLIENTO_TOKEN='{"audience": "https://api.example.com", "claims": {"foo": "bar"}}'
+export KLIENTO_TOKEN='{"audience": "http://localhost:8082/"}'
 
 # On Windows, use an online encoder like https://www.base64decode.org
 export KLIENTO_TOKEN_BASE64=$(echo "$KLIENTO_TOKEN" | base64)
@@ -219,41 +287,100 @@ export SIGNATURE_SPEC=$(cat << EOF
   "auth": {
     "type": "oidc-discovery",
     "providerIssuerUrl": "http://mock-authz-server:8080/default",
-    "jwtSubjectField": "email",
+    "jwtSubjectClaim": "email",
     "jwtSubjectValue": "machine@cloud-provider.example"
   },
   "serviceOid": "1.3.6.1.4.1.58708.3.0",
-  "ttlSeconds": 300,
+  "ttlSeconds": 600,
   "plaintext": "${KLIENTO_TOKEN_BASE64}"
 }
 EOF
 )
-curl --request POST \
+export EXCHANGE_URL=$(curl --request POST \
   --url "http://localhost:8080${MEMBER_SIGNATURE_SPECS_ENDPOINT}" \
   --header "Authorization: Bearer $SUPER_ADMIN_TOKEN" \
   --header 'Content-Type: application/json' \
-  --data "$SIGNATURE_SPEC"
+  --data "$SIGNATURE_SPEC" \
+  --silent \
+  | jq -r .exchangeUrl)
 ```
 
 Where the signature spec is defined as follows:
 
 - `auth` requires the client to present a JWT from the mock OAuth2 server and the claim `email` set to `machine@cloud-provider.example`.
-- `serviceOid` binds the signature bundles to Kliento (OID `1.3.6.1.4.1.58708.3.0`), so they can't be used for other purposes.
-- `ttlSeconds` caps the validity of the signature bundles at 5 minutes (300 seconds).
+- `serviceOid` binds the signature bundles to Kliento (OID `1.3.6.1.4.1.58708.3.0`), so they can't be used in a different context.
+- `ttlSeconds` caps the validity of the signature bundles at 10 minutes (600 seconds).
 - `plaintext` is the base64-encoded Kliento token (`$KLIENTO_TOKEN_BASE64`).
 
-## 7. Implement the server
-
-TODO
+The output of the command above (`$EXCHANGE_URL`) is the URL that the client will use to exchange its JWTs for the signature bundles we configured to represent Kliento token bundles.
 
 ## 8. Test it!
 
-TODO
+We'll use `curl` as our client to demonstrate how to obtain token bundles and use them to make authenticated requests to the server.
+
+First, obtain a JWT from the mock OAuth2 server:
+
+```bash
+export EXCHANGE_JWT=$(curl --request POST \
+  --url "http://localhost:8081/default/token" \
+  --header 'Content-Type: application/x-www-form-urlencoded' \
+  --data-urlencode grant_type=client_credentials \
+  --data-urlencode client_id=machine@cloud-provider.example \
+  --data-urlencode client_secret=s3cr3t \
+  --data-urlencode scope=user \
+  --silent \
+  | jq -r .access_token)
+```
+
+Then exchange the JWT for a token bundle:
+
+```bash
+export TOKEN_BUNDLE="$(curl \
+  --url "$EXCHANGE_URL" \
+  --header 'Accept: application/vnd.veraid.signature-bundle+base64' \
+  --header "Authorization: Bearer $EXCHANGE_JWT")"
+```
+
+And finally, make a request to the server using the token bundle:
+
+```bash
+curl --request GET \
+  --url "http://localhost:8082/" \
+  --header "Authorization: Bearer $TOKEN_BUNDLE"
+```
+
+The response should report the client's identifier: `user@your-domain.com` or simply `your-domain.com` if you created a bot.
+
+Remember that you set the signature spec to expire in 10 minutes, so you can reuse the token bundle as many times as you like within that time frame.
 
 ## That's a wrap!
 
-TODO: Explain how to clean up.
+Congratulations! You've successfully set up a complete Kliento system on your local machine. Let's recap what we've accomplished:
+
+1. We set up a local VeraId Authority instance to manage your domain's credentials.
+2. We implemented a simple server that verifies Kliento token bundles.
+3. We configured your domain in VeraId Authority.
+4. We created a user or bot identity associated with your domain.
+5. We configured a signature spec that allows the exchange of JWTs for Kliento token bundles.
+6. We demonstrated the complete flow: obtaining a JWT, exchanging it for a token bundle, and using that bundle to make an authenticated request.
+
+This hands-on exercise has shown you the fundamental components of Kliento authentication and how they work together to provide domain-based identity for your applications.
+
+To clean up:
+
+1. Stop the Docker Compose process with `Ctrl+C`/`Cmd+C`.
+2. Remove the Docker resources:
+   ```bash
+   docker-compose down --volumes --rmi all
+   ```
+3. Delete the files we created:
+   ```bash
+   rm compose.yml server.js package.json Dockerfile
+   ```
 
 ## Next steps
 
+- [Learn about integrating Kliento in your clients](/kliento/clients).
+- [Learn about integrating Kliento in your servers](/kliento/servers).
+- [Read the technical overview of the protocol](/kliento/overview).
 - If you need to interact with the VeraId Authority API in your own JavaScript application, use the [`@relaycorp/veraid-authority`](https://github.com/relaycorp/veraid-authority-js) package.
