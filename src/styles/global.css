@@ -11,3 +11,29 @@ html {
 :not(pre) > code {
   @apply bg-neutral-700 rounded-sm py-0.5 px-1 border border-neutral-600;
 }
+
+/* Scrollbar Styling */
+/* For WebKit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a; /* Dark background color */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555; /* Thumb color */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+/* For Firefox */
+* {
+  scrollbar-color: #5b5b5b #2c2c2c; /* thumb color track color */
+  scrollbar-width: thin;
+}

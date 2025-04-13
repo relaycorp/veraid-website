@@ -55,6 +55,8 @@ const articleClasses = [
   "prose-a:no-underline",
   "prose-a:[&:hover]:text-green-200",
   "prose-a:hover:underline",
+  "break-words",
+  "overflow-wrap-anywhere",
 
   // Inline code
   "[&_:not(pre)>code]:bg-neutral-800",
@@ -76,6 +78,12 @@ const articleClasses = [
   "[&_code>a]:hover:underline",
   "[&_a>code]:text-green-300",
   "[&_a>code]:hover:text-green-200",
+  "lg:[&_pre]:max-w-[80%]",
+  "[&_pre]:max-h-[60vh]",
+  "lg:[&_pre]:overflow-auto",
+  "[&_pre]:mx-auto",
+  "[&_pre]:!bg-neutral-800",
+  "[&_pre]:relative",
 
   "prose-strong:text-white",
   "prose-strong:font-bold",
@@ -95,3 +103,8 @@ const articleClasses = [
     <slot />
   </article>
 </Skeleton>
+
+<script>
+  import { addCopyButtonsToPre } from "../scripts/addCopyButtonToPre";
+  addCopyButtonsToPre();
+</script>

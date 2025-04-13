@@ -4,22 +4,24 @@ import TabContainerServerVerification from "./TabContainer/TabContainerServerVer
 ---
 
 <section class="bg-neutral-900 py-8 lg:py-16">
-  <div class="max-w-5xl mx-auto items-center justify-center text-center px-4 lg:px-6">
-    <h2 class="text-3xl lg:text-6xl mb-4 lg:mb-8">Server-side verification</h2>
-    <p class="text-sm lg:text-lg">
+  <div
+    class="max-w-5xl mx-auto text-left px-4 lg:px-6 [&>p]:text-sm [&>p]:lg:text-lg [&>p]:max-w-4xl [&>p]:mx-auto"
+  >
+    <h2 class="text-3xl lg:text-6xl mb-4 lg:mb-8 text-center">Server-side verification</h2>
+    <p>
       Servers verify token bundles locally, without accessing remote servers or configuring trusted
       public keys.
     </p>
 
     <TabContainerServerVerification client:load />
 
-    <p class="text-sm lg:text-lg">
+    <p>
       Upon successful verification, your server obtains the <code>subjectId</code> of the client (e.g.
       <code>staging@customer.app</code>) and any <code>claims</code> present. You decide what claims
       are supported and how they're used.
     </p>
 
-    <div class="mt-8">
+    <div class="flex justify-center mt-8">
       <CtaButton
         href="/kliento/servers"
         text="Integrate Kliento in your server"
