@@ -1,18 +1,51 @@
 ---
-title: "Kliento Demo"
+title: "Test Drive Kliento on Your Computer"
 description: "Try Kliento on your local machine"
 layout: ../../layouts/KlientoPage.astro
 permalink: /kliento/demo
 ---
 
-# Kliento Demo
+# Test Drive Kliento
 
-Docker Compose file:
+This hands-on guide will walk you through the process of obtaining Kliento token bundles attributed to a domain name under your control, and using such bundles to make authenticated requests to a server. We'll also implement a server that verifies such token bundles. This will all be done locally, on your own computer!
+
+Since Kliento is a small extension to the [VeraId protocol](/), the bulk of this exercise involves configuring your domain name on a local instance of [VeraId Authority](https://docs.relaycorp.tech/veraid-authority/)--a server that facilitates the issuance of VeraId credentials like Kliento token bundles.
+
+We want you to learn what's actually happening along the way, so we'll minimise the use of our high-level tooling here in favour of generic, low-level tools (e.g. `curl`). Bear in mind that due to this, and the fact we'll be implementing the client and server sides, this walkthrough may feel more complex than it actually is to integrate Kliento into your application.
+
+If you get stuck at any point, please post a question on the [r/VeraId](https://www.reddit.com/r/VeraId/) Reddit sub.
+
+## Prerequisites
+
+- A domain name you control.
+- [Docker Compose](https://docs.docker.com/compose/install/).
+- [Curl](https://curl.se/download.html).
+- [`jq`](https://jqlang.org/download/).
+
+Please note that the commands in this tutorial have been tested on Linux and macOS. If you're using Windows, you'll need to adjust the commands accordingly (e.g. use `curl.exe` instead of `curl`).
+
+## 1. Enable DNSSEC on your domain
+
+You can skip this step if you're using a domain name that is already DNSSEC-enabled.
+
+If your DNS hosting provider is the same as your registrar, the process may be as straightforward as ticking a box to enable DNSSEC. Otherwise, you'll have to copy the DNSSEC configuration from your DNS hosting provider (e.g. Cloudflare) to your registrar (e.g. GoDaddy). Either way, the process is entirely provider-specific, so we recommend you consult the relevant documentation if it isn't obvious.
+
+You can use [DNSSEC Analyzer](https://dnssec-analyzer.verisignlabs.com/) to verify that your domain is correctly configured. Since it may take a few minutes for the DNS changes to propagate, you may want to continue with the rest of the guide and check back later.
+
+## 2. Deploy VeraId Authority
+
+You're going to use Docker Compose to deploy a local instance of VeraId Authority, along with its backing services (e.g. MongoDB), and a mock OAuth2 server, to emulate a third-party identity provider like GCP (`https://accounts.google.com`).
+
+![Kliento setup diagram](/diagrams/kliento/demo-diagram.svg)
+
+In an eventual production deployment, you may actually prefer to use our upcoming VeraId Authority-as-a-Service offering or deploy a serverless infrastructure with an official Terraform module (e.g. [`relaycorp/veraid-authority/google`](https://github.com/relaycorp/terraform-google-veraid-authority) for GCP).
+
+In a new directory, create a `compose.yml` file with the following content:
 
 ```yaml
 services:
   veraid-authority:
-    image: ghcr.io/relaycorp/veraid-authority:2.4.2
+    image: ghcr.io/relaycorp/veraid-authority:2.4.3
     command: api
     ports:
       - "127.0.0.1:8080:8080"
@@ -59,7 +92,7 @@ services:
                 {
                   "requestParam": "scope",
                   "match": "user",
-                  "claims": {"email": "member@example.com"}
+                  "claims": {"email": "machine@cloud-provider.example"}
                 }
               ]
             }
@@ -68,15 +101,14 @@ services:
 
   mock-aws-kms:
     image: nsmithuk/local-kms:3.11.4
-    volumes:
-      - ./kms-seed.yaml:/init/seed.yaml
     healthcheck:
       test: ["CMD", "sh", "-c", "netstat -an | grep -q ':8080.*LISTEN' || nc -z localhost 8080"]
       interval: 5s
       retries: 3
 
   mongodb:
-    image: mongo:6.0.4
+    image: mongo:8.0.6
+    command: "--quiet"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password123
@@ -88,44 +120,22 @@ services:
       start_period: 40s
 ```
 
-`kms-seed.yaml`:
+Then start the services:
 
-```yaml
-Keys:
-  Asymmetric:
-    Rsa:
-      - Metadata:
-          KeyId: 800d5768-3fd7-4edd-a4b8-4c81c3e4c147
-          KeyUsage: SIGN_VERIFY
-          Description: Real key for organisation lib-testing.veraid.net
-        PrivateKeyPem: |
-          -----BEGIN PRIVATE KEY-----
-          MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDDnpY+5uDnj87qQz2Odd3Ji2uL
-          8lQ3iHr0Nvc/DozD2/JFqYl5qfghIdMdQaj9kmurBBdSI6KttnThV7g2CLyLwFTA85rSCg7x+4Xw
-          KBefNmTNarUUksA+C14JMZzvjKh9qLfNe2MB0zCNdfFSHHVwC6U18CK9Uw2EKu058hbzEPI4gdh4
-          74zo3hLpPt8JWYb57+OfY7FTHKkWvbtfZUsVfhgTl668I/vruGNBZruYlh6UuV45EGSGjMvqTj30
-          BCNEuG4JKXnksYx908Be/sPP9AKexrQkie88pgOXow2vGjzjP22LlP20+cF1K1eYzHc5P/z6hWzI
-          7TwhPT/EqhQlAgMBAAECggEAeE7mdJUmKQQm66ijCSSwXK3kXNOSu/yyMdRER4G5TRPOcs2MAUlp
-          k2bsIggp2JneofUIKrpD6LZYN+btIj5JR2HoPisUQq1w954Lh+IAdSjM4hEIgTioBwCSuvDKZgGJ
-          9o53TGbgQ1URfU7WNfvOtjRTTVL86pdTrr9/2q1rM91YvzSZJkt23uTSnqrOaMgHPCP8e6IUDvam
-          /nHAqfxBX8vM8OggIWmm7v78PjKAGjL4c56TmQEJeJ5z1qXxfrqcACD6L5OkvxVgYVH6tzlAAsGb
-          Ghswtbbf8h2bLj1NDgPJ+TtzKBcglFJfwtUdS8B8L2qiNAo/GDERqLu0Zl4XGQKBgQD+FZJgpMiz
-          SybP3Kw/ziUHzZznKf927YvhhYpLAeDLiSjeg9dA5NiTTRf7Phqh282CvFq0zWpHFNVeDn+ztpr2
-          gy+m/hZp6HKP6qMKvu+zMU/c8kDyDGR3DlceXnU8/kYdQIz3L0kEziV5DvXEyNSlu7MXyKBg2UZJ
-          0/hIVdYB4wKBgQDFGCrm/4crDTXjAZ0lUywp4qPZL2u5iF3kbwnOAx5SH1+SrheJ10iCnkI7fqMP
-          6ejyLrrQJDEEcn3rqQ92lZfaYt3b6RUxyG4xl5VKSptvnIJyjaCbVQ8dWXMnWvCklANkDyUQk2MZ
-          kGsnWf8NWdvL2dtJbbjfJ+lyXDmDm63QVwKBgQDW4GdqU/Fnr6ajI3yIeU3Xy4tl856YdUxW7RiH
-          Vo9Fkjl99QGVX/PInuopD9x2Be1HIwOS5CV896F6aciVs1haIZerIjbSWkKIc2ZvMAqHAK0JrdY+
-          3TwZc4c5p6h+bIvfMTgF03dtGOmX947hXPZ5MsPC2WjIfvdyeFEA25ahAQKBgELcJ/GkzV21ZYpU
-          idKXnGu5DowmogyWTgOoB1Nzi12gdvNzS1jfRyHIPf+gvgAwAW3mnEjvfhFcJYtEFpLLvG/BCjIH
-          p8DzlS4Nlf9Vv9Tk6vuhP9Jx0GbMaVv4ZZnu/Bd9a71rwjpx22fGB9ennABTLyiBqC1LhM3eq0QS
-          E6yRAoGBAJHBmAM6oUF1AoSMOHyCmvOZQVbD8gB4oMJM30QIt4KznwK+9QDRoP5ljRvUkpjvpfke
-          TGZT0wqk920enf6gJQdX63+lhK87FMtJLskRlyO9TsE12VKC1P5HR+AezSOnvyhw99F7GVx/w1NH
-          8c/4p8ICuv7ujuunhKrvUR51vJbY
-          -----END PRIVATE KEY-----
+```bash
+docker-compose up
 ```
 
-Get access token for super-admin:
+At this point, you will have deployed the following services locally:
+
+- `veraid-authority`: The VeraId Authority server, accessible at `http://localhost:8080`.
+- `mock-authz-server`: A mock OAuth2 server, accessible at `http://localhost:8081`.
+- `mock-aws-kms`: A server that emulates AWS KMS. You can use any Key Management Service supported by [`@relaycorp/webcrypto-kms`](https://www.npmjs.com/package/@relaycorp/webcrypto-kms).
+- `mongodb`: A MongoDB server.
+
+## 3. Log in as super-admin
+
+We configured VeraId Authority to use `admin@veraid.example` as the super-admin, so we need to obtain a JWT from our mock OAuth2 server to assume that role on the VeraId Authority API by running the following command:
 
 ```bash
 export SUPER_ADMIN_TOKEN=$(curl --request POST \
@@ -135,29 +145,115 @@ export SUPER_ADMIN_TOKEN=$(curl --request POST \
   --data-urlencode client_id=admin@veraid.example \
   --data-urlencode client_secret=s3cr3t \
   --data-urlencode scope=super-admin \
-  --silent | jq -r .access_token)
+  | jq -r .access_token)
 ```
 
-Create a new organisation:
+Double-check that you obtained a JWT by printing the token with `echo $SUPER_ADMIN_TOKEN`. You should see a base64-encoded string beginning with `ey`.
+
+We'll act as super-admin when interacting with the VeraId Authority API for the rest of the document, but in production you'll want to observe the principle of least privilege and [use a different role](https://docs.relaycorp.tech/veraid-authority/api#authentication-and-authorisation).
+
+## 4. Configure your domain name
+
+Now it's time to create an _organisation_ for your domain name. In VeraId, domain names participating in the protocol are called "organisations".
+
+To simplify the rest of the exercise, let's store your organisation name in an environment variable:
+
+```bash
+export ORG_NAME=example.com
+```
+
+Then run the following command to create the organisation:
 
 ```bash
 curl --request POST \
-  --url  http://localhost:8080/orgs \
+  --url http://localhost:8080/orgs \
   --header "Authorization: Bearer $SUPER_ADMIN_TOKEN" \
   --header 'Content-Type: application/json' \
-  --data '{"name": "chores.fans"}' \
-  --silent | jq .txtRecordRdata
+  --data "{\"name\": \"$ORG_NAME\"}" \
+  | jq -r .txtRecordRdata
 ```
 
-Create a new member (e.g. `alice`):
+The command above would output the value of the TXT record you should now create under the `_veraid` subdomain of your domain name (`_veraid.$ORG_NAME`). The TXT record value will look like this:
+
+```
+1 XRSDmxhlZhYx+Y8dUy0LWd+Oinp6l6GZsk9gnZpd8S0= 3600
+```
+
+In this example, `1` denotes the key algorithm (RSA), `XRSDmxhlZhYx+Y8dUy0LWd+Oinp6l6GZsk9gnZpd8S0=` is the base64-encoded public key, and `3600` is the _VeraId TTL override_ (in seconds). You may adjust the TTL depending on your needs.
+
+## 5. Configure the VeraId member
+
+VeraId signatures are attributed to _members_ of the organisation, and there are two types of members: _bots_, which act on behalf of the organisation (e.g. `example.com`), and _users_, which act on their own behalf (e.g. `alice@example.com`). The only difference is that users have names and bots don't.
+
+Run the following command to create a new user named `alice`, but feel free to replace `alice` with any name you like or remove the name altogether if you're creating a bot:
 
 ```bash
 export MEMBER_SIGNATURE_SPECS_ENDPOINT=$(curl --request POST \
-  --url  http://localhost:8080/orgs/chores.fans/members \
+  --url "http://localhost:8080/orgs/$ORG_NAME/members" \
   --header "Authorization: Bearer $SUPER_ADMIN_TOKEN" \
   --header 'Content-Type: application/json' \
   --data '{"name": "alice", "role": "REGULAR"}' \
-  --silent | jq -r .signatureSpecs)
+  | jq -r .signatureSpecs)
 ```
 
-Create
+The command above would output the endpoint of the member's signature specs (e.g. `/orgs/$ORG_NAME/members/{memberId}/signature-specs`), which you'll use in the next step.
+
+## 6. Configure the signature spec
+
+Clients need to obtain a Kliento token bundle, which is a form of _VeraId signature bundle_ where the payload is a JSON object with the attributes `audience` (a string identifying the server where the token bundle will be valid) and `claims` (an optional object of key/value pairs). It's up to the server to define which claims are supported and how they're used.
+
+To get VeraId Authority to issue signature bundles for the desired payload, you'll have to create a _signature spec_ for the member created in the previous step. Before creating the signature spec, let's define the payload and base64-encode it:
+
+```bash
+export KLIENTO_TOKEN='{"audience": "https://api.example.com", "claims": {"foo": "bar"}}'
+
+# On Windows, use an online encoder like https://www.base64decode.org
+export KLIENTO_TOKEN_BASE64=$(echo "$KLIENTO_TOKEN" | base64)
+```
+
+Once the base64-encoded Kliento token is stored in the `KLIENTO_TOKEN_BASE64` environment variable, you can create the signature spec by making a POST request to the member's signature specs endpoint obtained in the previous step:
+
+```bash
+export SIGNATURE_SPEC=$(cat << EOF
+{
+  "auth": {
+    "type": "oidc-discovery",
+    "providerIssuerUrl": "http://mock-authz-server:8080/default",
+    "jwtSubjectField": "email",
+    "jwtSubjectValue": "machine@cloud-provider.example"
+  },
+  "serviceOid": "1.3.6.1.4.1.58708.3.0",
+  "ttlSeconds": 300,
+  "plaintext": "${KLIENTO_TOKEN_BASE64}"
+}
+EOF
+)
+curl --request POST \
+  --url "http://localhost:8080${MEMBER_SIGNATURE_SPECS_ENDPOINT}" \
+  --header "Authorization: Bearer $SUPER_ADMIN_TOKEN" \
+  --header 'Content-Type: application/json' \
+  --data "$SIGNATURE_SPEC"
+```
+
+Where the signature spec is defined as follows:
+
+- `auth` requires the client to present a JWT from the mock OAuth2 server and the claim `email` set to `machine@cloud-provider.example`.
+- `serviceOid` binds the signature bundles to Kliento (OID `1.3.6.1.4.1.58708.3.0`), so they can't be used for other purposes.
+- `ttlSeconds` caps the validity of the signature bundles at 5 minutes (300 seconds).
+- `plaintext` is the base64-encoded Kliento token (`$KLIENTO_TOKEN_BASE64`).
+
+## 7. Implement the server
+
+TODO
+
+## 8. Test it!
+
+TODO
+
+## That's a wrap!
+
+TODO: Explain how to clean up.
+
+## Next steps
+
+- If you need to interact with the VeraId Authority API in your own JavaScript application, use the [`@relaycorp/veraid-authority`](https://github.com/relaycorp/veraid-authority-js) package.
