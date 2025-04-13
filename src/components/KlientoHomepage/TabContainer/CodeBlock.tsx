@@ -29,23 +29,29 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
   }, []);
 
   return (
-    <div className={`p-4 relative max-h-[80vh] overflow-y-auto w-full ${className}`}>
-      {showCopyButton && <CopyButton textToCopy={code} className="absolute right-4 top-4" />}
+    <div className={`relative p-4 w-full ${className}`}>
+      {showCopyButton && (
+        <div className="absolute top-4 right-3 z-10">
+          <CopyButton textToCopy={code} />
+        </div>
+      )}
 
-      <SyntaxHighlighter
-        language={language.toLowerCase()}
-        style={vscDarkPlus}
-        customStyle={{
-          margin: 0,
-          padding: 0,
-          background: "transparent",
-          fontSize: fontSize,
-          lineHeight: "1.5",
-        }}
-        codeTagProps={{ style: { fontSize: "inherit" } }}
-      >
-        {code}
-      </SyntaxHighlighter>
+      <div className="max-h-[50vh] overflow-auto">
+        <SyntaxHighlighter
+          language={language.toLowerCase()}
+          style={vscDarkPlus}
+          customStyle={{
+            margin: 0,
+            padding: 0,
+            background: "transparent",
+            fontSize: fontSize,
+            lineHeight: "1.5",
+          }}
+          codeTagProps={{ style: { fontSize: "inherit" } }}
+        >
+          {code}
+        </SyntaxHighlighter>
+      </div>
     </div>
   );
 };
