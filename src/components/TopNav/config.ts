@@ -14,8 +14,8 @@ export const primaryNavLinks: NavLink[] = [
         href: "/kliento",
         text: "Kliento",
         children: [
-          { href: "/kliento/clients", text: "Clients" },
           { href: "/kliento/servers", text: "Servers" },
+          { href: "/kliento/clients", text: "Clients" },
           { href: "/kliento/overview", text: "Overview" },
         ],
       },
