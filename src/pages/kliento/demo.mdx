@@ -7,11 +7,11 @@ permalink: /kliento/demo
 
 # Test Drive Kliento
 
-This hands-on guide will walk you through the process of obtaining Kliento token bundles attributed to a domain name under your control, and using such bundles to make authenticated requests to a server. We'll also implement a server that verifies such token bundles. This will all be done locally, on your own computer!
+This hands-on guide demonstrates how to set up a complete Kliento authentication system locally. You'll build both client and server components, configure your domain, obtain token bundles, and make authenticated requests between them—all on your own computer. Since Kliento is a small extension to the [VeraId protocol](/), most of this exercise involves setting up [VeraId Authority](https://docs.relaycorp.tech/veraid-authority/) to issue the necessary credentials.
 
-Since Kliento is a small extension to the [VeraId protocol](/), the bulk of this exercise involves configuring your domain name on a local instance of [VeraId Authority](https://docs.relaycorp.tech/veraid-authority/)--a server that facilitates the issuance of VeraId credentials like Kliento token bundles.
+We'll demonstrate how clients can leverage existing workload identities (like those from GitHub Actions or GCP service accounts) to obtain VeraId credentials. Whilst VeraId Authority is technically optional—clients could use long-lived private keys to sign credentials directly—using VeraId Authority simplifies credential management and is the recommended approach for workload authentication.
 
-We want you to learn what's actually happening along the way, so we'll minimise the use of our high-level tooling here in favour of generic, low-level tools (e.g. `curl`). Bear in mind that due to this, and the fact we'll be implementing the client and server sides, this walkthrough may feel more complex than it actually is to integrate Kliento into your application.
+**For educational purposes, we use low-level tools like `curl` rather than our existing high-level tooling** to help you understand what's happening. This, coupled with the fact that we'll be implementing both client and server sides simultaneously, makes this walkthrough appear more complex than a typical Kliento integration would be in production.
 
 If you get stuck at any point, please post a question on the [r/VeraId](https://www.reddit.com/r/VeraId/) Reddit sub.
 
@@ -57,7 +57,7 @@ const app = new Hono().get("/", async (context) => {
 serve({ fetch: app.fetch, port: 3000 });
 ```
 
-The server above exposes a `GET /` endpoint that accepts a `Authorization` header with a Kliento token bundle, and requires the `audience` to be set to the URL of the request.
+The server above exposes a `GET /` endpoint that accepts an `Authorization` header with a Kliento token bundle, and requires the `audience` to be set to the URL of the request.
 
 Next, create the `package.json` file with the following content:
 
@@ -266,7 +266,7 @@ export MEMBER_SIGNATURE_SPECS_ENDPOINT=$(curl --request POST \
   | jq -r .signatureSpecs)
 ```
 
-The command above would output the endpoint of the member's signature specs (e.g. `/orgs/$ORG_NAME/members/{memberId}/signature-specs`), which you'll use in the next step.
+The command above will output the endpoint of the member's signature specs (e.g. `/orgs/$ORG_NAME/members/{memberId}/signature-specs`), which you'll use in the next step.
 
 ## 7. Configure the signature spec
 
@@ -358,16 +358,7 @@ Remember that you set the signature spec to expire in 10 minutes, so you can reu
 
 ## That's a wrap!
 
-Congratulations! You've successfully set up a complete Kliento system on your local machine. Let's recap what we've accomplished:
-
-1. We set up a local VeraId Authority instance to manage your domain's credentials.
-2. We implemented a simple server that verifies Kliento token bundles.
-3. We configured your domain in VeraId Authority.
-4. We created a user or bot identity associated with your domain.
-5. We configured a signature spec that allows the exchange of JWTs for Kliento token bundles.
-6. We demonstrated the complete flow: obtaining a JWT, exchanging it for a token bundle, and using that bundle to make an authenticated request.
-
-This hands-on exercise has shown you the fundamental components of Kliento authentication and how they work together to provide domain-based identity for your applications.
+Congratulations! You've successfully set up a complete Kliento system on your local machine. You've deployed a local VeraId Authority instance, implemented a server that validates token bundles, created domain-based identities, and demonstrated the full authentication flow from JWT exchange to making authenticated requests.
 
 To clean up:
 
@@ -381,9 +372,9 @@ To clean up:
    rm compose.yml server.js package.json Dockerfile
    ```
 
-## Next steps
+## Additional resources
 
-- [Learn about integrating Kliento in your clients](/kliento/clients).
-- [Learn about integrating Kliento in your servers](/kliento/servers).
+- [Integrate Kliento in your clients](/kliento/clients).
+- [Integrate Kliento in your servers](/kliento/servers).
 - [Read the technical overview of the protocol](/kliento/overview).
-- If you need to interact with the VeraId Authority API in your own JavaScript application, use the [`@relaycorp/veraid-authority`](https://github.com/relaycorp/veraid-authority-js) package.
+- [If you need to interact with the VeraId Authority API in your own JavaScript application, use the `@relaycorp/veraid-authority` package](https://github.com/relaycorp/veraid-authority-js).
