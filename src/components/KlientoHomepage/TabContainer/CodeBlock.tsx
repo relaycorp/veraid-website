@@ -20,7 +20,13 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
 
   useEffect(() => {
     const handleResize = () => {
-      setFontSize(window.innerWidth < 640 ? "0.75rem" : "1rem");
+      if (window.innerWidth < 640) {
+        setFontSize("0.75rem");
+      } else if (window.innerWidth < 1024) {
+        setFontSize("0.875rem");
+      } else {
+        setFontSize("1rem");
+      }
     };
 
     handleResize();
