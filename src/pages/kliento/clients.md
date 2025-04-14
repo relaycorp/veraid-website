@@ -2,7 +2,6 @@
 title: "Integrate Kliento in your clients"
 description: "How to integrate Kliento in your clients using different programming languages, and with and without VeraId Authority"
 layout: ../../layouts/KlientoPage.astro
-permalink: /kliento/clients
 ---
 
 # Integrate Kliento in your clients
@@ -67,7 +66,7 @@ export async function authFetch(request: Request) {
 }
 ```
 
-Although this example obtains a token bundle for each request, you reuse it for as long as it is valid (up to 5 minutes in your signature spec).
+Although this example obtains a token bundle for each request, you could reuse it for as long as it is valid (up to 5 minutes in your signature spec).
 
 ### GitHub Actions
 
@@ -112,7 +111,7 @@ The response will contain a base64-encoded token bundle which can be used in the
 
 In a future where Kliento becomes widely adopted, many clients may not need VeraId Authority if their cloud provider issues Kliento token bundles directly. For example, GitHub could issue token bundles for GitHub Actions workloads with identifiers like `your-repo@your-org.github.io`.
 
-Until then, if you don't want to use VeraId Authority, you will have to manage the issuance of VeraId _signature bundles_ that represent Kliento token bundles using a VeraId library like [`@relaycorp/veraid`](https://github.com/relaycorp/veraid-js). You'll basically have to generate a key pair for your _organisation_ and use the SDK to generate the VeraId TXT record (based on the public key of your organisation) and issue Kliento token bundles using your organisation's private key.
+Until then, if you don't want to use VeraId Authority, you will have to manage the issuance of VeraId _signature bundles_ that represent Kliento token bundles using a VeraId library like [`@relaycorp/veraid`](https://github.com/relaycorp/veraid-js). You'll basically have to generate a key pair for your _organisation_, and then use the SDK to generate the VeraId TXT record and issue Kliento token bundles using your organisation's private key.
 
 Since your client must now securely manage a private key, we recommend using a Key Management Service (KMS) like [AWS KMS](https://aws.amazon.com/kms/). If you're using JavaScript, consider using the [`@relaycorp/webcrypto-kms`](https://github.com/relaycorp/webcrypto-kms-js) library.
 
