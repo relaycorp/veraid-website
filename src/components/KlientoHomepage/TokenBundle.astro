@@ -1,33 +1,35 @@
 ---
 import tokenBundle from "../../assets/images/token-bundle.svg";
-import CtaButton from "../CtaButton.astro";
+import AnimatedSection from "../common/AnimatedSection";
 ---
 
 <section class="py-10 lg:py-16">
-  <div class="mx-auto max-w-6xl px-4 lg:px-6">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 items-center">
-      <div class="order-2 lg:order-1">
-        <div class="flex justify-center items-center">
-          <img src={tokenBundle.src} alt="Token bundle illustration" />
+  <AnimatedSection client:visible>
+    <div class="mx-auto max-w-6xl px-4 lg:px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 items-center">
+        <div class="order-2 lg:order-1">
+          <div class="flex justify-center items-center">
+            <img src={tokenBundle.src} alt="Token bundle illustration" />
+          </div>
+        </div>
+
+        <div class="text-left order-1 lg:order-2 space-y-6 text-sm lg:text-base">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem]">
+            Kliento credentials are <span
+              class="bg-gradient-to-r from-indigo-400 via-indigo-300 to-indigo-200 !text-transparent bg-clip-text"
+              >self-contained</span
+            >
+          </h2>
+          <p>
+            Kliento is powered by <a href="/" class="text-indigo-400!">VeraId</a>, a DNSSEC-based
+            protocol that attributes digital signatures to domain names.
+          </p>
+          <p>
+            Kliento <i>token bundles</i> are <b>short-lived</b> VeraId signatures, which contain the
+            entire trust chain, so <b>no public keys need to be configured or retrieved</b>.
+          </p>
         </div>
       </div>
-
-      <div class="text-left order-1 lg:order-2 space-y-6 text-sm lg:text-base">
-        <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem]">
-          Kliento credentials are <span
-            class="bg-gradient-to-r from-indigo-400 via-indigo-300 to-indigo-200 !text-transparent bg-clip-text"
-            >self-contained</span
-          >
-        </h2>
-        <p>
-          Kliento is powered by <a href="/" class="text-indigo-400!">VeraId</a>, a DNSSEC-based
-          protocol that attributes digital signatures to domain names.
-        </p>
-        <p>
-          Kliento <i>token bundles</i> are <b>short-lived</b> VeraId signatures, which contain the entire
-          trust chain, so <b>no public keys need to be configured or retrieved</b>.
-        </p>
-      </div>
     </div>
-  </div>
+  </AnimatedSection>
 </section>

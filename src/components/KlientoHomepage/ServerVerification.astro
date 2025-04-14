@@ -1,32 +1,35 @@
 ---
 import CtaButton from "../CtaButton.astro";
 import TabContainerServerVerification from "./TabContainer/TabContainerServerVerification.tsx";
+import AnimatedSection from "../common/AnimatedSection";
 ---
 
 <section class="bg-neutral-900 py-8 lg:py-16">
-  <div
-    class="max-w-5xl mx-auto text-left px-4 lg:px-6 [&>p]:text-sm [&>p]:lg:text-lg [&>p]:max-w-4xl [&>p]:mx-auto"
-  >
-    <h2 class="text-3xl lg:text-6xl mb-4 lg:mb-8 text-center">Server-side verification</h2>
-    <p>
-      Servers verify token bundles locally, without accessing remote servers or configuring trusted
-      public keys.
-    </p>
+  <AnimatedSection client:visible>
+    <div
+      class="max-w-5xl mx-auto text-left px-4 lg:px-6 [&>p]:text-sm [&>p]:lg:text-lg [&>p]:max-w-4xl [&>p]:mx-auto"
+    >
+      <h2 class="text-3xl lg:text-6xl mb-4 lg:mb-8 text-center">Server-side verification</h2>
+      <p>
+        Servers verify token bundles locally, without accessing remote servers or configuring
+        trusted public keys.
+      </p>
 
-    <TabContainerServerVerification client:load />
+      <TabContainerServerVerification client:load />
 
-    <p>
-      Upon successful verification, your server obtains the <code>subjectId</code> of the client (e.g.
-      <code>staging@customer.app</code>) and any <code>claims</code> present. You decide what claims
-      are supported and how they're used.
-    </p>
+      <p>
+        Upon successful verification, your server obtains the <code>subjectId</code> of the client (e.g.
+        <code>staging@customer.app</code>) and any <code>claims</code> present. You decide what claims
+        are supported and how they're used.
+      </p>
 
-    <div class="flex justify-center mt-8">
-      <CtaButton
-        href="/kliento/servers"
-        text="Integrate Kliento in your server"
-        variant="primaryKliento"
-      />
+      <div class="flex justify-center mt-8">
+        <CtaButton
+          href="/kliento/servers"
+          text="Integrate Kliento in your server"
+          variant="primaryKliento"
+        />
+      </div>
     </div>
-  </div>
+  </AnimatedSection>
 </section>
