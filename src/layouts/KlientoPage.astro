@@ -11,5 +11,19 @@ import klientoLogo from "../assets/images/kliento-logo.png";
     logoSrc={klientoLogo.src}
     slot="kliento-header"
   />
-  <slot />
+  <div class="kliento-content">
+    <slot />
+  </div>
 </Page>
+<style>
+  /* Override link styles for Kliento pages */
+  :global(.kliento-content a) {
+    color: #839cff !important;
+    text-decoration: none;
+  }
+
+  :global(.kliento-content a:hover) {
+    color: #a3b6ff !important;
+    text-decoration: underline;
+  }
+</style>
