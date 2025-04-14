@@ -2,6 +2,7 @@
 import { SecondaryNav } from "../components/TopNav/SecondaryNav";
 import Page from "./Page.astro";
 import klientoLogo from "../assets/images/kliento-logo.png";
+import "../styles/kliento.css";
 ---
 
 <Page {...Astro.props} showBrandInTitle={false}>
@@ -11,5 +12,7 @@ import klientoLogo from "../assets/images/kliento-logo.png";
     logoSrc={klientoLogo.src}
     slot="kliento-header"
   />
-  <slot />
+  <div class="kliento-content">
+    <slot />
+  </div>
 </Page>

@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+.kliento-content a {
+  @apply text-indigo-300;
+}
+
+.kliento-content a:hover {
+  @apply text-indigo-400;
+}
+
+.kliento-content code > a {
+  @apply text-indigo-300;
+}
+
+.kliento-content code > a:hover {
+  @apply text-indigo-400;
+}
+
+.kliento-content a > code {
+  @apply text-indigo-300;
+}
+
+.kliento-content a > code:hover {
+  @apply text-indigo-400;
+}

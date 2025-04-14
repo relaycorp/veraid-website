@@ -9,12 +9,12 @@ const identifiers = [
 ---
 
 <div
-  class="w-full h-[64px] overflow-hidden border-2 rounded-md border-neutral-700 bg-neutral-800 text-lg relative carousel-container"
+  class="w-full h-[64px] overflow-hidden rounded-md border-2 border-neutral-700 bg-neutral-800 text-lg relative carousel-container"
 >
   <div class="absolute top-0 left-0 w-full text-wrapper text-white">
     {
       identifiers.map((identifier) => (
-        <div class="h-[64px] flex items-center justify-center px-4">{identifier}</div>
+        <div class="h-[60px] flex items-center justify-center px-4">{identifier}</div>
       ))
     }
   </div>
@@ -34,31 +34,31 @@ const identifiers = [
     }
 
     20% {
-      transform: translateY(-64px);
+      transform: translateY(-60px);
     }
     35% {
-      transform: translateY(-64px);
+      transform: translateY(-60px);
     }
 
     40% {
-      transform: translateY(-128px);
+      transform: translateY(-120px);
     }
     55% {
-      transform: translateY(-128px);
+      transform: translateY(-120px);
     }
 
     60% {
-      transform: translateY(-192px);
+      transform: translateY(-180px);
     }
     75% {
-      transform: translateY(-192px);
+      transform: translateY(-180px);
     }
 
     80% {
-      transform: translateY(-256px);
+      transform: translateY(-240px);
     }
     95% {
-      transform: translateY(-256px);
+      transform: translateY(-240px);
     }
 
     100% {

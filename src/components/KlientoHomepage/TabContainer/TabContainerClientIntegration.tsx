@@ -5,7 +5,7 @@ import CodeBlock from "./CodeBlock";
 import JavaScriptIcon from "../../../assets/icons/JavaScript.svg?react";
 import GitHubIcon from "../../../assets/icons/github.svg?react";
 
-const PARAGRAPH = "px-4 text-xs lg:text-base leading-normal pb-4";
+const PARAGRAPH = "px-4 text-xs sm:text-sm lg:text-base leading-normal pb-4";
 const CONTENT_CONTAINER = "text-left pt-4 bg-black";
 
 const TabContainerClientIntegration: React.FC = () => {
