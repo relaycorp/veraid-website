@@ -40,6 +40,8 @@ Content-Type: application/json
 
 Note that `plaintext` represents the base64-encoded value that will be signed, which in the case of Kliento must be a JSON object with the properties `audience` (a string identifying the target server) and `claims` (an optional object containing a key/value pair for each claim).
 
+The JSON response to the request above will contain a field with the URL to the exchange endpoint (`exchangeUrl`) that your client will use to obtain token bundles.
+
 Refer to the [Credentials Exchange API documentation](https://docs.relaycorp.tech/veraid-authority/credentials) for more information.
 
 ### JavaScript
