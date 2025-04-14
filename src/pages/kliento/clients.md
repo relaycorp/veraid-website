@@ -34,13 +34,13 @@ Content-Type: application/json
   },
   "serviceOid": "1.3.6.1.4.1.58708.1.1",
   "ttlSeconds": 300,
-  "plaintext": "SGVsbG8gd29ybGQ="
+  "plaintext": "eyJhdWRpZW5jZSI6Imh0dHA6Ly9sb2NhbGhvc3QvIn0K"
 }
 ```
 
-Note that `plaintext` represents the base64-encoded value that will be signed, which in the case of Kliento must be a JSON object with the properties `audience` (a string identifying the target server) and `claims` (an optional object containing a key/value pair for each claim).
+Note that `plaintext` represents the base64-encoded value that will be signed, which in the case of Kliento must be a JSON object with the properties `audience` (a string identifying the target server) and `claims` (an optional object containing a key/value pair for each claim). In the example above, `plaintext` represents the base64 encoding of `{"audience":"https://localhost/"}`.
 
-The JSON response to the request above will contain a field with the URL to the exchange endpoint (`exchangeUrl`) that your client will use to obtain token bundles.
+The response to the request above will be a JSON object containing the URL that your client will use to exchange token bundles (`exchangeUrl`).
 
 Refer to the [Credentials Exchange API documentation](https://docs.relaycorp.tech/veraid-authority/credentials) for more information.
 
@@ -66,6 +66,8 @@ export async function authFetch(request: Request) {
   return fetch(request, { headers })
 }
 ```
+
+Although this example obtains a token bundle for each request, you reuse it for as long as it is valid (up to 5 minutes in your signature spec).
 
 ### GitHub Actions
 
@@ -108,19 +110,68 @@ The response will contain a base64-encoded token bundle which can be used in the
 
 ## Without VeraId Authority
 
-In a future where Kliento becomes widely adopted, many clients may not need to exchange credentials with VeraId Authority. Instead, their cloud provider may issue Kliento token bundles directly. For example, GitHub could issue token bundles for GitHub Actions workloads with identifiers like `your-repo@your-org.github.io`.
+In a future where Kliento becomes widely adopted, many clients may not need VeraId Authority if their cloud provider issues Kliento token bundles directly. For example, GitHub could issue token bundles for GitHub Actions workloads with identifiers like `your-repo@your-org.github.io`.
 
-Until then, if you don't want to use VeraId Authority, you will have to manage the issuance of VeraId _signature bundles_ that represent Kliento token bundles. This is an advanced topic and it mostly involves using VeraId directly, preferably via a high-level SDK like [`@relaycorp/veraid`](https://github.com/relaycorp/veraid-js). You'll basically have to generate a key pair for your _organisation_ and use the SDK to:
+Until then, if you don't want to use VeraId Authority, you will have to manage the issuance of VeraId _signature bundles_ that represent Kliento token bundles using a VeraId library like [`@relaycorp/veraid`](https://github.com/relaycorp/veraid-js). You'll basically have to generate a key pair for your _organisation_ and use the SDK to generate the VeraId TXT record (based on the public key of your organisation) and issue Kliento token bundles using your organisation's private key.
 
-- Generate the value of your VeraId TXT record based on the public key of your organisation.
-- Generate Kliento token bundles using your organisation's private key. A VeraId signature bundle contains:
+Since your client must now securely manage a private key, we recommend using a Key Management Service (KMS) like [AWS KMS](https://aws.amazon.com/kms/). If you're using JavaScript, consider using the [`@relaycorp/webcrypto-kms`](https://github.com/relaycorp/webcrypto-kms-js) library.
 
-  - A DNSSEC chain, which you'll have to retrieve.
-  - The organisation's certificate (which you'll have to issue and optionally cache).
-  - The signature itself, which in the case of Kliento must encapsulate a JSON object with the properties `audience` and `claims`.
+### Generate VeraId TXT record
 
-  If your client is written in JavaScript, you should use the high-level [`@veraid/kliento`](https://github.com/CheVeraId/kliento-js) library.
+The value of the VeraId TXT record is mostly derived from the public key of your organisation, but it also contains the maximum validity period of the DNSSEC chain.
 
-Since your client must now securely manage a private key, we recommend using a Key Management Service (KMS) like [AWS KMS](https://aws.amazon.com/kms/) or [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault/).
+For example, you can use the VeraId JavaScript library to generate such values as follows:
 
-If you need help with this, [reach out to us on Reddit](https://www.reddit.com/r/VeraId/).
+```javascript
+import { generateTxtRdata } from "@relaycorp/veraid";
+
+const TTL_OVERRIDE_SECONDS = 3600; // 1 hour
+
+const publicKey = await getYourPublicKey();
+const txtRecord = await generateTxtRdata(publicKey, TTL_OVERRIDE_SECONDS);
+```
+
+You'd then paste the result into the `TXT` record of your `_veraid.<your-domain>` subdomain. Evidently, you only need to do this once.
+
+### Issue Kliento token bundles
+
+Once your domain is properly configured, your client can issue Kliento token bundles using the organisation's private key. This basically involves generating VeraId signature bundles that encapsulate Kliento tokens (the end result being the token bundles).
+
+For example, the VeraId JavaScript library could be used with the [`@veraid/kliento`](https://github.com/CheVeraId/kliento-js) library to issue Kliento token bundles as follows:
+
+```javascript
+import {
+  OrganisationSigner,
+  selfIssueOrganisationCertificate,
+  VeraidDnssecChain,
+} from "@relaycorp/veraid";
+import { Token, TokenBundle } from "@veraid/kliento";
+
+// VeraId configuration
+const ORG_NAME = "your-company.com";
+const MEMBER_NAME = "alice";
+const TTL_SECONDS = 300; // 5 minutes
+
+// Kliento configuration
+const AUDIENCE = "https://localhost/";
+const TOKEN = new Token(AUDIENCE, { claim1: "value1" });
+
+async function issueTokenBundle() {
+  const domainName = `${ORG_NAME}.`;
+
+  // Retrieve DNSSEC chain or retrieve it from cache
+  const dnssecChain = await VeraidDnssecChain.retrieve(domainName);
+
+  // Issue organisation certificate or retrieve it from cache
+  const keyPair = await getYourKeyPair();
+  const expiry = new Date(Date.now() + TTL_SECONDS * 1000);
+  const certificate = await selfIssueOrganisationCertificate(domainName, keyPair, expiry);
+
+  // Finally, issue token bundle and return it as an ArrayBuffer
+  const signer = new OrganisationSigner(dnssecChain, certificate, MEMBER_NAME);
+  const tokenBundle = await TokenBundle.sign(TOKEN, keyPair.privateKey, signer, expiry);
+  return tokenBundle.serialise();
+}
+```
+
+If you went down this route, we'd love to hear about it on [r/VeraId](https://reddit.com/r/VeraId) so we can see if we can make things easier in the future.
