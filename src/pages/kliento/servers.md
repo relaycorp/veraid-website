@@ -8,7 +8,7 @@ layout: ../../layouts/KlientoPage.astro
 
 Kliento is a client authentication protocol that provides secure, offline-verifiable credentials. When clients present token bundles to your server, you simply verify them locally without accessing remote servers or pre-configuring trusted public keys—unlike JWTs which require JWKS endpoints.
 
-This guide explains how to implement server-side verification of Kliento token bundles, allowing you to securely identify clients and validate their claims.
+This guide explains how to implement server-side verification of Kliento token bundles across different platforms.
 
 ## JavaScript
 
