@@ -11,3 +11,11 @@ html {
 :not(pre) > code {
   @apply bg-neutral-700 rounded-sm py-0.5 px-1 border border-neutral-600;
 }
+
+.kliento-content a {
+  @apply text-indigo-300;
+}
+
+.kliento-content a:hover {
+  @apply text-indigo-400;
+}
