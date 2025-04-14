@@ -9,7 +9,7 @@ permalink: /kliento/demo
 
 This hands-on guide demonstrates how to set up a complete Kliento authentication system locally. You'll build both client and server components, configure your domain, obtain token bundles, and make authenticated requests between them—all on your own computer. Since Kliento is a small extension to the [VeraId protocol](/), most of this exercise involves setting up [VeraId Authority](https://docs.relaycorp.tech/veraid-authority/) to issue the necessary credentials.
 
-We'll demonstrate how clients can leverage existing workload identities (like those from GitHub Actions or GCP service accounts) to obtain VeraId credentials. Whilst VeraId Authority is technically optional—clients could use long-lived private keys to sign credentials directly—using VeraId Authority simplifies credential management and is the recommended approach for workload authentication.
+We'll demonstrate how clients can leverage existing workload identities (like those from GitHub Actions or GCP service accounts) to obtain VeraId credentials. Whilst [VeraId Authority is technically optional](/kliento/clients/#without-veraid-authority)—clients could use long-lived private keys to sign credentials directly—using VeraId Authority simplifies credential management and is the recommended approach for workload authentication.
 
 **For educational purposes, we use low-level tools like `curl` rather than our existing high-level tooling** to help you understand what's happening. This, coupled with the fact that we'll be implementing both client and server sides simultaneously, makes this walkthrough appear more complex than a typical Kliento integration would be in production.
 
