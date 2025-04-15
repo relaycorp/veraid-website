@@ -1,6 +1,6 @@
 ---
-title: "Overview"
-description: "Overview"
+title: "Technical Overview of Kliento"
+description: "Technical overview of Kliento, a client authentication protocol providing secure, offline-verifiable credentials without shared secrets or public key distribution"
 layout: ../../layouts/KlientoPage.astro
 ---
 
