@@ -1,62 +1,69 @@
 ---
 import { Image } from "astro:assets";
-import apiAuthentication from "../../assets/images/api-authentication.png";
 import documentSigning from "../../assets/images/document-signing.png";
 import decentralisedSystems from "../../assets/images/decentralised-systems.png";
 import offlineAuthentication from "../../assets/images/offline-authentication.png";
+import klientoLogo from "../../assets/images/kliento-logo.svg";
 import CtaButton from "../CtaButton.astro";
-import AnimatedSection from "../common/AnimatedSection";
+
+const cardClass = "space-y-2 bg-neutral-800 p-4 rounded-lg border border-neutral-700";
+const cardIconClass = "w-12 h-12";
 ---
 
-<section class="px-4 sm:px-6 py-12 md:py-16 bg-neutral-900 text-sm md:text-base">
-  <AnimatedSection client:visible>
-    <div class="max-w-6xl mx-auto">
-      <h2 id="use-cases" class="text-3xl sm:text-4xl md:text-6xl text-center md:mb-12 mb-8">
-        Use cases
-      </h2>
-      <div
-        class="grid md:grid-cols-2 md:gap-16 gap-8 [&>div>h3]:text-xl [&>div>h3]:sm:text-xl [&>div>h3]:md:text-3xl [&>div>h3]:font-semibold [&>div>h3]:mt-4"
-      >
-        <div class="space-y-2">
-          <Image src={apiAuthentication} alt="API Authentication icon" class="w-12 h-12" />
-          <h3>Service accounts for the Internet</h3>
-          <p class="text-gray-300">
-            Ditch API keys! Clients authenticate by proving their identity (e.g. alice@example.com).
-            Think AWS roles or Azure managed identities, but for the entire Internet!
-          </p>
-        </div>
+<section class="px-4 sm:px-6 py-10 md:py-16 text-sm md:text-base bg-neutral-900">
+  <div class="max-w-6xl mx-auto space-y-8">
+    <h2 class="text-3xl sm:text-4xl md:text-6xl text-center mb-6 lg:mb-8">Use cases</h2>
+    <div
+      class="grid md:grid-cols-2 gap-6 lg:gap-0 items-center bg-neutral-800 p-4 rounded-lg py-6 lg:py-8 border border-neutral-700"
+    >
+      <div class="flex justify-start lg:justify-center">
+        <Image src={klientoLogo} alt="Kliento logo" class="w-2/4 md:w-3/5" />
+      </div>
 
-        <div class="space-y-2">
-          <Image src={documentSigning} alt="API Authentication icon" class="w-12 h-12" />
-          <h3>Artefact signing</h3>
-          <p class="text-gray-300">
-            Sign documents, apps, libraries, and other files on behalf of a domain name, without
-            gatekeepers like Adobe or Microsoft.
-          </p>
-        </div>
-
-        <div class="space-y-2">
-          <Image src={offlineAuthentication} alt="API Authentication icon" class="w-12 h-12" />
-          <h3>Offline user authentication</h3>
-          <p class="text-gray-300">
-            Enable users of offline systems to authenticate with user-friendly, customisable
-            identifiers. That's how <a href="https://letro.app/en/">Letro</a> uses VeraId!
-          </p>
-        </div>
-
-        <div class="space-y-2">
-          <Image src={decentralisedSystems} alt="API Authentication icon" class="w-12 h-12" />
-          <h3>Next-gen decentralised systems</h3>
-          <p class="text-gray-300">
-            VeraId enables systems that are hard to imagine today, like peer-to-peer web hosting
-            with contents reliably attributed to their respective domain names.
-          </p>
+      <div>
+        <h3 class="text-xl md:text-2xl mb-3">Workload authentication</h3>
+        <p>
+          Ditch API keys! Clients authenticate by proving their identity (e.g. alice@example.com).
+          Think AWS roles or Azure managed identities, but for the entire Internet!
+        </p>
+        <div class="mt-6">
+          <CtaButton href="/kliento" text="Learn about Kliento" variant="primaryVeraid" />
         </div>
       </div>
     </div>
+    <div
+      class="grid md:grid-cols-3 gap-8 [&>div>h3]:text-xl [&>div>h3]:sm:text-xl [&>div>h3]:md:text-xl [&>div>h3]:mt-4"
+    >
+      <div class={cardClass}>
+        <Image src={documentSigning} alt="Document Signing icon" class={cardIconClass} />
+        <h3>Artefact signing</h3>
+        <p>
+          Sign documents, apps, libraries, and other files on behalf of a domain name, without
+          gatekeepers like Adobe or Microsoft.
+        </p>
+      </div>
 
-    <div class="flex justify-center pt-8 lg:pt-12">
-      <CtaButton href="/services" text="See services" />
+      <div class={cardClass}>
+        <Image
+          src={offlineAuthentication}
+          alt="Offline Authentication icon"
+          class={cardIconClass}
+        />
+        <h3>Offline user authentication</h3>
+        <p>
+          Enable users of offline systems to authenticate with user-friendly, customisable
+          identifiers. That's how <a href="https://letro.app/en/" class="underline">Letro</a> uses VeraId!
+        </p>
+      </div>
+
+      <div class={cardClass}>
+        <Image src={decentralisedSystems} alt="Decentralised Systems icon" class={cardIconClass} />
+        <h3>Next-gen decentralised systems</h3>
+        <p>
+          VeraId enables systems that are hard to imagine today, like peer-to-peer web hosting with
+          contents reliably attributed to their respective domain names.
+        </p>
+      </div>
     </div>
-  </AnimatedSection>
+  </div>
 </section>
