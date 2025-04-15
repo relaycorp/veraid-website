@@ -1,34 +1,37 @@
 ---
 import checkmarkIcon from "../../assets/icons/checkmark.svg?raw";
+import AnimatedSection from "../common/AnimatedSection";
 
 const CheckIcon = `<div class="w-6 h-6 text-green-400 shrink-0">${checkmarkIcon}</div>`;
 ---
 
 <section class="px-4 sm:px-6 py-12 md:py-16">
-  <div
-    class="flex flex-col md:flex-row justify-between items-start md:gap-16 gap-8 max-w-6xl mx-auto"
-  >
-    <div class="max-w-sm">
-      <h2 class="text-3xl sm:text-4xl md:text-6xl">Key features</h2>
-    </div>
+  <AnimatedSection client:visible>
+    <div
+      class="flex flex-col md:flex-row justify-between items-start md:gap-16 gap-8 max-w-6xl mx-auto"
+    >
+      <div class="max-w-sm">
+        <h2 class="text-3xl sm:text-4xl md:text-6xl">Key features</h2>
+      </div>
 
-    <ul class="space-y-8 text-sm md:text-lg">
-      <li class="flex items-center gap-4">
-        <Fragment set:html={CheckIcon} />
-        <span>Extends battle-tested standards like DNSSEC, X.509 and CMS.</span>
-      </li>
-      <li class="flex items-center gap-4">
-        <Fragment set:html={CheckIcon} />
-        <span>Open protocol with open source reference implementations.</span>
-      </li>
-      <li class="flex items-center gap-4">
-        <Fragment set:html={CheckIcon} />
-        <span>As decentralised as DNS itself.</span>
-      </li>
-      <li class="flex items-center gap-4">
-        <Fragment set:html={CheckIcon} />
-        <span>Signatures can be produced and verified offline.</span>
-      </li>
-    </ul>
-  </div>
+      <ul class="space-y-8 text-sm md:text-lg">
+        <li class="flex items-center gap-4">
+          <Fragment set:html={CheckIcon} />
+          <span>Extends battle-tested standards like DNSSEC, X.509 and CMS.</span>
+        </li>
+        <li class="flex items-center gap-4">
+          <Fragment set:html={CheckIcon} />
+          <span>Open protocol with open source reference implementations.</span>
+        </li>
+        <li class="flex items-center gap-4">
+          <Fragment set:html={CheckIcon} />
+          <span>As decentralised as DNS itself.</span>
+        </li>
+        <li class="flex items-center gap-4">
+          <Fragment set:html={CheckIcon} />
+          <span>Signatures can be produced and verified offline.</span>
+        </li>
+      </ul>
+    </div>
+  </AnimatedSection>
 </section>

@@ -1,39 +1,42 @@
 ---
 import ChainVerificationAnimation from "../ChainVerificationAnimation";
 import CtaButton from "../CtaButton.astro";
+import AnimatedSection from "../common/AnimatedSection";
 ---
 
 <section class="bg-neutral-900 px-4 sm:px-4 lg:px-6 py-12 md:py-16 text-sm md:text-base">
-  <div class="max-w-6xl mx-auto">
-    <h2 id="how-it-works" class="text-3xl sm:text-4xl md:text-6xl text-center mb-8">
-      How it works
-    </h2>
+  <AnimatedSection client:visible>
+    <div class="max-w-6xl mx-auto">
+      <h2 id="how-it-works" class="text-3xl sm:text-4xl md:text-6xl text-center mb-8">
+        How it works
+      </h2>
 
-    <div class="space-y-6 text-gray-300">
-      <p>
-        VeraId combines DNSSEC with a new Public Key Infrastructure (PKI) to produce signatures that
-        can be linked to a domain name. Every signature contains enough data to be independently
-        verified without external queries, like DNS lookups.
-      </p>
+      <div class="space-y-6 text-gray-300">
+        <p>
+          VeraId combines DNSSEC with a new Public Key Infrastructure (PKI) to produce signatures
+          that can be linked to a domain name. Every signature contains enough data to be
+          independently verified without external queries, like DNS lookups.
+        </p>
 
-      <p>
-        For example, this is how we'd verify a <em>VeraId Signature Bundle</em> attributing "Bazinga!"
-        to <code>sheldon@caltech.edu</code>:
-      </p>
+        <p>
+          For example, this is how we'd verify a <em>VeraId Signature Bundle</em> attributing "Bazinga!"
+          to <code>sheldon@caltech.edu</code>:
+        </p>
 
-      <ChainVerificationAnimation client:load />
+        <ChainVerificationAnimation client:load />
 
-      <p>
-        Any DNSSEC-enabled domain can be a trust anchor in the PKI, but it only has control over
-        itself. This offers far better security than PKIs such as the Transport Layer Security
-        (TLS), where many trust anchors (Certificate Authorities) can issue certificates for any
-        domain.
-      </p>
+        <p>
+          Any DNSSEC-enabled domain can be a trust anchor in the PKI, but it only has control over
+          itself. This offers far better security than PKIs such as the Transport Layer Security
+          (TLS), where many trust anchors (Certificate Authorities) can issue certificates for any
+          domain.
+        </p>
 
-      <div class="flex flex-col md:flex-row justify-center items-center pt-4 gap-4 text-center">
-        <CtaButton href="/overview" text="Read technical overview" />
-        <CtaButton href="/demo" text="Try demo" variant="secondaryVeraid" />
+        <div class="flex flex-col md:flex-row justify-center items-center pt-4 gap-4 text-center">
+          <CtaButton href="/overview" text="Read technical overview" />
+          <CtaButton href="/demo" text="Try demo" variant="secondaryVeraid" />
+        </div>
       </div>
     </div>
-  </div>
+  </AnimatedSection>
 </section>

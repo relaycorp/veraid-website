@@ -2,38 +2,41 @@
 import CtaButton from "../CtaButton.astro";
 import WorkloadIdentityCarousel from "./Carousel/Carousel.tsx";
 import TabContainerClientIntegration from "./TabContainer/TabContainerClientIntegration.tsx";
+import AnimatedSection from "../common/AnimatedSection";
 ---
 
 <section class="py-8 lg:py-16">
-  <div
-    class="max-w-5xl mx-auto px-4 lg:px-6 [&>p]:text-sm [&>p]:lg:text-lg [&>p]:max-w-4xl [&>p]:mx-auto"
-  >
-    <h2 class="text-3xl lg:text-6xl mb-4 lg:mb-8 text-center">Client integration</h2>
-    <p>
-      The easiest way to integrate Kliento is to obtain pre-configured token bundles from <a
-        href="https://docs.relaycorp.tech/veraid-authority/"
-        class="text-indigo-400!">VeraId Authority</a
-      >
-      by leveraging your existing workflow identity (e.g. GCP service account, GitHub workflow).
-    </p>
+  <AnimatedSection client:visible>
+    <div
+      class="max-w-5xl mx-auto px-4 lg:px-6 [&>p]:text-sm [&>p]:lg:text-lg [&>p]:max-w-4xl [&>p]:mx-auto"
+    >
+      <h2 class="text-3xl lg:text-6xl mb-4 lg:mb-8 text-center">Client integration</h2>
+      <p>
+        The easiest way to integrate Kliento is to obtain pre-configured token bundles from <a
+          href="https://docs.relaycorp.tech/veraid-authority/"
+          class="text-indigo-400!">VeraId Authority</a
+        >
+        by leveraging your existing workflow identity (e.g. GCP service account, GitHub workflow).
+      </p>
 
-    <TabContainerClientIntegration client:load />
+      <TabContainerClientIntegration client:load />
 
-    <p>Token bundles remain valid for up to an hour and can be used multiple times.</p>
+      <p>Token bundles remain valid for up to an hour and can be used multiple times.</p>
 
-    <p class="my-6">
-      As an alternative to using your workflow identity and VeraId Authority, you could generate
-      such bundles locally with your own private keys.
-    </p>
+      <p class="my-6">
+        As an alternative to using your workflow identity and VeraId Authority, you could generate
+        such bundles locally with your own private keys.
+      </p>
 
-    <div class="flex justify-center mt-8">
-      <CtaButton
-        href="/kliento/clients"
-        text="Integrate Kliento in your client"
-        variant="primaryKliento"
-      />
+      <div class="flex justify-center mt-8">
+        <CtaButton
+          href="/kliento/clients"
+          text="Integrate Kliento in your client"
+          variant="primaryKliento"
+        />
+      </div>
     </div>
-  </div>
+  </AnimatedSection>
 
   <WorkloadIdentityCarousel client:load />
 </section>

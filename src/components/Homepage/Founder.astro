@@ -1,40 +1,44 @@
 ---
 import { Image } from "astro:assets";
 import founderPortrait from "../../assets/images/founder-portrait.png";
+import AnimatedSection from "../common/AnimatedSection";
 ---
 
 <section class="px-4 sm:px-6 py-10 sm:py-16 text-sm md:text-base">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl sm:text-4xl md:text-6xl text-center mb-8">Forged from necessity</h2>
+  <AnimatedSection client:visible>
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl md:text-6xl text-center mb-8">Forged from necessity</h2>
 
-    <div class="flex flex-col md:flex-row gap-8 items-center">
-      <div class="w-full overflow-hidden flex justify-center md:justify-start">
-        <Image
-          src={founderPortrait}
-          alt="Portrait of the founder, Gus Narea"
-          class="object-cover"
-        />
-      </div>
+      <div class="flex flex-col md:flex-row gap-8 items-center">
+        <div class="w-full overflow-hidden flex justify-center md:justify-start">
+          <Image
+            src={founderPortrait}
+            alt="Portrait of the founder, Gus Narea"
+            class="object-cover"
+          />
+        </div>
 
-      <div class="space-y-4">
-        <p>
-          I designed VeraId to provide <a href="https://letro.app/en/">Letro</a> users with offline-compatible
-          identifiers that are robust enough to withstand attacks by the nation-state actors that would
-          target some of them.
-        </p>
+        <div class="space-y-4">
+          <p>
+            I designed VeraId to provide <a href="https://letro.app/en/">Letro</a> users with offline-compatible
+            identifiers that are robust enough to withstand attacks by the nation-state actors that would
+            target some of them.
+          </p>
 
-        <p>
-          Designing and implementing <strong>another</strong> auth protocol is not something I took lightly:
-          I know it's hard to get them right and the consequences can be catastrophic. Unfortunately,
-          <a href="/prior-art" class="text-green-400">no existing technology satisfied our needs</a
-          >.
-        </p>
+          <p>
+            Designing and implementing <strong>another</strong> auth protocol is not something I took
+            lightly: I know it's hard to get them right and the consequences can be catastrophic. Unfortunately,
+            <a href="/prior-art" class="text-green-400"
+              >no existing technology satisfied our needs</a
+            >.
+          </p>
 
-        <div class="pt-2 space-y-1">
-          <p class="font-bold text-white"><a href="https://gus.engineer">Gus Narea</a>.</p>
-          <p>Creator of VeraId, and former member of Auth0's core engineering team.</p>
+          <div class="pt-2 space-y-1">
+            <p class="font-bold text-white"><a href="https://gus.engineer">Gus Narea</a>.</p>
+            <p>Creator of VeraId, and former member of Auth0's core engineering team.</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </AnimatedSection>
 </section>
