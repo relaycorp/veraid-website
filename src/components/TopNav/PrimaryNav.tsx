@@ -5,8 +5,6 @@ import { primaryNavLinks } from "./config";
 import { useNavigation } from "./hooks";
 import { MobileMenuToggle } from "./MobileMenuToggle";
 
-const ENABLE_DROPDOWNS = false;
-
 export function PrimaryNav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -27,8 +25,6 @@ export function PrimaryNav() {
   }, []);
 
   const handleDropdownClick = (text: string, e?: React.MouseEvent) => {
-    if (!ENABLE_DROPDOWNS) return;
-
     if (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -61,8 +57,8 @@ export function PrimaryNav() {
                 <>
                   <div
                     className="dropdown-wrapper"
-                    onMouseEnter={() => ENABLE_DROPDOWNS && setActiveDropdown(link.text)}
-                    onMouseLeave={() => ENABLE_DROPDOWNS && setActiveDropdown(null)}
+                    onMouseEnter={() => setActiveDropdown(link.text)}
+                    onMouseLeave={() => setActiveDropdown(null)}
                   >
                     <div className="flex items-center space-x-1">
                       <a
@@ -73,19 +69,18 @@ export function PrimaryNav() {
                       >
                         {link.text}
                       </a>
-                      {ENABLE_DROPDOWNS && (
-                        <button
-                          onClick={(e) => handleDropdownClick(link.text, e)}
-                          className="flex items-center"
-                          aria-label="Toggle dropdown"
-                        >
-                          <ChevronIcon
-                            className={`w-3 h-3 transition-transform ${
-                              activeDropdown === link.text ? "rotate-180" : ""
-                            }`}
-                          />
-                        </button>
-                      )}
+
+                      <button
+                        onClick={(e) => handleDropdownClick(link.text, e)}
+                        className="flex items-center"
+                        aria-label="Toggle dropdown"
+                      >
+                        <ChevronIcon
+                          className={`w-3 h-3 transition-transform ${
+                            activeDropdown === link.text ? "rotate-180" : ""
+                          }`}
+                        />
+                      </button>
                     </div>
                     {/* Dropdown submenu*/}
                     {activeDropdown === link.text && (
@@ -142,21 +137,20 @@ export function PrimaryNav() {
                       >
                         {link.text}
                       </a>
-                      {ENABLE_DROPDOWNS && (
-                        <div className="flex items-center">
-                          <div className="h-6 w-px bg-neutral-600 mr-3"></div>
-                          <button
-                            onClick={() => handleDropdownClick(link.text)}
-                            aria-label="Toggle dropdown"
-                          >
-                            <ChevronIcon
-                              className={`w-4 h-4 transition-transform ${
-                                activeDropdown === link.text ? "rotate-180" : ""
-                              }`}
-                            />
-                          </button>
-                        </div>
-                      )}
+
+                      <div className="flex items-center">
+                        <div className="h-6 w-px bg-neutral-600 mr-3"></div>
+                        <button
+                          onClick={() => handleDropdownClick(link.text)}
+                          aria-label="Toggle dropdown"
+                        >
+                          <ChevronIcon
+                            className={`w-4 h-4 transition-transform ${
+                              activeDropdown === link.text ? "rotate-180" : ""
+                            }`}
+                          />
+                        </button>
+                      </div>
                     </div>
                     {activeDropdown === link.text && (
                       <div className="pl-4 space-y-2">
