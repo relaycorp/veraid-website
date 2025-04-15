@@ -8,9 +8,9 @@ layout: ../../layouts/KlientoPage.astro
 
 Kliento offers a distinct approach to client authentication, addressing common limitations found in traditional methods. It aims to provide secure, offline-verifiable credentials without shared secrets or key distribution mechanisms. Let's compare it to some prevalent alternatives.
 
-## Opaque API keys
+## API keys
 
-Opaque API keys are randomly-generated strings used as shared secrets for authentication.
+API keys are randomly-generated strings used as shared secrets for authentication.
 
 **Pros:**
 
