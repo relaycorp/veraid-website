@@ -19,7 +19,7 @@ const WorkloadIdentityCarousel: React.FC = () => {
   const carouselItems = (
     <div className="flex gap-6 sm:gap-14 items-center min-w-max pr-8 sm:pr-16">
       <CarouselItem
-        workloadIdentity="your-org / your-repo"
+        workloadIdentity="your-org/your-repo"
         veraidIdentity="your-repo@your-company.com"
         icon="github"
       />
