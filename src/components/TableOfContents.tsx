@@ -66,7 +66,7 @@ export function TableOfContentsReact({ headings }: TOCProps) {
   }
 
   return (
-    <aside className="sticky top-8 overflow-auto pr-4 pb-4 mb-8 max-h-[calc(50vh-8rem)] lg:max-h-[calc(100vh-8rem)] scrollbar">
+    <aside className="sticky top-8 overflow-auto px-4 pt-3 lg:pt-0 pb-4 mb-8 max-h-[calc(60vh-8rem)] lg:max-h-[calc(100vh-8rem)] scrollbar bg-neutral-800 lg:bg-black rounded-md">
       <nav>
         <h2 className="text-lg mb-4">On this page</h2>
         <ul className="space-y-3 font-['Noto_Sans']">
