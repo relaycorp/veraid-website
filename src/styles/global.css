@@ -9,5 +9,5 @@ html {
   --text-xxs: 10px;
 }
 :not(pre) > code {
-  @apply bg-neutral-700 rounded-sm py-0.5 px-1 border border-neutral-600;
+  @apply bg-neutral-700 rounded-sm px-1 border border-neutral-600;
 }
