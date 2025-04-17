@@ -16,8 +16,8 @@ export function SecondaryNav({ servicePath, logoSrc }: SecondaryNavProps) {
   const navigation = findNavItemByPath(servicePath);
 
   const secondaryNavLinkClass = {
-    active: "text-indigo-300",
-    inactive: "text-white hover:text-indigo-400",
+    active: "!text-indigo-400",
+    inactive: "!text-white",
   };
 
   return (
@@ -27,7 +27,7 @@ export function SecondaryNav({ servicePath, logoSrc }: SecondaryNavProps) {
           <img src={logoSrc} alt={`${navigation.text} logo`} className="h-4 md:h-5 w-auto" />
         </a>
         {/* Desktop Menu */}
-        <ul className="hidden md:flex space-x-8 text-xs">
+        <ul className="hidden md:flex space-x-8 text-xs [&>li>a]:!no-underline [&>li>a]:hover:!text-indigo-300">
           {navigation.children?.map((link) => (
             <li key={link.text}>
               <a
@@ -55,7 +55,7 @@ export function SecondaryNav({ servicePath, logoSrc }: SecondaryNavProps) {
       {/* Mobile Menu */}
       {isSecondaryMenuOpen && (
         <div className="md:hidden w-full mt-3">
-          <ul className="space-y-3 py-3">
+          <ul className="space-y-3 py-3 [&>li>a]:hover:!text-indigo-400">
             {navigation.children?.map((link) => (
               <li key={link.text}>
                 <a
