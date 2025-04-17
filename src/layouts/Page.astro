@@ -1,36 +1,51 @@
 ---
 import Skeleton from "./Skeleton.astro";
 import { z } from "astro:content";
+import { TableOfContentsReact } from "../components/TableOfContents";
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
 
 interface Frontmatter {
   title: string;
   description: string;
+  showTableOfContents?: boolean;
 }
 
 interface Props {
   frontmatter?: Frontmatter;
   showBrandInTitle?: boolean;
+  headings?: Heading[];
+  showTableOfContents?: boolean;
 }
 
 const schema = z.object({
   title: z.string(),
   description: z.string(),
+  showTableOfContents: z.boolean().optional(),
 });
 
-const { title, description } = schema.parse(Astro.props.frontmatter);
+const {
+  title,
+  description,
+  showTableOfContents: frontmatterTOC,
+} = schema.parse(Astro.props.frontmatter);
 const { showBrandInTitle } = Astro.props;
+
+const { headings = [] } = Astro.props;
+const showTableOfContents =
+  frontmatterTOC !== undefined ? frontmatterTOC : (Astro.props.showTableOfContents ?? false);
+
+const shouldShowTOC = showTableOfContents && headings.length > 0;
 
 const articleClasses = [
   "mx-auto",
   "max-w-5xl",
-  "pt-4",
-  "sm:pt-8",
-  "pb-12",
-  "sm:pb-16",
-  "px-4",
-  "sm:px-6",
+  "pb-10",
   "prose",
-  "prose-h1:text-4xl",
   "text-sm",
   "sm:text-sm",
   "leading-normal",
@@ -40,14 +55,19 @@ const articleClasses = [
   "prose-headings:text-white",
   "prose-headings:!font-[Noto_Sans]",
   "prose-headings:!font-semibold",
+  "prose-h1:lg:text-4xl",
+  "prose-h1:text-3xl",
   "prose-h1:mb-4",
-  "prose-h2:text-3xl",
+  "prose-h2:lg:text-3xl",
+  "prose-h2:text-2xl",
   "prose-h2:mt-10",
   "prose-h2:mb-4",
-  "prose-h3:text-2xl",
+  "prose-h3:lg:text-2xl",
+  "prose-h3:text-xl",
   "prose-h3:mt-8",
   "prose-h3:mb-2",
-  "prose-h4:text-xl",
+  "prose-h4:lg:text-xl",
+  "prose-h4:text-lg",
   "prose-h4:mt-5",
   "prose-h4:mb-2",
   "prose-code:text-white",
@@ -89,7 +109,6 @@ const articleClasses = [
 
   "prose-strong:text-white",
   "prose-strong:font-bold",
-  "[&_a>strong]:text-green-300",
   "prose-dt:text-white",
   "prose-dl:text-neutral-400",
   "prose-ol:marker:text-white",
@@ -102,9 +121,20 @@ const articleClasses = [
 
 <Skeleton title={title} description={description} showBrandInTitle={showBrandInTitle}>
   <slot name="kliento-header" />
-  <article class={articleClasses.join(" ")}>
-    <slot />
-  </article>
+  <div class="max-w-6xl mx-auto px-4 md:px-6 pt-6 md:pt-8">
+    <div class={shouldShowTOC ? "lg:grid lg:grid-cols-[250px_minmax(0,1fr)] md:gap-8" : ""}>
+      {
+        shouldShowTOC && (
+          <div class="hidden lg:block">
+            <TableOfContentsReact headings={headings} client:load />
+          </div>
+        )
+      }
+      <article class={articleClasses.join(" ")}>
+        <slot />
+      </article>
+    </div>
+  </div>
 </Skeleton>
 
 <script>
