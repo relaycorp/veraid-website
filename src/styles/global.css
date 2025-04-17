@@ -11,3 +11,25 @@ html {
 :not(pre) > code {
   @apply bg-neutral-700 rounded-sm px-1 border border-neutral-600;
 }
+
+/* Custom scrollbar styling */
+.scrollbar {
+  /* Standard properties */
+  scrollbar-width: thin;
+  scrollbar-color: #565656 #1a1a1a;
+}
+
+/* For Safari and older Chrome versions */
+.scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 4px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #565656;
+  border-radius: 4px;
+}
